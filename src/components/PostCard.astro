@@ -1,0 +1,58 @@
+---
+import TagBadge from './TagBadge.astro';
+import type { BlogPost } from '../lib/types.js';
+
+interface Props {
+  post: BlogPost;
+}
+
+const { post } = Astro.props;
+
+function readingTime(description: string): string {
+  const words = description.split(/\s+/).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes}분 읽기`;
+}
+---
+<article class="group border rounded-lg overflow-hidden transition-shadow hover:shadow-md" style="border-color: var(--color-border); background-color: var(--color-bg);">
+  {post.coverImageUrl && (
+    <a href={`/blog/${post.slug}/`}>
+      <img
+        src={post.coverImageUrl}
+        alt={post.title}
+        class="w-full h-48 object-cover"
+        loading="lazy"
+      />
+    </a>
+  )}
+  <div class="p-5">
+    <div class="flex flex-wrap gap-1.5 mb-3">
+      {post.tags.map((tag) => <TagBadge tag={tag} />)}
+    </div>
+    <h2 class="text-xl font-bold mb-2 leading-snug">
+      <a
+        href={`/blog/${post.slug}/`}
+        class="transition-colors group-hover:text-[var(--color-accent)]"
+        style="color: var(--color-text);"
+      >
+        {post.title}
+      </a>
+    </h2>
+    {post.description && (
+      <p class="text-sm mb-4 line-clamp-2" style="color: var(--color-text-muted);">
+        {post.description}
+      </p>
+    )}
+    <div class="flex items-center gap-3 text-xs" style="color: var(--color-text-muted);">
+      <time datetime={post.publishedDate}>
+        {new Date(post.publishedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </time>
+      {post.description && (
+        <>
+          <span>·</span>
+          <span>{readingTime(post.description)}</span>
+        </>
+      )}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import { fetchAllPosts } from '../../lib/fetchPosts.js';
+
+export async function getStaticPaths({ paginate }: { paginate: Function }) {
+  const posts = await fetchAllPosts();
+  return paginate(posts, { pageSize: 10 });
+}
+
+const { page } = Astro.props as { page: { data: Awaited<ReturnType<typeof fetchAllPosts>>; currentPage: number; lastPage: number } };
+---
+<BaseLayout
+  title={page.currentPage === 1 ? '블로그' : `블로그 - 페이지 ${page.currentPage}`}
+  description="전체 포스트 목록입니다."
+>
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold" style="color: var(--color-text);">블로그</h1>
+    <p class="mt-2 text-sm" style="color: var(--color-text-muted);">총 {page.data.length}개 포스트 (페이지 {page.currentPage}/{page.lastPage})</p>
+  </div>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    {page.data.map((post) => <PostCard post={post} />)}
+  </div>
+
+  <Pagination
+    currentPage={page.currentPage}
+    totalPages={page.lastPage}
+    baseUrl="/blog"
+  />
+</BaseLayout>

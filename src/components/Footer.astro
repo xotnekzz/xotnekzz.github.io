@@ -1,0 +1,12 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="border-t mt-16 py-8" style="border-color: var(--color-border);">
+  <div class="max-w-3xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm" style="color: var(--color-text-muted);">
+    <p>© {year} tskim. All rights reserved.</p>
+    <div class="flex items-center gap-4">
+      <a href="/rss.xml" class="hover:text-[var(--color-accent)] transition-colors">RSS</a>
+      <a href="https://github.com/tskim" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">GitHub</a>
+    </div>
+  </div>
+</footer>

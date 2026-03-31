@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import TagBadge from '../components/TagBadge.astro';
+import { fetchAllPosts } from '../lib/fetchPosts.js';
+import type { TagInfo } from '../lib/types.js';
+
+const posts = await fetchAllPosts();
+const featured = posts.filter((p) => p.featured).slice(0, 3);
+const recent = posts.filter((p) => !p.featured).slice(0, 6);
+
+// Top tags
+const tagMap = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.tags) {
+    tagMap.set(tag, (tagMap.get(tag) ?? 0) + 1);
+  }
+}
+const topTags: TagInfo[] = [...tagMap.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 10)
+  .map(([name, count]) => ({ name, count }));
+---
+<BaseLayout
+  title="tskim's dev blog"
+  description="데이터 엔지니어링, 백엔드 개발, 클라우드 인프라에 대한 개발 블로그입니다."
+>
+  <!-- Hero -->
+  <section class="mb-14">
+    <h1 class="text-4xl font-bold mb-3" style="color: var(--color-text);">tskim.dev</h1>
+    <p class="text-lg" style="color: var(--color-text-muted);">
+      데이터 엔지니어링 · 백엔드 · 클라우드에 대해 씁니다.
+    </p>
+  </section>
+
+  <!-- Featured posts -->
+  {featured.length > 0 && (
+    <section class="mb-14">
+      <h2 class="text-xl font-bold mb-5 flex items-center gap-2" style="color: var(--color-text);">
+        <span>📌</span> 추천 포스트
+      </h2>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {featured.map((post) => <PostCard post={post} />)}
+      </div>
+    </section>
+  )}
+
+  <!-- Recent posts -->
+  {recent.length > 0 && (
+    <section class="mb-14">
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-xl font-bold" style="color: var(--color-text);">최근 포스트</h2>
+        <a href="/blog/" class="text-sm font-medium" style="color: var(--color-accent);">
+          전체 보기 →
+        </a>
+      </div>
+      <div class="grid gap-5 sm:grid-cols-2">
+        {recent.map((post) => <PostCard post={post} />)}
+      </div>
+    </section>
+  )}
+
+  <!-- Top tags -->
+  {topTags.length > 0 && (
+    <section>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-bold" style="color: var(--color-text);">태그</h2>
+        <a href="/tags/" class="text-sm font-medium" style="color: var(--color-accent);">
+          전체 태그 →
+        </a>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        {topTags.map(({ name }) => <TagBadge tag={name} />)}
+      </div>
+    </section>
+  )}
+</BaseLayout>

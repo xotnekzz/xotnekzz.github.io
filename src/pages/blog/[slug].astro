@@ -1,0 +1,25 @@
+---
+import PostLayout from '../../layouts/PostLayout.astro';
+import { fetchAllPosts, fetchPostWithBody } from '../../lib/fetchPosts.js';
+import type { BlogPost } from '../../lib/types.js';
+
+export async function getStaticPaths() {
+  const posts = await fetchAllPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { postMeta: post },
+  }));
+}
+
+interface Props {
+  postMeta: BlogPost;
+}
+
+const { postMeta } = Astro.props;
+const post = await fetchPostWithBody(postMeta.slug);
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+---
+<PostLayout post={post} />

@@ -1,0 +1,37 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string; // e.g. '/blog'
+}
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+function pageUrl(page: number) {
+  return page === 1 ? `${baseUrl}/` : `${baseUrl}/${page}/`;
+}
+---
+{totalPages > 1 && (
+  <nav class="flex items-center justify-center gap-2 mt-12" aria-label="Pagination">
+    {currentPage > 1 && (
+      <a
+        href={pageUrl(currentPage - 1)}
+        class="px-4 py-2 rounded-md text-sm font-medium border transition-colors hover:bg-[var(--color-bg-secondary)]"
+        style="border-color: var(--color-border); color: var(--color-text);"
+      >
+        ← 이전
+      </a>
+    )}
+    <span class="text-sm" style="color: var(--color-text-muted);">
+      {currentPage} / {totalPages}
+    </span>
+    {currentPage < totalPages && (
+      <a
+        href={pageUrl(currentPage + 1)}
+        class="px-4 py-2 rounded-md text-sm font-medium border transition-colors hover:bg-[var(--color-bg-secondary)]"
+        style="border-color: var(--color-border); color: var(--color-text);"
+      >
+        다음 →
+      </a>
+    )}
+  </nav>
+)}

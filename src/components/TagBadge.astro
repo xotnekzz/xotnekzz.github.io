@@ -1,0 +1,15 @@
+---
+interface Props {
+  tag: string;
+  href?: string;
+}
+const { tag, href } = Astro.props;
+const url = href ?? `/tags/${encodeURIComponent(tag)}/`;
+---
+<a
+  href={url}
+  class="inline-block text-xs font-medium px-2.5 py-0.5 rounded-full transition-opacity hover:opacity-80"
+  style="background-color: var(--color-tag-bg); color: var(--color-tag-text);"
+>
+  {tag}
+</a>

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/tskim/Project/blog -type f -name .*)",
+      "Bash(npm --version)",
+      "Bash(npm info:*)",
+      "Bash(gh auth:*)",
+      "Bash(git config:*)",
+      "Bash(npm create:*)",
+      "Bash(cp:*)",
+      "Bash(npm install:*)",
+      "Bash(npx astro:*)",
+      "Bash(npx tsc:*)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(node:*)",
+      "Bash(NOTION_API_KEY=dummy NOTION_DATABASE_ID=00000000000000000000000000000000 npm run build)"
+    ]
+  }
+}

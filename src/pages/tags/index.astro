@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TagBadge from '../../components/TagBadge.astro';
+import { fetchAllPosts } from '../../lib/fetchPosts.js';
+import type { TagInfo } from '../../lib/types.js';
+
+const posts = await fetchAllPosts();
+
+const tagMap = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.tags) {
+    tagMap.set(tag, (tagMap.get(tag) ?? 0) + 1);
+  }
+}
+
+const tags: TagInfo[] = [...tagMap.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .map(([name, count]) => ({ name, count }));
+---
+<BaseLayout title="태그" description="블로그의 모든 태그 목록입니다.">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold" style="color: var(--color-text);">태그</h1>
+    <p class="mt-2 text-sm" style="color: var(--color-text-muted);">총 {tags.length}개 태그</p>
+  </div>
+
+  <div class="flex flex-wrap gap-3">
+    {tags.map(({ name, count }) => (
+      <a
+        href={`/tags/${encodeURIComponent(name)}/`}
+        class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-colors hover:bg-[var(--color-bg-secondary)]"
+        style="border-color: var(--color-border); color: var(--color-text);"
+      >
+        <span class="text-sm font-medium">{name}</span>
+        <span class="text-xs px-1.5 py-0.5 rounded-full" style="background-color: var(--color-bg-secondary); color: var(--color-text-muted);">{count}</span>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

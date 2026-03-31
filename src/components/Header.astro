@@ -1,0 +1,35 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navLinks = [
+  { href: '/', label: '홈' },
+  { href: '/blog/', label: '블로그' },
+  { href: '/tags/', label: '태그' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+<header class="sticky top-0 z-50 border-b" style="background-color: var(--color-bg); border-color: var(--color-border);">
+  <div class="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+    <a href="/" class="font-bold text-lg tracking-tight" style="color: var(--color-text);">
+      tskim.dev
+    </a>
+    <nav class="flex items-center gap-1">
+      {navLinks.map(({ href, label }) => (
+        <a
+          href={href}
+          class:list={[
+            'px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
+            currentPath === href || (href !== '/' && currentPath.startsWith(href))
+              ? 'text-[var(--color-accent)]'
+              : 'hover:bg-[var(--color-bg-secondary)]'
+          ]}
+          style="color: var(--color-text);"
+        >
+          {label}
+        </a>
+      ))}
+      <ThemeToggle />
+    </nav>
+  </div>
+</header>

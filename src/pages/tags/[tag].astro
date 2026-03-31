@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { fetchAllPosts } from '../../lib/fetchPosts.js';
+
+export async function getStaticPaths() {
+  const posts = await fetchAllPosts();
+
+  const tagMap = new Map<string, typeof posts>();
+  for (const post of posts) {
+    for (const tag of post.tags) {
+      if (!tagMap.has(tag)) tagMap.set(tag, []);
+      tagMap.get(tag)!.push(post);
+    }
+  }
+
+  return [...tagMap.entries()].map(([tag, tagPosts]) => ({
+    params: { tag },
+    props: { tag, posts: tagPosts },
+  }));
+}
+
+interface Props {
+  tag: string;
+  posts: Awaited<ReturnType<typeof fetchAllPosts>>;
+}
+
+const { tag, posts } = Astro.props;
+---
+<BaseLayout
+  title={`태그: ${tag}`}
+  description={`"${tag}" 태그가 달린 포스트 ${posts.length}개입니다.`}
+>
+  <div class="mb-8">
+    <a href="/tags/" class="text-sm mb-4 inline-block" style="color: var(--color-accent);">
+      ← 전체 태그
+    </a>
+    <h1 class="text-3xl font-bold" style="color: var(--color-text);">
+      #{tag}
+    </h1>
+    <p class="mt-2 text-sm" style="color: var(--color-text-muted);">{posts.length}개 포스트</p>
+  </div>
+
+  <div class="grid gap-5 sm:grid-cols-2">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+</BaseLayout>
