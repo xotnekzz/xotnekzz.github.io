@@ -13,7 +13,18 @@
       "Bash(npx tsc:*)",
       "Bash(node_modules/.bin/tsc --noEmit)",
       "Bash(node:*)",
-      "Bash(NOTION_API_KEY=dummy NOTION_DATABASE_ID=00000000000000000000000000000000 npm run build)"
+      "Bash(NOTION_API_KEY=dummy NOTION_DATABASE_ID=00000000000000000000000000000000 npm run build)",
+      "mcp__claude_ai_Notion__notion-search",
+      "mcp__claude_ai_Notion__notion-create-database",
+      "Bash(cmux tree:*)",
+      "Bash(cmux send:*)",
+      "Bash(cmux capture:*)",
+      "Bash(cmux read-screen:*)",
+      "Bash(ls -la /Users/tskim/Project/blog/.env*)",
+      "Bash(cmux browser:*)",
+      "Bash(curl:*)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(cat /Users/tskim/Project/blog/src/pages/blog/[slug].astro)"
     ]
   }
 }
