@@ -7,11 +7,3 @@ tags:
   - typescript
 featured: false
 ---
-
-## Content Collections란?
-
-Astro의 타입 안전 콘텐츠 관리 시스템입니다.
-
-```typescript
-import { defineCollection, z } from 'astro:content';
-```

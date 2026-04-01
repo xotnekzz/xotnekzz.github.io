@@ -24,7 +24,24 @@
       "Bash(cmux browser:*)",
       "Bash(curl:*)",
       "Bash(echo \"exit: $?\")",
-      "Bash(cat /Users/tskim/Project/blog/src/pages/blog/[slug].astro)"
+      "Bash(cat /Users/tskim/Project/blog/src/pages/blog/[slug].astro)",
+      "Bash(npm run:*)",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git commit:*)",
+      "Bash(python3 -c \"import json,sys; p=json.load\\(sys.stdin\\); deps={**p.get\\('dependencies',{}\\), **p.get\\('devDependencies',{}\\)}; print\\('notionhq/client' in str\\(deps\\), 'notion-to-md' in str\\(deps\\)\\)\")",
+      "Bash(echo \"PID: $!\")",
+      "WebFetch(domain:localhost)",
+      "Bash(python3 -c ':*)",
+      "Bash(pkill -f \"astro dev\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k: d[k] for k in ['dependencies','devDependencies'] if k in d}, indent=2\\)\\)\")",
+      "Bash(git push:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(echo \"DEV_PID=$!\")",
+      "Bash(python3 -c \"import sys; content=sys.stdin.read\\(\\); start=content.find\\('<script'\\); end=content.rfind\\('</script>'\\); print\\(content[start:end+9]\\)\")",
+      "Bash(git restore:*)",
+      "Bash(git stash:*)",
+      "Bash(kill 36304)"
     ]
   }
 }
