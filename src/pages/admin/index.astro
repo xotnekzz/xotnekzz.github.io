@@ -1,0 +1,112 @@
+---
+export const prerender = false;
+
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 대시보드</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: system-ui, sans-serif;
+        background: #0d1117;
+        color: #e6edf3;
+        min-height: 100vh;
+        padding: 2rem 1rem;
+      }
+      .container { max-width: 800px; margin: 0 auto; }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+      }
+      h1 { font-size: 1.5rem; font-weight: 700; }
+      .actions { display: flex; gap: 0.75rem; }
+      a.btn, button.btn {
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        border: none;
+      }
+      a.btn-primary { background: #238636; color: #fff; }
+      a.btn-primary:hover { background: #2ea043; }
+      button.btn-secondary { background: #21262d; color: #e6edf3; border: 1px solid #30363d; }
+      button.btn-secondary:hover { background: #30363d; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td {
+        text-align: left;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #21262d;
+        font-size: 0.875rem;
+      }
+      th { color: #8b949e; font-weight: 600; }
+      td { color: #e6edf3; }
+      .tag {
+        display: inline-block;
+        background: #21262d;
+        color: #8b949e;
+        padding: 0.125rem 0.5rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        margin-right: 0.25rem;
+      }
+      .empty { color: #8b949e; text-align: center; padding: 3rem; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>관리자 대시보드</h1>
+        <div class="actions">
+          <a href="/admin/new" class="btn btn-primary">새 글 쓰기</a>
+          <form method="POST" action="/api/admin/logout" style="display:inline;">
+            <button type="submit" class="btn btn-secondary">로그아웃</button>
+          </form>
+        </div>
+      </header>
+
+      <table>
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>날짜</th>
+            <th>태그</th>
+          </tr>
+        </thead>
+        <tbody>
+          {posts.length === 0 ? (
+            <tr>
+              <td colspan="3" class="empty">포스트가 없습니다.</td>
+            </tr>
+          ) : posts.map((post) => (
+            <tr>
+              <td>
+                <a href={`/blog/${post.id}/`} style="color: #58a6ff; text-decoration: none;" target="_blank">
+                  {post.data.title}
+                </a>
+              </td>
+              <td>{post.data.date.toISOString().slice(0, 10)}</td>
+              <td>
+                {post.data.tags.map((tag: string) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

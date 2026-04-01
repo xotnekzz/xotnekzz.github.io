@@ -1,0 +1,187 @@
+---
+export const prerender = false;
+
+const today = new Date().toISOString().slice(0, 10);
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>새 포스트 작성</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: system-ui, sans-serif;
+        background: #0d1117;
+        color: #e6edf3;
+        min-height: 100vh;
+        padding: 2rem 1rem;
+      }
+      .container { max-width: 800px; margin: 0 auto; }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+      }
+      h1 { font-size: 1.5rem; font-weight: 700; }
+      a.back { color: #8b949e; text-decoration: none; font-size: 0.875rem; }
+      a.back:hover { color: #e6edf3; }
+      .form-group { margin-bottom: 1.25rem; }
+      label { display: block; font-size: 0.875rem; color: #8b949e; margin-bottom: 0.375rem; }
+      input[type="text"],
+      input[type="date"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 6px;
+        color: #e6edf3;
+        font-size: 0.875rem;
+        outline: none;
+        font-family: inherit;
+      }
+      input:focus, select:focus, textarea:focus { border-color: #58a6ff; }
+      textarea { min-height: 400px; resize: vertical; font-family: 'Menlo', 'Monaco', monospace; }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .checkbox-group { display: flex; align-items: center; gap: 0.5rem; }
+      .checkbox-group input[type="checkbox"] { width: auto; }
+      .checkbox-group label { margin-bottom: 0; color: #e6edf3; }
+      .btn-row { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 1.5rem; }
+      button {
+        padding: 0.5rem 1.25rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+      }
+      .btn-primary { background: #238636; color: #fff; }
+      .btn-primary:hover { background: #2ea043; }
+      .btn-primary:disabled { background: #1c6a2c; cursor: not-allowed; }
+      .btn-secondary { background: #21262d; color: #e6edf3; border: 1px solid #30363d; }
+      .btn-secondary:hover { background: #30363d; }
+      .status {
+        padding: 0.75rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        margin-bottom: 1rem;
+        display: none;
+      }
+      .status.success { background: #1c3a23; border: 1px solid #238636; color: #3fb950; display: block; }
+      .status.error { background: #3d1e1e; border: 1px solid #f85149; color: #f85149; display: block; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>새 포스트 작성</h1>
+        <a href="/admin/" class="back">← 대시보드로</a>
+      </header>
+
+      <div id="status" class="status"></div>
+
+      <form id="post-form">
+        <div class="form-group">
+          <label for="title">제목 *</label>
+          <input type="text" id="title" name="title" required placeholder="포스트 제목" />
+        </div>
+
+        <div class="form-group">
+          <label for="description">설명 *</label>
+          <input type="text" id="description" name="description" required placeholder="짧은 설명 (SEO, 카드 미리보기)" />
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <label for="date">날짜 *</label>
+            <input type="date" id="date" name="date" required value={today} />
+          </div>
+          <div class="form-group">
+            <label for="category">카테고리 *</label>
+            <select id="category" name="category" required>
+              <option value="dev">dev</option>
+              <option value="til">til</option>
+              <option value="etc">etc</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tags">태그 (콤마 구분)</label>
+          <input type="text" id="tags" name="tags" placeholder="예: TypeScript, Astro, 블로그" />
+        </div>
+
+        <div class="form-group">
+          <label for="cover">커버 이미지 URL (선택)</label>
+          <input type="text" id="cover" name="cover" placeholder="https://..." />
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="featured" name="featured" value="true" />
+            <label for="featured">추천 포스트(featured)로 설정</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="content">본문 (Markdown) *</label>
+          <textarea id="content" name="content" required placeholder="마크다운으로 작성하세요..."></textarea>
+        </div>
+
+        <div class="btn-row">
+          <a href="/admin/" class="btn-secondary" style="text-decoration:none; display:inline-block; padding:0.5rem 1.25rem; border-radius:6px; border:1px solid #30363d; color:#e6edf3; font-size:0.875rem; font-weight:600;">취소</a>
+          <button type="submit" class="btn-primary" id="submit-btn">저장 (GitHub 커밋)</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById('post-form') as HTMLFormElement;
+      const statusEl = document.getElementById('status') as HTMLDivElement;
+      const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.textContent = '저장 중...';
+        statusEl.className = 'status';
+
+        const data: Record<string, string> = {};
+        const formData = new FormData(form);
+        formData.forEach((value, key) => {
+          data[key] = value.toString();
+        });
+
+        // featured checkbox: if unchecked it won't be in formData
+        if (!data['featured']) data['featured'] = 'false';
+
+        try {
+          const res = await fetch('/api/admin/post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+          });
+          const result = await res.json();
+          if (result.ok) {
+            statusEl.className = 'status success';
+            statusEl.textContent = `저장 완료! GitHub에 커밋되었습니다. ${result.url}`;
+            form.reset();
+          } else {
+            statusEl.className = 'status error';
+            statusEl.textContent = result.error ?? '저장에 실패했습니다.';
+          }
+        } catch (err) {
+          statusEl.className = 'status error';
+          statusEl.textContent = '네트워크 오류가 발생했습니다.';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '저장 (GitHub 커밋)';
+        }
+      });
+    </script>
+  </body>
+</html>
