@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
-import { fetchAllPosts } from '../../lib/fetchPosts.js';
+import { getCollection } from 'astro:content';
 
-const posts = await fetchAllPosts();
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
 ---
 <BaseLayout title="블로그" description="전체 포스트 목록입니다.">
   <div class="mb-8">

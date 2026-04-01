@@ -2,17 +2,19 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import TagBadge from '../components/TagBadge.astro';
-import { fetchAllPosts } from '../lib/fetchPosts.js';
+import { getCollection } from 'astro:content';
 import type { TagInfo } from '../lib/types.js';
 
-const posts = await fetchAllPosts();
-const featured = posts.filter((p) => p.featured).slice(0, 3);
-const recent = posts.filter((p) => !p.featured).slice(0, 6);
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const featured = posts.filter((p) => p.data.featured).slice(0, 3);
+const recent = posts.filter((p) => !p.data.featured).slice(0, 6);
 
 // Top tags
 const tagMap = new Map<string, number>();
 for (const post of posts) {
-  for (const tag of post.tags) {
+  for (const tag of post.data.tags) {
     tagMap.set(tag, (tagMap.get(tag) ?? 0) + 1);
   }
 }

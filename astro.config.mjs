@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, envField } from 'astro/config';
+import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
@@ -11,10 +11,9 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   integrations: [sitemap()],
-  env: {
-    schema: {
-      NOTION_API_KEY: envField.string({ context: 'server', access: 'secret' }),
-      NOTION_DATABASE_ID: envField.string({ context: 'server', access: 'secret' }),
-    }
-  }
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark',
+    },
+  },
 });

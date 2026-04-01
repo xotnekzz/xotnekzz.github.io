@@ -1,14 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TagBadge from '../../components/TagBadge.astro';
-import { fetchAllPosts } from '../../lib/fetchPosts.js';
+import { getCollection } from 'astro:content';
 import type { TagInfo } from '../../lib/types.js';
 
-const posts = await fetchAllPosts();
+const posts = await getCollection('posts');
 
 const tagMap = new Map<string, number>();
 for (const post of posts) {
-  for (const tag of post.tags) {
+  for (const tag of post.data.tags) {
     tagMap.set(tag, (tagMap.get(tag) ?? 0) + 1);
   }
 }

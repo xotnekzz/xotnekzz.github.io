@@ -1,60 +1,54 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import TagBadge from '../components/TagBadge.astro';
-import type { BlogPost } from '../lib/types.js';
+import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  post: BlogPost;
+  post: CollectionEntry<'posts'>;
+  Content: any;
 }
 
-const { post } = Astro.props;
-
-function readingTime(html: string): string {
-  const text = html.replace(/<[^>]+>/g, ' ');
-  const words = text.split(/\s+/).filter(Boolean).length;
-  const minutes = Math.max(1, Math.round(words / 200));
-  return `${minutes}분 읽기`;
-}
+const { post, Content } = Astro.props;
 ---
 <BaseLayout
-  title={post.title}
-  description={post.description}
-  image={post.coverImageUrl ?? undefined}
+  title={post.data.title}
+  description={post.data.description}
+  image={post.data.cover ?? undefined}
   type="article"
-  publishedDate={post.publishedDate}
-  tags={post.tags}
+  publishedDate={post.data.date.toISOString()}
+  tags={post.data.tags}
 >
   <article class="prose-post">
     <!-- Header -->
     <header class="mb-10 pb-8 border-b" style="border-color: var(--color-border);">
       <div class="flex flex-wrap gap-1.5 mb-4">
-        {post.tags.map((tag) => <TagBadge tag={tag} />)}
+        {post.data.tags.map((tag) => <TagBadge tag={tag} />)}
       </div>
       <h1 class="text-3xl font-bold leading-tight mb-4" style="color: var(--color-text);">
-        {post.title}
+        {post.data.title}
       </h1>
-      {post.description && (
-        <p class="text-lg mb-5" style="color: var(--color-text-muted);">{post.description}</p>
+      {post.data.description && (
+        <p class="text-lg mb-5" style="color: var(--color-text-muted);">{post.data.description}</p>
       )}
       <div class="flex items-center gap-3 text-sm" style="color: var(--color-text-muted);">
-        <time datetime={post.publishedDate}>
-          {new Date(post.publishedDate).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+        <time datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
         </time>
-        <span>·</span>
-        <span>{readingTime(post.bodyHtml)}</span>
       </div>
     </header>
 
-    {post.coverImageUrl && (
+    {post.data.cover && (
       <img
-        src={post.coverImageUrl}
-        alt={post.title}
+        src={post.data.cover}
+        alt={post.data.title}
         class="w-full rounded-lg mb-10 object-cover max-h-96"
       />
     )}
 
     <!-- Post body -->
-    <div class="notion-content" set:html={post.bodyHtml} />
+    <div class="notion-content">
+      <Content />
+    </div>
 
     <!-- Back link -->
     <div class="mt-16 pt-8 border-t" style="border-color: var(--color-border);">
@@ -125,7 +119,7 @@ function readingTime(html: string): string {
     font-style: italic;
   }
 
-  .notion-content :global(code:not(.shiki code)) {
+  .notion-content :global(code:not(.astro-code code)) {
     background-color: var(--color-bg-secondary);
     color: var(--color-accent);
     padding: 0.15em 0.4em;
