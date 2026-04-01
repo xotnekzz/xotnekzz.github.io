@@ -4,6 +4,7 @@ import PostCard from '../components/PostCard.astro';
 import TagBadge from '../components/TagBadge.astro';
 import { getCollection } from 'astro:content';
 import type { TagInfo } from '../lib/types.js';
+import { SITE } from '../config/site';
 
 const posts = (await getCollection('posts')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -24,14 +25,14 @@ const topTags: TagInfo[] = [...tagMap.entries()]
   .map(([name, count]) => ({ name, count }));
 ---
 <BaseLayout
-  title="tskim's dev blog"
-  description="데이터 엔지니어링, 백엔드 개발, 클라우드 인프라에 대한 개발 블로그입니다."
+  title={SITE.title}
+  description={SITE.description}
 >
   <!-- Hero -->
   <section class="mb-14">
-    <h1 class="text-4xl font-bold mb-3" style="color: var(--color-text);">tskim.dev</h1>
+    <h1 class="text-4xl font-bold mb-3" style="color: var(--color-text);">{SITE.home.headline}</h1>
     <p class="text-lg" style="color: var(--color-text-muted);">
-      데이터 엔지니어링 · 백엔드 · 클라우드에 대해 씁니다.
+      {SITE.home.tagline}
     </p>
   </section>
 
