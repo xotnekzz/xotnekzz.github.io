@@ -1,7 +1,4 @@
 ---
-export const prerender = false;
-
-const error = Astro.url.searchParams.get('error');
 ---
 <!doctype html>
 <html lang="ko">
@@ -30,6 +27,7 @@ const error = Astro.url.searchParams.get('error');
       }
       h1 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.5rem; }
       label { display: block; font-size: 0.875rem; color: #8b949e; margin-bottom: 0.375rem; }
+      input[type="text"],
       input[type="password"] {
         width: 100%;
         padding: 0.5rem 0.75rem;
@@ -41,6 +39,7 @@ const error = Astro.url.searchParams.get('error');
         margin-bottom: 1rem;
         outline: none;
       }
+      input[type="text"]:focus,
       input[type="password"]:focus { border-color: #58a6ff; }
       button {
         width: 100%;
@@ -54,40 +53,37 @@ const error = Astro.url.searchParams.get('error');
         cursor: pointer;
       }
       button:hover { background: #2ea043; }
-      .error {
-        background: #3d1e1e;
-        border: 1px solid #f85149;
-        border-radius: 6px;
-        padding: 0.75rem;
-        font-size: 0.875rem;
-        color: #f85149;
-        margin-bottom: 1rem;
+      .hint {
+        font-size: 0.75rem;
+        color: #8b949e;
+        margin-top: 0.5rem;
       }
     </style>
   </head>
   <body>
     <div class="card">
       <h1>관리자 로그인</h1>
-      {error && <div class="error">{error}</div>}
-      <form method="POST" action="/api/admin/login" id="login-form">
-        <label for="password">비밀번호</label>
-        <input type="password" id="password" name="password" autocomplete="current-password" required />
+      <form id="login-form">
+        <label for="pat">GitHub Personal Access Token</label>
+        <input type="password" id="pat" name="pat" autocomplete="off" required placeholder="ghp_..." />
+        <p class="hint">토큰은 sessionStorage에만 저장되며 서버로 전송되지 않습니다.</p>
+        <br />
         <button type="submit">로그인</button>
       </form>
     </div>
     <script>
-      const form = document.getElementById('login-form');
-      form?.addEventListener('submit', async (e) => {
+      // Redirect if already logged in
+      if (sessionStorage.getItem('github_pat')) {
+        window.location.href = '/admin/';
+      }
+
+      const form = document.getElementById('login-form') as HTMLFormElement;
+      form?.addEventListener('submit', (e) => {
         e.preventDefault();
-        const formData = new FormData(form as HTMLFormElement);
-        const res = await fetch('/api/admin/login', { method: 'POST', body: formData });
-        if (res.redirected) {
-          window.location.href = res.url;
-        } else if (!res.ok) {
-          const data = await res.json();
-          const url = new URL(window.location.href);
-          url.searchParams.set('error', data.error ?? '로그인에 실패했습니다.');
-          window.location.href = url.toString();
+        const pat = (document.getElementById('pat') as HTMLInputElement).value.trim();
+        if (pat) {
+          sessionStorage.setItem('github_pat', pat);
+          window.location.href = '/admin/';
         }
       });
     </script>

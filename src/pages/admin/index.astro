@@ -1,11 +1,4 @@
 ---
-export const prerender = false;
-
-import { getCollection } from 'astro:content';
-
-const posts = (await getCollection('posts')).sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-);
 ---
 <!doctype html>
 <html lang="ko">
@@ -63,6 +56,8 @@ const posts = (await getCollection('posts')).sort(
         margin-right: 0.25rem;
       }
       .empty { color: #8b949e; text-align: center; padding: 3rem; }
+      .loading { color: #8b949e; text-align: center; padding: 3rem; }
+      .error-msg { color: #f85149; text-align: center; padding: 3rem; }
     </style>
   </head>
   <body>
@@ -71,42 +66,105 @@ const posts = (await getCollection('posts')).sort(
         <h1>관리자 대시보드</h1>
         <div class="actions">
           <a href="/admin/new" class="btn btn-primary">새 글 쓰기</a>
-          <form method="POST" action="/api/admin/logout" style="display:inline;">
-            <button type="submit" class="btn btn-secondary">로그아웃</button>
-          </form>
+          <button class="btn btn-secondary" id="logout-btn">로그아웃</button>
         </div>
       </header>
 
       <table>
         <thead>
           <tr>
-            <th>제목</th>
-            <th>날짜</th>
-            <th>태그</th>
+            <th>파일명</th>
+            <th>경로</th>
           </tr>
         </thead>
-        <tbody>
-          {posts.length === 0 ? (
-            <tr>
-              <td colspan="3" class="empty">포스트가 없습니다.</td>
-            </tr>
-          ) : posts.map((post) => (
-            <tr>
-              <td>
-                <a href={`/blog/${post.id}/`} style="color: #58a6ff; text-decoration: none;" target="_blank">
-                  {post.data.title}
-                </a>
-              </td>
-              <td>{post.data.date.toISOString().slice(0, 10)}</td>
-              <td>
-                {post.data.tags.map((tag: string) => (
-                  <span class="tag">{tag}</span>
-                ))}
-              </td>
-            </tr>
-          ))}
+        <tbody id="posts-tbody">
+          <tr>
+            <td colspan="2" class="loading">포스트 목록을 불러오는 중...</td>
+          </tr>
         </tbody>
       </table>
     </div>
+
+    <script>
+      const REPO_OWNER = 'xotnekzz';
+      const REPO_NAME = 'xotnekzz.github.io';
+
+      const pat = sessionStorage.getItem('github_pat');
+      if (!pat) {
+        window.location.href = '/admin/login';
+      }
+
+      document.getElementById('logout-btn')?.addEventListener('click', () => {
+        sessionStorage.removeItem('github_pat');
+        window.location.href = '/admin/login';
+      });
+
+      async function loadPosts() {
+        const tbody = document.getElementById('posts-tbody') as HTMLTableSectionElement;
+        try {
+          const res = await fetch(
+            `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/src/content/posts`,
+            {
+              headers: {
+                'Authorization': `Bearer ${pat}`,
+                'Accept': 'application/vnd.github+json',
+              },
+            }
+          );
+
+          if (!res.ok) {
+            throw new Error(`GitHub API 오류: ${res.status}`);
+          }
+
+          const items: Array<{ name: string; path: string; type: string }> = await res.json();
+
+          // Collect all .md files, including those in subdirectories
+          const mdFiles: Array<{ name: string; path: string }> = [];
+
+          for (const item of items) {
+            if (item.type === 'dir') {
+              const subRes = await fetch(
+                `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${item.path}`,
+                {
+                  headers: {
+                    'Authorization': `Bearer ${pat}`,
+                    'Accept': 'application/vnd.github+json',
+                  },
+                }
+              );
+              if (subRes.ok) {
+                const subItems: Array<{ name: string; path: string; type: string }> = await subRes.json();
+                for (const sub of subItems) {
+                  if (sub.type === 'file' && sub.name.endsWith('.md')) {
+                    mdFiles.push({ name: sub.name, path: sub.path });
+                  }
+                }
+              }
+            } else if (item.type === 'file' && item.name.endsWith('.md')) {
+              mdFiles.push({ name: item.name, path: item.path });
+            }
+          }
+
+          if (mdFiles.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="2" class="empty">포스트가 없습니다.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = mdFiles.map((f) => `
+            <tr>
+              <td>${f.name}</td>
+              <td style="color: #8b949e; font-family: monospace; font-size: 0.8rem;">${f.path}</td>
+            </tr>
+          `).join('');
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : '알 수 없는 오류';
+          tbody.innerHTML = `<tr><td colspan="2" class="error-msg">오류: ${msg}</td></tr>`;
+        }
+      }
+
+      if (pat) {
+        loadPosts();
+      }
+    </script>
   </body>
 </html>

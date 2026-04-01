@@ -1,7 +1,4 @@
 ---
-export const prerender = false;
-
-const today = new Date().toISOString().slice(0, 10);
 ---
 <!doctype html>
 <html lang="ko">
@@ -98,7 +95,7 @@ const today = new Date().toISOString().slice(0, 10);
         <div class="row">
           <div class="form-group">
             <label for="date">날짜 *</label>
-            <input type="date" id="date" name="date" required value={today} />
+            <input type="date" id="date" name="date" required />
           </div>
           <div class="form-group">
             <label for="category">카테고리 *</label>
@@ -113,11 +110,6 @@ const today = new Date().toISOString().slice(0, 10);
         <div class="form-group">
           <label for="tags">태그 (콤마 구분)</label>
           <input type="text" id="tags" name="tags" placeholder="예: TypeScript, Astro, 블로그" />
-        </div>
-
-        <div class="form-group">
-          <label for="cover">커버 이미지 URL (선택)</label>
-          <input type="text" id="cover" name="cover" placeholder="https://..." />
         </div>
 
         <div class="form-group">
@@ -140,6 +132,26 @@ const today = new Date().toISOString().slice(0, 10);
     </div>
 
     <script>
+      const REPO_OWNER = 'xotnekzz';
+      const REPO_NAME = 'xotnekzz.github.io';
+
+      const pat = sessionStorage.getItem('github_pat');
+      if (!pat) {
+        window.location.href = '/admin/login';
+      }
+
+      // Set default date to today
+      const dateInput = document.getElementById('date') as HTMLInputElement;
+      dateInput.value = new Date().toISOString().slice(0, 10);
+
+      function toKebabCase(str: string): string {
+        return str
+          .toLowerCase()
+          .replace(/[^a-z0-9가-힣\s-]/g, '')
+          .trim()
+          .replace(/\s+/g, '-');
+      }
+
       const form = document.getElementById('post-form') as HTMLFormElement;
       const statusEl = document.getElementById('status') as HTMLDivElement;
       const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
@@ -150,31 +162,65 @@ const today = new Date().toISOString().slice(0, 10);
         submitBtn.textContent = '저장 중...';
         statusEl.className = 'status';
 
-        const data: Record<string, string> = {};
         const formData = new FormData(form);
-        formData.forEach((value, key) => {
-          data[key] = value.toString();
-        });
+        const title = (formData.get('title') as string).trim();
+        const description = (formData.get('description') as string).trim();
+        const date = (formData.get('date') as string).trim();
+        const category = (formData.get('category') as string).trim();
+        const tags = (formData.get('tags') as string).trim();
+        const featured = formData.get('featured') === 'true';
+        const content = (formData.get('content') as string).trim();
 
-        // featured checkbox: if unchecked it won't be in formData
-        if (!data['featured']) data['featured'] = 'false';
+        const slug = toKebabCase(title);
+
+        // Parse tags into YAML array
+        const tagList = tags
+          ? tags.split(',').map((t) => t.trim()).filter(Boolean)
+          : [];
+        const tagsYaml = tagList.length > 0
+          ? `[${tagList.map((t) => `"${t}"`).join(', ')}]`
+          : '[]';
+
+        const frontmatter = `---
+title: "${title.replace(/"/g, '\\"')}"
+description: "${description.replace(/"/g, '\\"')}"
+date: ${date}
+tags: ${tagsYaml}
+featured: ${featured}
+---`;
+
+        const markdownContent = `${frontmatter}\n\n${content}`;
+
+        const filePath = `src/content/posts/${category}/${slug}.md`;
 
         try {
-          const res = await fetch('/api/admin/post', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
-          });
-          const result = await res.json();
-          if (result.ok) {
+          const res = await fetch(
+            `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${filePath}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Authorization': `Bearer ${pat}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/vnd.github+json',
+              },
+              body: JSON.stringify({
+                message: `post: ${title}`,
+                content: btoa(unescape(encodeURIComponent(markdownContent))),
+              }),
+            }
+          );
+
+          if (res.ok) {
             statusEl.className = 'status success';
-            statusEl.textContent = `저장 완료! GitHub에 커밋되었습니다. ${result.url}`;
+            statusEl.textContent = '저장됨! 1~2분 후 반영됩니다.';
             form.reset();
+            dateInput.value = new Date().toISOString().slice(0, 10);
           } else {
+            const errorData = await res.json();
             statusEl.className = 'status error';
-            statusEl.textContent = result.error ?? '저장에 실패했습니다.';
+            statusEl.textContent = `저장 실패: ${errorData.message ?? res.status}`;
           }
-        } catch (err) {
+        } catch (err: unknown) {
           statusEl.className = 'status error';
           statusEl.textContent = '네트워크 오류가 발생했습니다.';
         } finally {
