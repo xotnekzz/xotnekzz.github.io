@@ -4,7 +4,7 @@
 /* ─── CSS custom properties ─── */
 :root {
   --color-bg: #ffffff;
-  --color-bg-secondary: #f8f9fa;
+  --color-bg-secondary: #f3f4f6;
   --color-text: #1a1a1a;
   --color-text-muted: #6b7280;
   --color-border: #e5e7eb;
@@ -17,14 +17,14 @@
 }
 
 [data-theme="dark"] {
-  --color-bg: #0f172a;
-  --color-bg-secondary: #1e293b;
-  --color-text: #f1f5f9;
-  --color-text-muted: #94a3b8;
-  --color-border: #334155;
+  --color-bg: #141414;
+  --color-bg-secondary: #1f1f1f;
+  --color-text: #e8e8e8;
+  --color-text-muted: #9ca3af;
+  --color-border: #2e2e2e;
   --color-accent: #60a5fa;
   --color-accent-hover: #93c5fd;
-  --color-tag-bg: #1e3a5f;
+  --color-tag-bg: #1e2a3a;
   --color-tag-text: #93c5fd;
   --color-callout-bg: #1c1917;
   --color-callout-border: #78716c;

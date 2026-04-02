@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  category: string;
+}
+
+const { post, category } = Astro.props;
+
+const dateStr = post.data.date.toLocaleDateString('ko-KR', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
+---
+<article
+  class="post-item py-6 border-b rounded-sm px-3 -mx-3 transition-colors hover:bg-[var(--color-bg-secondary)]"
+  style="border-color: var(--color-border);"
+  data-category={category}
+  data-title={post.data.title.toLowerCase()}
+>
+  <span class="text-xs font-medium uppercase tracking-wide" style="color: var(--color-text-muted);">
+    {category}
+  </span>
+  <h2 class="mt-1 text-xl font-bold leading-snug">
+    <a
+      href={`/blog/${post.id}/`}
+      class="transition-colors hover:text-[var(--color-accent)]"
+      style="color: var(--color-text);"
+    >
+      {post.data.title}
+    </a>
+  </h2>
+  <time
+    datetime={post.data.date.toISOString()}
+    class="mt-2 block text-sm"
+    style="color: var(--color-text-muted);"
+  >
+    {dateStr}
+  </time>
+</article>
