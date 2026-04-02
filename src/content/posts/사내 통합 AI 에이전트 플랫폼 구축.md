@@ -1,4 +1,17 @@
-# 사내 통합 AI 에이전트 플랫폼 구축
+---
+title: 사내 통합 AI 에이전트 플랫폼 구축
+description: LibreChat + MCP + Milvus 기반 RAG 인프라로 전사 AI 플랫폼 구축 — 파편화된 PoC를 하나의 통합 플랫폼으로
+date: 2025-04-01
+tags:
+  - LibreChat
+  - MCP
+  - Milvus
+  - LangChain
+  - Python
+  - RAG
+  - AI Platform
+featured: true
+---
 
 > **기간:** 2025.4 ~ 2024.6
 **역할:** AI Platform Architect & Lead Developer (플랫폼 설계 및 RAG/MCP 인프라 구축 주도)

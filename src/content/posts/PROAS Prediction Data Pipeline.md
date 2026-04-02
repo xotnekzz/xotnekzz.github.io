@@ -1,4 +1,15 @@
-# PROAS Prediction Data Pipeline
+---
+title: PROAS Prediction Data Pipeline
+description: 딥러닝 기반 pROAS/pLTV 예측 모델을 위한 피처 데이터 공급 및 실시간 서빙 파이프라인 구축
+date: 2022-01-01
+tags:
+  - Python
+  - Airflow
+  - Deep Learning
+  - Data Pipeline
+  - Marketing
+featured: false
+---
 
 > **기간:** 2022 ~ 2023
 **역할:** Data Engineer (딥러닝 학습용 데이터 피딩 및 서빙 파이프라인 구축)

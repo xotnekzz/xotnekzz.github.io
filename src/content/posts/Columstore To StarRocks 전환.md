@@ -1,4 +1,15 @@
-# Columstore To StarRocks 전환
+---
+title: Columstore To StarRocks 전환
+description: MariaDB Columnstore 한계 극복을 위한 StarRocks 클러스터 구축 및 30억 건 마케팅 데이터 이관
+date: 2024-01-01
+tags:
+  - StarRocks
+  - MariaDB
+  - Data Migration
+  - ETL
+  - Python
+featured: false
+---
 
 > **기간:** 2024
 **참여인원**: 2명

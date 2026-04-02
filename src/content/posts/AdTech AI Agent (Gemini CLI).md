@@ -1,4 +1,15 @@
-# AdTech AI Agent (Gemini CLI)
+---
+title: AdTech AI Agent (Gemini CLI)
+description: Gemini CLI 기반 AI 에이전트로 1,500개 마케팅 캠페인 자동화 — Human-in-the-loop 구조로 할루시네이션 리스크 제거
+date: 2025-01-01
+tags:
+  - AI
+  - Gemini
+  - MCP
+  - Python
+  - AdTech
+featured: true
+---
 
 > **기간:** 2025
 **역할:** AI Engineer (Gemini CLI 기반 에이전트 설계 및 개발)

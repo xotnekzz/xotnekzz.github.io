@@ -1,4 +1,16 @@
-# 비트망고 BI 성장기
+---
+title: 비트망고 BI 성장기
+description: BI팀 초기 멤버로서 레거시 시스템 현대화, 데이터 모델링, 예측 모델 이식까지 — 주니어 엔지니어 3년의 성장 기록
+date: 2019-01-01
+tags:
+  - Airflow
+  - MariaDB
+  - Python
+  - NestJS
+  - Superset
+  - BI
+featured: false
+---
 
 > **기간:** 2019 ~ 2022 (Junior Engineer)
 **핵심 역량:** Analytics Engineering, Legacy Modernization, Data Modeling, Backend Development

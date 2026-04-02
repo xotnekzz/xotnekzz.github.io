@@ -1,4 +1,15 @@
-# Event Driven Kafka Kraft
+---
+title: Event Driven Kafka Kraft
+description: KRaft 모드 Kafka를 활용한 이벤트 드리븐 아키텍처 설계 — 수천 개 마케팅 캠페인의 실시간 오케스트레이션
+date: 2024-09-01
+tags:
+  - Kafka
+  - KRaft
+  - Django
+  - Python
+  - Event-Driven Architecture
+featured: false
+---
 
 > **기간:** 2024.09 ~ 2024.12
 **참여인원: 2명**

@@ -9,8 +9,7 @@ export const SITE = {
     github: "https://github.com/xotnekzz",
   },
   nav: [
-    { href: '/', label: '홈' },
-    { href: '/blog/', label: '블로그' },
+    { href: '/blog/', label: 'Posts' },
     { href: '/resume/', label: '이력서' },
     { href: 'https://www.linkedin.com/in/%ED%83%9C%EC%88%98-%EA%B9%80-9734b3213/', label: 'LinkedIn' },
     { href: 'https://github.com/xotnekzz', label: 'GitHub' },

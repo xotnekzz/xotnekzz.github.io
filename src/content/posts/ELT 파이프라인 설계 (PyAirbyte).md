@@ -1,4 +1,15 @@
-# ELT 파이프라인 설계 (PyAirbyte)
+---
+title: ELT 파이프라인 설계 (PyAirbyte)
+description: PyAirbyte로 EL 자동화를 분리하고 StarRocks Materialized View로 Transform 단계 최적화
+date: 2026-02-01
+tags:
+  - PyAirbyte
+  - Airflow
+  - StarRocks
+  - Python
+  - ELT
+featured: false
+---
 
 > **기간:** 2026.2 ~ 2026.3
 **역할:** Senior Data Engineer (아키텍처 설계 리딩)

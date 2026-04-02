@@ -1,4 +1,15 @@
-# AI를 활용한 파이썬 모듈 문서 자동화하기
+---
+title: AI를 활용한 파이썬 모듈 문서 자동화하기
+description: GitLab CI/CD와 Gemini API를 연동하여 사내 Python 모듈 문서를 자동 생성하는 파이프라인 구축
+date: 2024-01-01
+tags:
+  - Python
+  - CI-CD
+  - LLM
+  - Gemini
+  - Sphinx
+featured: false
+---
 
 > **기간:** 2024
 **역할:** Senior AI Engineer & Infrastructure (CI/CD 및 LLM 파이프라인 설계)

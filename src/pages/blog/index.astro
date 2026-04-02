@@ -1,19 +1,97 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostCard from '../../components/PostCard.astro';
+import PostListItem from '../../components/PostListItem.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('posts')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+
+function getCategory(id: string): string {
+  const parts = id.split('/');
+  return parts.length > 1 ? parts[0] : '기타';
+}
+
+const categories = [...new Set(posts.map((p) => getCategory(p.id)))].sort();
 ---
-<BaseLayout title="블로그" description="전체 포스트 목록입니다.">
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold" style="color: var(--color-text);">블로그</h1>
-    <p class="mt-2 text-sm" style="color: var(--color-text-muted);">총 {posts.length}개 포스트</p>
+<BaseLayout title="Posts" description="전체 포스트 목록입니다.">
+
+  <!-- 필터 바 -->
+  <div class="flex flex-col sm:flex-row gap-3 mb-8">
+    <select
+      id="category-select"
+      class="flex-none sm:w-48 px-4 py-2.5 rounded-md border text-sm appearance-none cursor-pointer"
+      style="border-color: var(--color-border); background-color: var(--color-bg); color: var(--color-text);"
+    >
+      <option value="">카테고리</option>
+      {categories.map((cat) => (
+        <option value={cat}>{cat}</option>
+      ))}
+    </select>
+
+    <div class="relative flex-1">
+      <svg
+        class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none"
+        style="color: var(--color-text-muted);"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+      </svg>
+      <input
+        id="search-input"
+        type="text"
+        placeholder="검색어"
+        class="w-full pl-10 pr-4 py-2.5 rounded-md border text-sm"
+        style="border-color: var(--color-border); background-color: var(--color-bg); color: var(--color-text);"
+      />
+    </div>
   </div>
 
-  <div class="grid gap-5 sm:grid-cols-2">
-    {posts.map((post) => <PostCard post={post} />)}
+  <!-- 포스트 카운트 -->
+  <p id="post-count" class="text-sm mb-2" style="color: var(--color-text-muted);">
+    총 {posts.length}개 포스트
+  </p>
+
+  <!-- 포스트 목록 -->
+  <div id="post-list" class="border-t" style="border-color: var(--color-border);">
+    {posts.map((post) => (
+      <PostListItem post={post} category={getCategory(post.id)} />
+    ))}
   </div>
+
+  <!-- 결과 없음 -->
+  <p id="no-results" class="hidden py-12 text-center text-sm" style="color: var(--color-text-muted);">
+    포스트가 없습니다.
+  </p>
+
 </BaseLayout>
+
+<script>
+  const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const postCount = document.getElementById('post-count') as HTMLParagraphElement;
+  const noResults = document.getElementById('no-results') as HTMLParagraphElement;
+  const items = document.querySelectorAll<HTMLElement>('.post-item');
+  const total = items.length;
+
+  function applyFilters() {
+    const cat = categorySelect.value;
+    const query = searchInput.value.toLowerCase().trim();
+    let visible = 0;
+
+    items.forEach((item) => {
+      const matchCat = !cat || item.dataset.category === cat;
+      const matchSearch = !query || (item.dataset.title ?? '').includes(query);
+      const show = matchCat && matchSearch;
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    postCount.textContent = `총 ${visible}개 포스트`;
+    noResults.classList.toggle('hidden', visible > 0);
+  }
+
+  categorySelect.addEventListener('change', applyFilters);
+  searchInput.addEventListener('input', applyFilters);
+</script>

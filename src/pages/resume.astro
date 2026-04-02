@@ -1,28 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const techStack: { category: string; skills: string[] }[] = [
-  {
-    category: 'Languages',
-    skills: ['Python', 'SQL', 'Java', 'TypeScript', 'Bash'],
-  },
-  {
-    category: 'Data Infra',
-    skills: ['Apache Doris', 'StarRocks', 'SeaweedFS', 'Apache Airflow', 'PyAirbyte', 'Kafka', 'HDFS', 'Impala'],
-  },
-  {
-    category: 'AI',
-    skills: ['Gemini API', 'MCP', 'LangChain', 'Milvus', 'LibreChat'],
-  },
-  {
-    category: 'BI & Governance',
-    skills: ['OpenMetadata', 'Apache Superset', 'Google Sheets (Apps Script)'],
-  },
-  {
-    category: 'Backend & DevOps',
-    skills: ['NestJS', 'Django', 'MariaDB', 'MongoDB', 'Docker', 'Git/GitLab CI-CD'],
-  },
-];
+import { personal, summary, experiences, techStack, education } from '../data/resume';
 ---
 
 <BaseLayout
@@ -31,24 +9,24 @@ const techStack: { category: string; skills: string[] }[] = [
 >
   <!-- Hero -->
   <section class="mb-12 pb-8 border-b" style="border-color: var(--color-border);">
-    <h1 class="text-4xl font-bold mb-2" style="color: var(--color-text);">김태수</h1>
-    <p class="text-xl font-medium mb-4" style="color: var(--color-accent);">Senior Data Engineer</p>
+    <h1 class="text-4xl font-bold mb-2" style="color: var(--color-text);">{personal.name}</h1>
+    <p class="text-xl font-medium mb-4" style="color: var(--color-accent);">{personal.title}</p>
     <div class="flex flex-wrap gap-4 text-sm" style="color: var(--color-text-muted);">
       <a
-        href="mailto:xotnekzz@gmail.com"
+        href={`mailto:${personal.email}`}
         class="hover:underline"
         style="color: var(--color-accent);"
       >
-        xotnekzz@gmail.com
+        {personal.email}
       </a>
       <a
-        href="https://github.com/xotnekzz"
+        href={personal.githubUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="hover:underline"
         style="color: var(--color-accent);"
       >
-        github.com/xotnekzz
+        {personal.github}
       </a>
     </div>
   </section>
@@ -57,11 +35,7 @@ const techStack: { category: string; skills: string[] }[] = [
   <section class="mb-12">
     <h2 class="text-2xl font-bold mb-6" style="color: var(--color-text);">Professional Summary</h2>
     <p class="leading-relaxed" style="color: var(--color-text-muted);">
-      30억 건 규모의 마케팅 데이터 마트와 수백억 건의 게임 로그 인프라를 StarRocks 및 Doris 기반으로
-      현대화하여, 쿼리 응답 속도를 최대 1,715배 향상시키며 엔지니어링 운영 리소스 최적화 및 TCO 대폭 절감을 달성했습니다.
-      특히 Gemini 기반 AI 에이전트를 개발하며 데이터 품질이 AI 비즈니스의 핵심임을 체감한 후, 현재는
-      데이터 사일로 제거와 신뢰도 확보를 위한 전사적 데이터 거버넌스 체계 구축을 주도하고 있습니다.
-      기술적 탁월함을 비즈니스 수익으로 연결하며, 견고한 데이터 거버넌스 기반의 'AI-Native 전문가'로 성장하고 있습니다.
+      {summary}
     </p>
   </section>
 
@@ -69,138 +43,51 @@ const techStack: { category: string; skills: string[] }[] = [
   <section class="mb-12">
     <h2 class="text-2xl font-bold mb-6" style="color: var(--color-text);">Professional Experience</h2>
 
-    <!-- BitMango -->
-    <div class="mb-10">
-      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
-        <h3 class="text-lg font-bold" style="color: var(--color-text);">비트망고 (BitMango)</h3>
-        <span class="text-sm" style="color: var(--color-text-muted);">2019.08 ~ 현재 (7년 차)</span>
-      </div>
-      <p class="text-sm font-medium mb-6" style="color: var(--color-accent);">Senior Data Engineer</p>
-
-      <!-- Timeline -->
-      <div class="relative border-l-2 pl-6 space-y-8" style="border-color: var(--color-border);">
-
-        <!-- Project 1 -->
-        <div class="relative">
-          <span
-            class="absolute -left-[1.4375rem] top-1 w-3 h-3 rounded-full border-2 flex-shrink-0"
-            style="background-color: var(--color-accent); border-color: var(--color-accent);"
-          ></span>
-          <div class="flex flex-wrap items-baseline gap-2 mb-1">
-            <h4 class="font-semibold" style="color: var(--color-text);">
-              [Modernization] 전사 대규모 로그 플랫폼 & OLAP 현대화
-            </h4>
-            <span class="text-xs" style="color: var(--color-text-muted);">2025 ~ 현재</span>
-          </div>
-          <p class="text-xs mb-2 italic" style="color: var(--color-text-muted);">
-            Problem: 레거시 40대 노드(HDFS/Impala)의 과도한 운영 리소스 및 노후 인프라 성능 한계
-          </p>
-          <ul class="space-y-1 text-sm list-disc list-inside" style="color: var(--color-text-muted);">
-            <li>역인덱스 기술로 단순 집계 최대 1,715배(50ms 이내) 단축. 총 12대 노드로 17대 연산 노드 성능 상회</li>
-            <li>Fluentd → SeaweedFS → Apache Doris Broker Load 병렬 적재 파이프라인 최적화</li>
-            <li>수동 파티셔닝/통계수집 제거로 운영 리소스 제로화</li>
-          </ul>
+    {experiences.map((exp, expIdx) => (
+      <div class={expIdx < experiences.length - 1 ? 'mb-10' : 'mb-2'}>
+        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
+          <h3 class="text-lg font-bold" style="color: var(--color-text);">
+            {exp.company} ({exp.companyEn})
+          </h3>
+          <span class="text-sm" style="color: var(--color-text-muted);">{exp.period}</span>
         </div>
+        <p class="text-sm font-medium mb-6" style="color: var(--color-accent);">{exp.role}</p>
 
-        <!-- Project 2 -->
-        <div class="relative">
-          <span
-            class="absolute -left-[1.4375rem] top-1 w-3 h-3 rounded-full border-2 flex-shrink-0"
-            style="background-color: var(--color-accent); border-color: var(--color-accent);"
-          ></span>
-          <div class="flex flex-wrap items-baseline gap-2 mb-1">
-            <h4 class="font-semibold" style="color: var(--color-text);">
-              [AI Automation] Ad-Tech AI Agent & 전사 AI 플랫폼
-            </h4>
-            <span class="text-xs" style="color: var(--color-text-muted);">2024 ~ 현재</span>
-          </div>
-          <p class="text-xs mb-2 italic" style="color: var(--color-text-muted);">
-            Problem: 1,500개 캠페인의 수동 운영 한계 및 AI 도입에 대한 전사적 기술 장벽
-          </p>
-          <ul class="space-y-1 text-sm list-disc list-inside" style="color: var(--color-text-muted);">
-            <li>Gemini CLI Agent: 프롬프트 기반 룰 관리 + Human-in-the-loop 검증 구조로 할루시네이션 리스크 제거</li>
-            <li>마케터 생산성 1,000배 혁신: 수 명의 운영 인력 → 마케터 1명 전담 가능</li>
-            <li>WorkwithAI 플랫폼: LibreChat/MCP/Milvus 기반 RAG 인프라 구축</li>
-          </ul>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="relative">
-          <span
-            class="absolute -left-[1.4375rem] top-1 w-3 h-3 rounded-full border-2 flex-shrink-0"
-            style="background-color: var(--color-accent); border-color: var(--color-accent);"
-          ></span>
-          <div class="flex flex-wrap items-baseline gap-2 mb-1">
-            <h4 class="font-semibold" style="color: var(--color-text);">
-              [Governance] 전사 데이터 관리 체계 및 자동화
-            </h4>
-            <span class="text-xs" style="color: var(--color-text-muted);">2025 ~ 현재</span>
-          </div>
-          <p class="text-xs mb-2 italic" style="color: var(--color-text-muted);">
-            Problem: 데이터 사일로 현상 및 Airflow 버전 제약으로 인한 리니지 수집 자동화 불가
-          </p>
-          <ul class="space-y-1 text-sm list-disc list-inside" style="color: var(--color-text-muted);">
-            <li>OpenMetadata 전사 도입 리드, Custom API 기반 Decorator 자체 개발</li>
-            <li>Metadata-driven ETL: DAG 설정을 DB화하여 수십 개의 파이프라인을 단일 코드베이스로 관리</li>
-          </ul>
-        </div>
-
-        <!-- Project 4 -->
-        <div class="relative">
-          <span
-            class="absolute -left-[1.4375rem] top-1 w-3 h-3 rounded-full border-2 flex-shrink-0"
-            style="background-color: var(--color-accent); border-color: var(--color-accent);"
-          ></span>
-          <div class="flex flex-wrap items-baseline gap-2 mb-1">
-            <h4 class="font-semibold" style="color: var(--color-text);">
-              [Architecture] 마케팅 ROI 최적화 & 이벤트 드리븐 시스템
-            </h4>
-            <span class="text-xs" style="color: var(--color-text-muted);">2022 ~ 2025</span>
-          </div>
-          <ul class="space-y-1 text-sm list-disc list-inside" style="color: var(--color-text-muted);">
-            <li>pROAS 파이프라인: 딥러닝 기반 조기 성과 예측 시스템, 마케팅 최적화 주기 단축(Day 3~7)</li>
-            <li>KRaft Kafka 도입: 비동기 메시징 아키텍처 설계 및 광고 API 오케스트레이션 고도화</li>
-          </ul>
-        </div>
-
-        <!-- Project 5 -->
-        <div class="relative">
-          <span
-            class="absolute -left-[1.4375rem] top-1 w-3 h-3 rounded-full border-2 flex-shrink-0"
-            style="background-color: var(--color-border); border-color: var(--color-border);"
-          ></span>
-          <div class="flex flex-wrap items-baseline gap-2 mb-1">
-            <h4 class="font-semibold" style="color: var(--color-text);">[Other] 백엔드 & BI</h4>
-            <span class="text-xs" style="color: var(--color-text-muted);">2019 ~ 2022</span>
-          </div>
-          <ul class="space-y-1 text-sm list-disc list-inside" style="color: var(--color-text-muted);">
-            <li>게임 서버 백엔드(NestJS) 고도화 지원</li>
-            <li>Apache Superset 기반 전사 BI 체계 구축</li>
-          </ul>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Wooam Corp -->
-    <div class="mb-2">
-      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-1">
-        <h3 class="text-lg font-bold" style="color: var(--color-text);">우암코퍼레이션 (Wooam Corp)</h3>
-        <span class="text-sm" style="color: var(--color-text-muted);">2018 ~ 2019</span>
-      </div>
-      <p class="text-sm font-medium mb-4" style="color: var(--color-accent);">Backend Developer</p>
-      <div class="relative border-l-2 pl-6" style="border-color: var(--color-border);">
-        <div class="relative">
-          <span
-            class="absolute -left-[1.4375rem] top-1 w-3 h-3 rounded-full border-2 flex-shrink-0"
-            style="background-color: var(--color-border); border-color: var(--color-border);"
-          ></span>
-          <ul class="space-y-1 text-sm list-disc list-inside" style="color: var(--color-text-muted);">
-            <li>10만 세대 규모 전력 데이터 수집 API(Java) 및 FastDR 시스템 구축</li>
-          </ul>
+        <!-- Timeline -->
+        <div class="relative border-l-2 pl-6 space-y-8" style="border-color: var(--color-border);">
+          {exp.projects.map((project) => (
+            <div class="relative">
+              <span
+                class="absolute -left-[1.4375rem] top-1 w-3 h-3 rounded-full border-2 flex-shrink-0"
+                style={project.accent
+                  ? 'background-color: var(--color-accent); border-color: var(--color-accent);'
+                  : 'background-color: var(--color-border); border-color: var(--color-border);'}
+              ></span>
+              {project.title && (
+                <div class="flex flex-wrap items-baseline gap-2 mb-1">
+                  <h4 class="font-semibold" style="color: var(--color-text);">
+                    {project.title}
+                  </h4>
+                  {project.period && (
+                    <span class="text-xs" style="color: var(--color-text-muted);">{project.period}</span>
+                  )}
+                </div>
+              )}
+              {project.problem && (
+                <p class="text-xs mb-2 italic" style="color: var(--color-text-muted);">
+                  Problem: {project.problem}
+                </p>
+              )}
+              <ul class="space-y-1 text-sm list-disc list-inside" style="color: var(--color-text-muted);">
+                {project.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    ))}
   </section>
 
   <!-- Core Technical Stack -->
@@ -234,19 +121,21 @@ const techStack: { category: string; skills: string[] }[] = [
   <section class="mb-4">
     <h2 class="text-2xl font-bold mb-6" style="color: var(--color-text);">Education</h2>
     <div class="relative border-l-2 pl-6" style="border-color: var(--color-border);">
-      <div class="relative">
-        <span
-          class="absolute -left-[1.4375rem] top-1 w-3 h-3 rounded-full border-2 flex-shrink-0"
-          style="background-color: var(--color-border); border-color: var(--color-border);"
-        ></span>
-        <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-          <div>
-            <h3 class="font-semibold" style="color: var(--color-text);">성공회대학교</h3>
-            <p class="text-sm" style="color: var(--color-text-muted);">컴퓨터공학과</p>
+      {education.map((edu) => (
+        <div class="relative">
+          <span
+            class="absolute -left-[1.4375rem] top-1 w-3 h-3 rounded-full border-2 flex-shrink-0"
+            style="background-color: var(--color-border); border-color: var(--color-border);"
+          ></span>
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
+            <div>
+              <h3 class="font-semibold" style="color: var(--color-text);">{edu.school}</h3>
+              <p class="text-sm" style="color: var(--color-text-muted);">{edu.major}</p>
+            </div>
+            <span class="text-sm" style="color: var(--color-text-muted);">{edu.period}</span>
           </div>
-          <span class="text-sm" style="color: var(--color-text-muted);">2012.02 ~ 2017.02 (졸업)</span>
         </div>
-      </div>
+      ))}
     </div>
   </section>
 </BaseLayout>

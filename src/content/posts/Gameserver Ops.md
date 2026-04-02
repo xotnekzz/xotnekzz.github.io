@@ -1,4 +1,13 @@
-# Gameserver Ops
+---
+title: Gameserver Ops
+description: 게임 서버(band, billboard, decalcomanie 등) 안정 운영을 위한 Ops 업무 기록
+date: 2019-01-01
+tags:
+  - Backend
+  - GameServer
+  - Ops
+featured: false
+---
 
 
 
