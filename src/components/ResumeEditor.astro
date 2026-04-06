@@ -248,24 +248,39 @@
         saveBtn.textContent = '저장 중...';
 
         try {
+          console.log('Sending edits to API:', edits);
+
           const response = await fetch('/api/save-resume', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ edits }),
           });
 
-          const result = await response.json();
+          console.log('Response status:', response.status);
+          console.log('Response headers:', response.headers);
+
+          const responseText = await response.text();
+          console.log('Response text:', responseText);
+
+          let result;
+          try {
+            result = JSON.parse(responseText);
+          } catch (parseError) {
+            console.error('JSON parse error:', parseError);
+            throw new Error(`응답이 유효한 JSON이 아닙니다:\n${responseText}`);
+          }
 
           if (response.ok) {
-            alert(`✅ ${result.edits}개 항목이 resume.ts에 저장되었습니다!\n페이지가 새로고침됩니다.`);
+            alert(`✅ ${result.edits}개 항목이 resume.ts에 저장되었습니다!\n\n경로: ${result.savedTo}\n\n페이지가 새로고침됩니다.`);
             // localStorage 초기화
             localStorage.removeItem(STORAGE_KEY);
             // 페이지 새로고침
-            window.location.reload();
+            setTimeout(() => window.location.reload(), 500);
           } else {
-            alert(`❌ 저장 실패: ${result.error}\n\n${result.details || ''}`);
+            alert(`❌ 저장 실패 (${response.status}):\n${result.error}\n\n${result.details || ''}`);
           }
         } catch (error) {
+          console.error('Save error:', error);
           alert(`❌ 저장 실패:\n${error instanceof Error ? error.message : String(error)}`);
         } finally {
           saveBtn.disabled = false;

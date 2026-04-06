@@ -21,11 +21,40 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    const { edits } = await request.json();
+    let parsedData;
+    try {
+      parsedData = await request.json();
+    } catch (jsonError) {
+      console.error('[API save-resume] JSON parse error:', jsonError);
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid JSON',
+          details: jsonError instanceof Error ? jsonError.message : 'Failed to parse request body',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        },
+      );
+    }
+
+    const { edits } = parsedData;
 
     if (!edits || typeof edits !== 'object') {
-      return new Response(JSON.stringify({ error: 'Invalid edits data' }), { status: 400 });
+      console.error('[API save-resume] Invalid edits data:', edits);
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid edits data',
+          details: `edits must be an object, got: ${typeof edits}`,
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        },
+      );
     }
+
+    console.log('[API save-resume] Received edits:', edits);
 
     // 현재 resume.ts 파일 읽기
     let resumeContent = readFileSync(RESUME_FILE, 'utf-8');
@@ -91,13 +120,22 @@ export const POST: APIRoute = async ({ request }) => {
       },
     );
   } catch (error) {
-    console.error('Error saving resume:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : '';
+
+    console.error('[API save-resume] Error:', errorMessage);
+    console.error('[API save-resume] Stack:', errorStack);
+
     return new Response(
       JSON.stringify({
         error: 'Failed to save resume',
-        details: error instanceof Error ? error.message : String(error),
+        details: errorMessage,
+        stack: errorStack,
       }),
-      { status: 500 },
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      },
     );
   }
 };
