@@ -1,0 +1,458 @@
+---
+// 개발 모드 전용: 이력서 에디터 모달 컴포넌트
+// 이 컴포넌트는 isDev === false일 때 빌드에 포함되지 않음 (tree-shaking)
+---
+
+<dialog id="resume-editor-modal" class="resume-editor-modal">
+  <div class="resume-editor-content">
+    <div class="resume-editor-header">
+      <h3 id="editor-title" class="resume-editor-title">편집</h3>
+      <button id="editor-close-btn" class="resume-editor-close" aria-label="Close editor">
+        ×
+      </button>
+    </div>
+    <form id="editor-form" class="resume-editor-form">
+      <div id="editor-fields" class="resume-editor-fields">
+        <!-- 동적으로 필드가 렌더링됨 -->
+      </div>
+      <div class="resume-editor-actions">
+        <button type="button" id="editor-cancel-btn" class="resume-editor-btn resume-editor-btn-secondary">
+          취소
+        </button>
+        <button type="submit" class="resume-editor-btn resume-editor-btn-primary">
+          저장
+        </button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  // 개발 모드 전용: 클라이언트 사이드 에디터 로직
+  if (import.meta.env.DEV) {
+    const modal = document.getElementById('resume-editor-modal') as HTMLDialogElement;
+    const closeBtn = document.getElementById('editor-close-btn') as HTMLButtonElement;
+    const cancelBtn = document.getElementById('editor-cancel-btn') as HTMLButtonElement;
+    const form = document.getElementById('editor-form') as HTMLFormElement;
+    const fieldsContainer = document.getElementById('editor-fields') as HTMLDivElement;
+    const titleElement = document.getElementById('editor-title') as HTMLHeadingElement;
+
+    // 전역 상태 관리
+    interface EditorState {
+      [key: string]: Record<string, string>;
+    }
+    const state: EditorState = {};
+
+    // 초기 상태 로드
+    function initializeState() {
+      // Hero section
+      const heroSection = document.querySelector('[data-editable="hero"]');
+      if (heroSection) {
+        const name = heroSection.querySelector('h1')?.textContent || '';
+        const title = heroSection.querySelector('p[style*="color-accent"]')?.textContent || '';
+        const email = heroSection.querySelector('a[href^="mailto:"]')?.textContent || '';
+        const github = heroSection.querySelector('a[href*="github"]')?.textContent || '';
+        state['hero'] = { name, title, email, github };
+      }
+
+      // Professional Summary
+      const summarySection = document.querySelector('[data-editable="professional-summary"]');
+      if (summarySection) {
+        const summary = summarySection.querySelector('p')?.textContent || '';
+        state['professional-summary'] = { summary };
+      }
+
+      // Professional Experience - 각 회사별 첫 번째 프로젝트만 편집 가능하게 (간단하게)
+      const expSection = document.querySelector('[data-editable="professional-experience"]');
+      if (expSection) {
+        const companies = expSection.querySelectorAll('h3');
+        const experiences: Record<string, string> = {};
+        companies.forEach((company, idx) => {
+          experiences[`company_${idx}`] = company.textContent?.split('(')[0].trim() || '';
+        });
+        state['professional-experience'] = experiences;
+      }
+
+      // Core Technical Stack
+      const techSection = document.querySelector('[data-editable="core-technical-stack"]');
+      if (techSection) {
+        const categories = techSection.querySelectorAll('.flex.flex-col');
+        const techData: Record<string, string> = {};
+        categories.forEach((cat, idx) => {
+          const categoryName = cat.querySelector('span')?.textContent || '';
+          const skills = Array.from(cat.querySelectorAll('[style*="color-tag"]'))
+            .map((s) => s.textContent)
+            .join(', ');
+          techData[`category_${idx}`] = categoryName;
+          techData[`skills_${idx}`] = skills;
+        });
+        state['core-technical-stack'] = techData;
+      }
+
+      // Education
+      const eduSection = document.querySelector('[data-editable="education"]');
+      if (eduSection) {
+        const eduItems = eduSection.querySelectorAll('.relative');
+        const eduData: Record<string, string> = {};
+        eduItems.forEach((item, idx) => {
+          const school = item.querySelector('h3')?.textContent || '';
+          const major = item.querySelector('p')?.textContent || '';
+          const period = item.querySelectorAll('span')[1]?.textContent || '';
+          eduData[`school_${idx}`] = school;
+          eduData[`major_${idx}`] = major;
+          eduData[`period_${idx}`] = period;
+        });
+        state['education'] = eduData;
+      }
+    }
+
+    // 에디터 아이콘 클릭 핸들러
+    document.addEventListener('click', (e: MouseEvent) => {
+      const btn = e.target as HTMLButtonElement;
+      const sectionId = btn.dataset.editorIcon;
+
+      if (sectionId) {
+        openEditor(sectionId);
+      }
+    });
+
+    // 현재 열려있는 섹션 ID 저장
+    let currentSectionId: string = '';
+
+    // 에디터 열기
+    function openEditor(sectionId: string) {
+      currentSectionId = sectionId;
+      titleElement.textContent = getSectionTitle(sectionId) + ' 편집';
+
+      // 필드 렌더링
+      renderFields(sectionId);
+
+      modal.showModal();
+    }
+
+    // 섹션 제목 조회
+    function getSectionTitle(sectionId: string): string {
+      const titles: Record<string, string> = {
+        hero: 'Hero',
+        'professional-summary': 'Professional Summary',
+        'professional-experience': 'Professional Experience',
+        'core-technical-stack': 'Core Technical Stack',
+        education: 'Education',
+      };
+      return titles[sectionId] || 'Edit';
+    }
+
+    // 필드 렌더링
+    function renderFields(sectionId: string) {
+      fieldsContainer.innerHTML = '';
+      const data = state[sectionId] || {};
+
+      if (sectionId === 'hero') {
+        addField('name', 'Name', data['name'] || '', 'text');
+        addField('title', 'Title', data['title'] || '', 'text');
+        addField('email', 'Email', data['email'] || '', 'text');
+        addField('github', 'GitHub', data['github'] || '', 'text');
+      } else if (sectionId === 'professional-summary') {
+        addField('summary', 'Summary', data['summary'] || '', 'textarea');
+      } else if (sectionId === 'professional-experience') {
+        Object.entries(data).forEach(([key, value]) => {
+          if (key.startsWith('company_')) {
+            addField(key, `Company ${key.split('_')[1]}`, value, 'text');
+          }
+        });
+      } else if (sectionId === 'core-technical-stack') {
+        let idx = 0;
+        while (data[`category_${idx}`] !== undefined) {
+          addField(`category_${idx}`, `Category ${idx}`, data[`category_${idx}`], 'text');
+          addField(`skills_${idx}`, `Skills ${idx}`, data[`skills_${idx}`], 'textarea');
+          idx++;
+        }
+      } else if (sectionId === 'education') {
+        let idx = 0;
+        while (data[`school_${idx}`] !== undefined) {
+          addField(`school_${idx}`, `School ${idx}`, data[`school_${idx}`], 'text');
+          addField(`major_${idx}`, `Major ${idx}`, data[`major_${idx}`], 'text');
+          addField(`period_${idx}`, `Period ${idx}`, data[`period_${idx}`], 'text');
+          idx++;
+        }
+      }
+    }
+
+    // 필드 추가
+    function addField(
+      name: string,
+      label: string,
+      value: string,
+      type: 'text' | 'textarea',
+    ) {
+      const fieldGroup = document.createElement('div');
+      fieldGroup.className = 'resume-editor-field-group';
+
+      const labelElement = document.createElement('label');
+      labelElement.className = 'resume-editor-label';
+      labelElement.htmlFor = name;
+      labelElement.textContent = label;
+
+      let inputElement: HTMLInputElement | HTMLTextAreaElement;
+
+      if (type === 'textarea') {
+        inputElement = document.createElement('textarea');
+        inputElement.className = 'resume-editor-textarea';
+        (inputElement as HTMLTextAreaElement).rows = 4;
+      } else {
+        inputElement = document.createElement('input');
+        inputElement.type = 'text';
+        inputElement.className = 'resume-editor-input';
+      }
+
+      inputElement.id = name;
+      inputElement.name = name;
+      inputElement.value = value;
+
+      fieldGroup.appendChild(labelElement);
+      fieldGroup.appendChild(inputElement);
+      fieldsContainer.appendChild(fieldGroup);
+    }
+
+    // 폼 제출 (저장)
+    form.addEventListener('submit', (e: Event) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      if (currentSectionId) {
+        // 상태 업데이트
+        state[currentSectionId] = Object.fromEntries(formData);
+
+        // DOM 업데이트
+        updateDOM(currentSectionId, state[currentSectionId]);
+
+        // 모달 닫기
+        modal.close();
+      }
+    });
+
+    // DOM 업데이트
+    function updateDOM(sectionId: string, data: Record<string, string>) {
+      const section = document.querySelector(`[data-editable="${sectionId}"]`);
+      if (!section) return;
+
+      if (sectionId === 'hero') {
+        const nameEl = section.querySelector('h1');
+        const titleEl = section.querySelector('p[style*="color-accent"]');
+        const emailEl = section.querySelector('a[href^="mailto:"]');
+        const githubEl = section.querySelector('a[href*="github"]');
+
+        if (nameEl) nameEl.textContent = data['name'];
+        if (titleEl) titleEl.textContent = data['title'];
+        if (emailEl) emailEl.textContent = data['email'];
+        if (githubEl) githubEl.textContent = data['github'];
+      } else if (sectionId === 'professional-summary') {
+        const p = section.querySelector('p');
+        if (p) p.textContent = data['summary'];
+      } else if (sectionId === 'professional-experience') {
+        const companies = section.querySelectorAll('h3');
+        companies.forEach((company, idx) => {
+          const newCompanyName = data[`company_${idx}`];
+          if (newCompanyName) {
+            const parts = company.textContent?.split('(');
+            if (parts && parts[1]) {
+              company.textContent = newCompanyName + ' (' + parts[1];
+            }
+          }
+        });
+      } else if (sectionId === 'core-technical-stack') {
+        const categories = section.querySelectorAll('.flex.flex-col');
+        categories.forEach((cat, idx) => {
+          const categoryEl = cat.querySelector('span');
+          const skillEls = cat.querySelectorAll('[style*="color-tag"]');
+
+          if (categoryEl) categoryEl.textContent = data[`category_${idx}`];
+
+          const skillsList = data[`skills_${idx}`]?.split(',').map((s: string) => s.trim()) || [];
+          skillEls.forEach((skill, skillIdx) => {
+            if (skillIdx < skillsList.length) {
+              skill.textContent = skillsList[skillIdx];
+            }
+          });
+        });
+      } else if (sectionId === 'education') {
+        const eduItems = section.querySelectorAll('.relative');
+        eduItems.forEach((item, idx) => {
+          const schoolEl = item.querySelector('h3');
+          const majorEl = item.querySelector('p');
+          const periodEl = item.querySelectorAll('span')[1];
+
+          if (schoolEl) schoolEl.textContent = data[`school_${idx}`];
+          if (majorEl) majorEl.textContent = data[`major_${idx}`];
+          if (periodEl) periodEl.textContent = data[`period_${idx}`];
+        });
+      }
+    }
+
+    // 모달 닫기 이벤트
+    closeBtn.addEventListener('click', () => {
+      modal.close();
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      modal.close();
+    });
+
+    // 배경 클릭 시 모달 닫기
+    modal.addEventListener('click', (e: MouseEvent) => {
+      if (e.target === modal) {
+        modal.close();
+      }
+    });
+
+    // ESC 키로 모달 닫기 (자동)
+    // HTMLDialogElement는 기본적으로 ESC 키를 지원함
+
+    // 초기화
+    initializeState();
+
+    console.log('Resume editor initialized (dev mode only)');
+  }
+</script>
+
+<style>
+  .resume-editor-modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .resume-editor-modal {
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .resume-editor-content {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .resume-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .resume-editor-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .resume-editor-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+  }
+
+  .resume-editor-close:hover {
+    color: var(--color-text);
+  }
+
+  .resume-editor-form {
+    padding: 1.25rem;
+  }
+
+  .resume-editor-fields {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .resume-editor-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .resume-editor-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text);
+    display: block;
+  }
+
+  .resume-editor-input,
+  .resume-editor-textarea {
+    padding: 0.625rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.375rem;
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.875rem;
+    transition: border-color 0.2s;
+  }
+
+  .resume-editor-input:focus,
+  .resume-editor-textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background-color: var(--color-bg);
+  }
+
+  .resume-editor-textarea {
+    resize: vertical;
+  }
+
+  .resume-editor-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.25rem;
+  }
+
+  .resume-editor-btn {
+    padding: 0.625rem 1rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+  }
+
+  .resume-editor-btn-primary {
+    background-color: var(--color-accent);
+    color: white;
+  }
+
+  .resume-editor-btn-primary:hover {
+    background-color: var(--color-accent-hover);
+  }
+
+  .resume-editor-btn-secondary {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+
+  .resume-editor-btn-secondary:hover {
+    background-color: var(--color-border);
+  }
+</style>

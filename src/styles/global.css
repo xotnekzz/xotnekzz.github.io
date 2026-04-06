@@ -84,3 +84,12 @@ body {
   color: var(--color-text);
   font-size: 0.9375rem;
 }
+
+/* ─── Resume Editor (Dev Mode Only) ─── */
+.editable-section {
+  transition: background-color 0.2s;
+}
+
+.editable-section:hover {
+  background-color: var(--color-bg-secondary);
+}
