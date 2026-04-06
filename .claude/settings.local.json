@@ -42,7 +42,14 @@
       "Bash(git restore:*)",
       "Bash(git stash:*)",
       "Bash(kill 36304)",
-      "Bash(ls -t docs/qa/*.md)"
+      "Bash(ls -t docs/qa/*.md)",
+      "Bash(bash /tmp/check_portfolio.sh)",
+      "Bash(bash /tmp/check_dates.sh)",
+      "Bash(pkill -f \"npm run dev\")",
+      "Bash(cat /Users/tskim/Project/blog/src/content/portfolio/AIEnginerring/AdTech*.md)",
+      "Read(//tmp/**)",
+      "Bash(grep ^title::*)",
+      "Bash(grep -v \"^/Users/tskim/Project/blog/dist/portfolio$\")"
     ]
   }
 }

@@ -19,15 +19,14 @@ const isDev = import.meta.env.DEV;
     data-editable={isDev ? 'hero' : undefined}
   >
     {isDev && (
-      <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <button
-          class="text-lg cursor-pointer hover:scale-110 transition-transform"
-          data-editor-icon="hero"
-          title="Edit Hero Section"
-        >
-          ✏️
-        </button>
-      </div>
+      <button
+        class="absolute top-0 right-0 p-2 text-2xl cursor-pointer hover:scale-120 transition-transform bg-yellow-100 rounded-lg"
+        style="color: #f59e0b; border: 2px solid #f59e0b;"
+        data-editor-icon="hero"
+        title="Edit Hero Section"
+      >
+        ✏️
+      </button>
     )}
     <h1 class="text-4xl font-bold mb-2" style="color: var(--color-text);">{personal.name}</h1>
     <p class="text-xl font-medium mb-4" style="color: var(--color-accent);">{personal.title}</p>

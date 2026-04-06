@@ -1,6 +1,6 @@
 ---
 import type { Portfolio } from '../lib/types';
-import { formatDateKorean } from '../lib/portfolio';
+import { formatDateKorean, generateSlug } from '../lib/portfolio';
 
 export interface Props {
   categories: string[];
@@ -41,8 +41,9 @@ const { categories, data } = Astro.props;
         >
           <div class="space-y-8">
             {data[category].map((project) => (
-              <div
-                class="pb-8 border-b last:border-b-0"
+              <a
+                href={`/portfolio/${project.category}/${generateSlug(project.title)}/`}
+                class="project-link pb-8 border-b last:border-b-0 block transition-opacity hover:opacity-80"
                 style="border-color: var(--color-border);"
               >
                 <div class="flex items-start justify-between gap-4 mb-2">
@@ -86,7 +87,7 @@ const { categories, data } = Astro.props;
                     </span>
                   ))}
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
@@ -219,6 +220,15 @@ const { categories, data } = Astro.props;
 
   .tab-panel.active {
     display: block;
+  }
+
+  .project-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-link:hover {
+    opacity: 0.8;
   }
 
   @media (max-width: 768px) {
