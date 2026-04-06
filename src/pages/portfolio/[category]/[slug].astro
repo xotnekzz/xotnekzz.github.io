@@ -5,22 +5,13 @@ import PortfolioDetailLayout from '../../../layouts/PortfolioDetailLayout.astro'
 export async function getStaticPaths() {
   const portfolios = await getCollection('portfolio');
 
-  // 카테고리명 매핑 (소문자로 정규화된 경로를 원본 대소문자로 복원)
-  const categoryMap: Record<string, string> = {
-    aienginerring: 'AIEnginerring',
-    analyticsenginering: 'AnalyticsEnginering',
-    dataengineering: 'DataEngineering',
-    governance: 'Governance',
-  };
-
   return portfolios.map((portfolio) => {
     const [categoryLower, filename] = portfolio.id.split('/');
-    const categoryDisplay = categoryMap[categoryLower] || categoryLower;
     const slug = filename.replace(/\.md$/, '');
 
     return {
       params: {
-        category: categoryDisplay,
+        category: categoryLower, // 소문자로 통일 (URL에서 사용)
         slug: slug,
       },
       props: { portfolio },
