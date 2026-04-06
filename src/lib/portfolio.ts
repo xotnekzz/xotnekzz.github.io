@@ -10,29 +10,28 @@ export function extractCategory(filePath: string): string {
 }
 
 /**
- * 파일 ID(경로) 또는 제목을 기반으로 URL-safe한 슬러그 생성
- * 파일명에서 확장자를 제거하고 정규화
- * 한글을 공백으로 대체하고, 남은 영문/숫자를 정규화
- * 예: "AIEnginerring/사내 통합 AI 에이전트 플랫폼 구축.md" -> "ai"
- * 예: "AIEnginerring/AdTech AI Agent (Gemini CLI).md" -> "adtech-ai-agent-gemini-cli"
- * 예: "AI를 활용한 파이썬 모듈 문서 자동화하기.md" -> "ai-python"
+ * 포트폴리오 파일 ID를 기반으로 URL-safe한 슬러그 생성
+ * 카테고리명 + 영문/숫자 부분 사용
+ *
+ * 예: "AIEnginerring/사내 통합 AI 에이전트 플랫폼 구축.md" -> "aienginerring-ai-platform"
+ * 예: "DataEngineering/Columstore To StarRocks 전환.md" -> "dataengineering-columstore-starrocks"
+ * 예: "AIEnginerring/AdTech AI Agent (Gemini CLI).md" -> "aienginerring-adtech-ai-agent"
  */
-export function generateSlug(titleOrId: string): string {
-  // 파일 경로인 경우 파일명만 추출
-  let slug = titleOrId.includes('/')
-    ? titleOrId.split('/').pop() || titleOrId
-    : titleOrId;
+export function generateSlug(id: string): string {
+  const parts = id.split('/');
+  if (parts.length < 2) return 'untitled';
 
-  // .md 확장자 제거
-  slug = slug.replace(/\.md$/, '');
+  const category = parts[0].toLowerCase();
+  const filename = parts[1].replace(/\.md$/, '');
 
-  slug = slug
+  // 파일명에서 영문, 숫자, 공백만 추출
+  let titleSlug = filename
     // 괄호와 그 안의 내용 제거
     .replace(/\s*\([^)]*\)\s*/g, ' ')
-    // 한글을 공백으로 대체
+    // 한글 제거
     .replace(/[\uAC00-\uD7AF]/g, ' ')
-    // 한글이 아닌 문자 중 영문, 숫자, 공백, 하이픈만 남김
-    .replace(/[^\w\s\-]/g, '')
+    // 특수문자 제거 (공백, 영문, 숫자, 하이픈만 유지)
+    .replace(/[^\w\s\-]/g, ' ')
     // 연속된 공백을 단일 공백으로
     .replace(/\s+/g, ' ')
     // 양쪽 공백 제거
@@ -40,15 +39,16 @@ export function generateSlug(titleOrId: string): string {
     // 공백으로 분리된 단어들을 하이픈으로 결합
     .split(/\s+/)
     .filter((word) => word.length > 0)
+    .map((word) => word.toLowerCase())
     .join('-')
-    // 소문자로 변환
-    .toLowerCase()
     // 연속된 하이픈 제거
     .replace(/-+/g, '-')
     // 시작/끝 하이픈 제거
     .replace(/^-+|-+$/g, '');
 
-  // 빈 문자열인 경우 기본값 반환
+  // 카테고리 + 파일명 조합 (영문 부분이 없으면 카테고리만)
+  const slug = titleSlug ? `${category}-${titleSlug}` : category;
+
   return slug || 'untitled';
 }
 
