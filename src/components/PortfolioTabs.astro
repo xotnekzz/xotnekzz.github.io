@@ -1,10 +1,14 @@
 ---
 import type { Portfolio } from '../lib/types';
-import { formatDateKorean, generateSlug } from '../lib/portfolio';
+import { formatDateKorean } from '../lib/portfolio';
+
+interface PortfolioWithSlug extends Portfolio {
+  slug?: string;
+}
 
 export interface Props {
   categories: string[];
-  data: Record<string, Portfolio[]>;
+  data: Record<string, PortfolioWithSlug[]>;
 }
 
 const { categories, data } = Astro.props;
@@ -42,7 +46,7 @@ const { categories, data } = Astro.props;
           <div class="space-y-8">
             {data[category].map((project) => (
               <a
-                href={`/portfolio/${project.category}/${generateSlug(project.title)}/`}
+                href={`/portfolio/${project.category}/${project.slug}/`}
                 class="project-link pb-8 border-b last:border-b-0 block transition-opacity hover:opacity-80"
                 style="border-color: var(--color-border);"
               >

@@ -10,4 +10,5 @@ export interface Portfolio {
   tags: string[];
   featured?: boolean;
   category?: string; // 폴더명
+  slug?: string; // URL-safe 슬러그
 }

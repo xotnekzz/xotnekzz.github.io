@@ -6,6 +6,7 @@ import {
   extractCategory,
   groupByCategory,
   sortByDateDesc,
+  generateSlug,
 } from '../lib/portfolio';
 
 // 포트폴리오 파일 동적 로딩
@@ -14,7 +15,12 @@ const portfolioFiles = import.meta.glob('../content/portfolio/*/*.md', {
 }) as Record<string, any>;
 
 // 메타데이터 추출 및 정렬
-const projects: Portfolio[] = Object.entries(portfolioFiles)
+
+interface PortfolioWithId extends Portfolio {
+  slug?: string;
+}
+
+const projects: PortfolioWithId[] = Object.entries(portfolioFiles)
   .map(([path, module]) => {
     const frontmatter = module.frontmatter || {};
     return {
@@ -24,7 +30,8 @@ const projects: Portfolio[] = Object.entries(portfolioFiles)
       tags: frontmatter.tags || [],
       featured: frontmatter.featured || false,
       category: extractCategory(path),
-    } as Portfolio;
+      slug: generateSlug(path), // 파일 경로로부터 슬러그 생성
+    } as PortfolioWithId;
   })
   .filter((p) => p.title && p.date) // 필수 필드 검증
   .sort((a, b) => {
