@@ -1,19 +1,23 @@
 ---
 import { getCollection, render } from 'astro:content';
 import PortfolioDetailLayout from '../../../layouts/PortfolioDetailLayout.astro';
-import { extractCategory, generateSlug } from '../../../lib/portfolio';
-import type { CollectionEntry } from 'astro:content';
+import { extractCategory } from '../../../lib/portfolio';
 
 export async function getStaticPaths() {
   const portfolios = await getCollection('portfolio');
 
-  return portfolios.map((portfolio) => ({
-    params: {
-      category: extractCategory(`portfolio/${portfolio.id.split('/')[0]}/`),
-      slug: generateSlug(portfolio.id),
-    },
-    props: { portfolio },
-  }));
+  return portfolios.map((portfolio) => {
+    const [category, filename] = portfolio.id.split('/');
+    const slug = filename.replace(/\.md$/, '');
+
+    return {
+      params: {
+        category: extractCategory(`portfolio/${category}/`),
+        slug: slug,
+      },
+      props: { portfolio },
+    };
+  });
 }
 
 const { portfolio } = Astro.props;
