@@ -50,7 +50,8 @@
       "Read(//tmp/**)",
       "Bash(grep ^title::*)",
       "Bash(grep -v \"^/Users/tskim/Project/blog/dist/portfolio$\")",
-      "Bash(find /Users/tskim/Project/blog/dist/portfolio -name \"index.html\" -exec dirname {} \\\\;)"
+      "Bash(find /Users/tskim/Project/blog/dist/portfolio -name \"index.html\" -exec dirname {} \\\\;)",
+      "Bash(git log:*)"
     ]
   }
 }

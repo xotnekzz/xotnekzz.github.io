@@ -20,26 +20,38 @@
       // 이미 입력 중이면 무시
       if (currentEditing) return;
 
-      // 편집 가능한 요소 찾기 (h1, h2, h3, p, span)
-      if (!['H1', 'H2', 'H3', 'P', 'SPAN'].includes(target.tagName)) return;
-
       // 편집 불가능한 부분 제외
-      if (target.closest('a') || target.closest('button')) return;
+      if (target.closest('a') || target.closest('button') || target.closest('input') || target.closest('textarea')) {
+        return;
+      }
 
       // 부모 섹션이 editable-section인지 확인
       const editableSection = target.closest('.editable-section');
       if (!editableSection) return;
 
-      startEditing(target);
+      // 텍스트가 있는 요소면 편집 가능
+      const text = target.textContent?.trim();
+      if (text) {
+        startEditing(target);
+      }
     });
 
     function startEditing(element: Element) {
       const originalText = element.textContent || '';
       currentEditing = { element, originalText };
 
-      // 입력 필드 생성
-      const input = document.createElement('input');
-      input.type = 'text';
+      // 텍스트 길이에 따라 input 또는 textarea 사용
+      const isLongText = originalText.length > 100 || originalText.includes('\n');
+
+      let input: HTMLInputElement | HTMLTextAreaElement;
+      if (isLongText) {
+        input = document.createElement('textarea');
+        (input as HTMLTextAreaElement).rows = Math.max(3, Math.ceil(originalText.length / 50));
+      } else {
+        input = document.createElement('input');
+        (input as HTMLInputElement).type = 'text';
+      }
+
       input.value = originalText;
       input.className = 'resume-editor-inline-input';
       input.style.cssText = `
@@ -49,6 +61,7 @@
         border-radius: 0.375rem;
         font-size: 1rem;
         font-family: inherit;
+        box-sizing: border-box;
       `;
 
       // 원본 요소 숨기고 입력 필드 삽입
@@ -58,6 +71,14 @@
       // 포커스 및 선택
       input.focus();
       input.select();
+
+      // textarea 높이 자동 조절
+      if (isLongText && input instanceof HTMLTextAreaElement) {
+        input.addEventListener('input', () => {
+          input.style.height = 'auto';
+          input.style.height = Math.max(100, input.scrollHeight) + 'px';
+        });
+      }
 
       // 저장 핸들러
       function save() {
@@ -79,7 +100,7 @@
 
       // 키 이벤트
       function handleKeydown(e: KeyboardEvent) {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !isLongText) {
           save();
         } else if (e.key === 'Escape') {
           cleanup();
@@ -95,32 +116,34 @@
 </script>
 
 <style>
-  /* Double-click edit inline input styles */
+  /* Double-click edit inline input/textarea styles */
   .resume-editor-inline-input {
     border: 2px solid var(--color-accent) !important;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
     font-size: 1rem !important;
+    line-height: 1.6 !important;
+    resize: vertical;
   }
 
   .editable-section {
     cursor: default;
   }
 
-  .editable-section h1,
-  .editable-section h2,
-  .editable-section h3,
-  .editable-section p,
-  .editable-section span {
+  /* 모든 텍스트 노드의 부모 요소를 편집 가능하게 */
+  .editable-section * {
     cursor: text;
     user-select: none;
     transition: background-color 0.2s;
   }
 
-  .editable-section h1:hover,
-  .editable-section h2:hover,
-  .editable-section h3:hover,
-  .editable-section p:hover,
-  .editable-section span:hover {
+  /* 링크와 버튼은 제외 */
+  .editable-section a,
+  .editable-section button {
+    cursor: pointer;
+    user-select: auto;
+  }
+
+  .editable-section *:hover:not(a):not(button) {
     background-color: rgba(37, 99, 235, 0.1);
   }
 </style>
