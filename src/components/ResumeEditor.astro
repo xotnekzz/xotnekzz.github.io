@@ -64,6 +64,9 @@
       const editableSection = target.closest('.editable-section');
       if (!editableSection) return;
 
+      // H2 섹션 제목은 resume.ts에 대응 필드 없음 → 편집 불가
+      if (target.tagName === 'H2' || target.closest('h2')) return;
+
       // 텍스트가 있는 요소면 편집 가능
       const text = target.textContent?.trim();
       if (text) {
@@ -338,5 +341,14 @@
 
   .editable-section *:hover:not(a):not(button) {
     background-color: rgba(37, 99, 235, 0.1);
+  }
+
+  /* H2 섹션 제목은 편집 불가 — 호버 효과 제거 */
+  .editable-section h2 {
+    cursor: default;
+  }
+
+  .editable-section h2:hover {
+    background-color: transparent;
   }
 </style>
