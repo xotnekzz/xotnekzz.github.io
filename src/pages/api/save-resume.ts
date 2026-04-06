@@ -1,11 +1,18 @@
 import type { APIRoute } from 'astro';
-import { writeFileSync, readFileSync } from 'fs';
+import { writeFileSync, readFileSync, existsSync } from 'fs';
+import { resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { dirname } from 'path';
 
+// 현재 파일 기반으로 프로젝트 루트 찾기
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const RESUME_FILE = join(__dirname, '../../../src/data/resume.ts');
+// /src/pages/api/save-resume.ts → /src/pages → /src → /
+const PROJECT_ROOT = resolve(__dirname, '../../../');
+const RESUME_FILE = resolve(PROJECT_ROOT, 'src/data/resume.ts');
+
+console.log('[API save-resume] PROJECT_ROOT:', PROJECT_ROOT);
+console.log('[API save-resume] RESUME_FILE:', RESUME_FILE);
 
 export const POST: APIRoute = async ({ request }) => {
   // 개발 모드 확인
@@ -63,13 +70,20 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     // 파일 저장
+    console.log('[API save-resume] Saving to:', RESUME_FILE);
+    console.log('[API save-resume] File exists before:', existsSync(RESUME_FILE));
+
     writeFileSync(RESUME_FILE, resumeContent, 'utf-8');
+
+    console.log('[API save-resume] File exists after:', existsSync(RESUME_FILE));
+    console.log('[API save-resume] Successfully saved', Object.keys(edits).length, 'edits');
 
     return new Response(
       JSON.stringify({
         success: true,
         message: 'resume.ts updated successfully',
         edits: Object.keys(edits).length,
+        savedTo: RESUME_FILE,
       }),
       {
         status: 200,
