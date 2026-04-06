@@ -173,6 +173,90 @@
       restoreSavedEdits();
     }
 
+    // "파일에 저장" 버튼 추가
+    function addSaveButton() {
+      const header = document.querySelector('header');
+      if (!header) return;
+
+      // 기존 버튼이 있으면 제거
+      const existing = document.getElementById('resume-save-btn');
+      if (existing) existing.remove();
+
+      const saveBtn = document.createElement('button');
+      saveBtn.id = 'resume-save-btn';
+      saveBtn.textContent = '📝 파일에 저장';
+      saveBtn.style.cssText = `
+        margin-left: 1rem;
+        padding: 0.5rem 1rem;
+        background-color: #10b981;
+        color: white;
+        border: none;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.875rem;
+        transition: background-color 0.2s;
+      `;
+
+      saveBtn.addEventListener('mouseover', () => {
+        saveBtn.style.backgroundColor = '#059669';
+      });
+      saveBtn.addEventListener('mouseout', () => {
+        saveBtn.style.backgroundColor = '#10b981';
+      });
+
+      saveBtn.addEventListener('click', async () => {
+        const edits = loadEdits();
+        if (Object.keys(edits).length === 0) {
+          alert('저장할 수정사항이 없습니다.');
+          return;
+        }
+
+        saveBtn.disabled = true;
+        saveBtn.textContent = '저장 중...';
+
+        try {
+          const response = await fetch('/api/save-resume', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ edits }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            alert(`✅ ${result.edits}개 항목이 resume.ts에 저장되었습니다!\n페이지가 새로고침됩니다.`);
+            // localStorage 초기화
+            localStorage.removeItem(STORAGE_KEY);
+            // 페이지 새로고침
+            window.location.reload();
+          } else {
+            alert(`❌ 저장 실패: ${result.error}\n\n${result.details || ''}`);
+          }
+        } catch (error) {
+          alert(`❌ 저장 실패:\n${error instanceof Error ? error.message : String(error)}`);
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.textContent = '📝 파일에 저장';
+        }
+      });
+
+      // 네비게이션 끝에 버튼 추가
+      const nav = header.querySelector('nav');
+      if (nav) {
+        nav.parentNode?.insertBefore(saveBtn, nav.nextSibling);
+      } else {
+        header.appendChild(saveBtn);
+      }
+    }
+
+    // DOM 로드 후 버튼 추가
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', addSaveButton);
+    } else {
+      addSaveButton();
+    }
+
     console.log('Resume double-click editor initialized (dev mode only)');
   }
 </script>
