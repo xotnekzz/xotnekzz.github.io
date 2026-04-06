@@ -13,6 +13,41 @@
 
     let currentEditing: EditableElement | null = null;
 
+    // localStorage 관리
+    const STORAGE_KEY = 'resume-edits';
+
+    function loadEdits() {
+      try {
+        const data = localStorage.getItem(STORAGE_KEY);
+        return data ? JSON.parse(data) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveEditToStorage(selector: string, value: string) {
+      const edits = loadEdits();
+      edits[selector] = value;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(edits));
+    }
+
+    // 페이지 로드 시 저장된 편집사항 복원
+    function restoreSavedEdits() {
+      const edits = loadEdits();
+      Object.entries(edits).forEach(([selector, value]) => {
+        try {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach((el) => {
+            if (el.textContent !== value) {
+              el.textContent = value as string;
+            }
+          });
+        } catch (e) {
+          // selector가 유효하지 않으면 무시
+        }
+      });
+    }
+
     // 편집 가능한 모든 텍스트 요소에 더블클릭 이벤트 추가
     document.addEventListener('dblclick', (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -39,6 +74,22 @@
     function startEditing(element: Element) {
       const originalText = element.textContent || '';
       currentEditing = { element, originalText };
+
+      // 요소의 고유 selector 생성 (저장용)
+      let selector = '';
+      if (element.id) {
+        selector = `#${element.id}`;
+      } else {
+        const parent = element.parentElement;
+        const index = Array.from(parent?.children || []).indexOf(element as Element);
+        const className = (element as HTMLElement).className;
+        const tag = element.tagName.toLowerCase();
+        if (className) {
+          selector = `${tag}.${className.split(' ')[0]}`;
+        } else {
+          selector = `${tag}:nth-child(${index + 1})`;
+        }
+      }
 
       // 텍스트 길이에 따라 input 또는 textarea 사용
       const isLongText = originalText.length > 100 || originalText.includes('\n');
@@ -83,8 +134,12 @@
       // 저장 핸들러
       function save() {
         const newText = input.value.trim();
-        if (newText) {
+        if (newText && newText !== originalText) {
           element.textContent = newText;
+          // localStorage에 저장
+          if (selector) {
+            saveEditToStorage(selector, newText);
+          }
         }
         cleanup();
       }
@@ -109,6 +164,13 @@
 
       input.addEventListener('blur', save);
       input.addEventListener('keydown', handleKeydown);
+    }
+
+    // 페이지 로드 후 저장된 편집사항 복원
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', restoreSavedEdits);
+    } else {
+      restoreSavedEdits();
     }
 
     console.log('Resume double-click editor initialized (dev mode only)');
