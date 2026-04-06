@@ -1,445 +1,126 @@
 ---
-// 개발 모드 전용: 이력서 인라인 에디터 컴포넌트
+// 개발 모드 전용: 이력서 더블클릭 에디터 컴포넌트
 // 이 컴포넌트는 isDev === false일 때 빌드에 포함되지 않음 (tree-shaking)
 ---
 
 <script>
-  // 개발 모드 전용: 클라이언트 사이드 인라인 에디터 로직
+  // 개발 모드 전용: 더블클릭해서 inline edit
   if (import.meta.env.DEV) {
-    // 전역 상태 관리
-    interface EditorState {
-      [key: string]: Record<string, string>;
-    }
-    const state: EditorState = {};
-    let currentEditingSection: string | null = null;
-
-    // 초기 상태 로드
-    function initializeState() {
-      // Hero section
-      const heroSection = document.querySelector('[data-editable="hero"]');
-      if (heroSection) {
-        const name = heroSection.querySelector('h1')?.textContent || '';
-        const title = heroSection.querySelector('p[style*="color-accent"]')?.textContent || '';
-        const email = heroSection.querySelector('a[href^="mailto:"]')?.textContent || '';
-        const github = heroSection.querySelector('a[href*="github"]')?.textContent || '';
-        state['hero'] = { name, title, email, github };
-      }
-
-      // Professional Summary
-      const summarySection = document.querySelector('[data-editable="professional-summary"]');
-      if (summarySection) {
-        const summary = summarySection.querySelector('p')?.textContent || '';
-        state['professional-summary'] = { summary };
-      }
-
-      // Professional Experience - 각 회사별 첫 번째 프로젝트만 편집 가능하게 (간단하게)
-      const expSection = document.querySelector('[data-editable="professional-experience"]');
-      if (expSection) {
-        const companies = expSection.querySelectorAll('h3');
-        const experiences: Record<string, string> = {};
-        companies.forEach((company, idx) => {
-          experiences[`company_${idx}`] = company.textContent?.split('(')[0].trim() || '';
-        });
-        state['professional-experience'] = experiences;
-      }
-
-      // Core Technical Stack
-      const techSection = document.querySelector('[data-editable="core-technical-stack"]');
-      if (techSection) {
-        const categories = techSection.querySelectorAll('.flex.flex-col');
-        const techData: Record<string, string> = {};
-        categories.forEach((cat, idx) => {
-          const categoryName = cat.querySelector('span')?.textContent || '';
-          const skills = Array.from(cat.querySelectorAll('[style*="color-tag"]'))
-            .map((s) => s.textContent)
-            .join(', ');
-          techData[`category_${idx}`] = categoryName;
-          techData[`skills_${idx}`] = skills;
-        });
-        state['core-technical-stack'] = techData;
-      }
-
-      // Education
-      const eduSection = document.querySelector('[data-editable="education"]');
-      if (eduSection) {
-        const eduItems = eduSection.querySelectorAll('.relative');
-        const eduData: Record<string, string> = {};
-        eduItems.forEach((item, idx) => {
-          const school = item.querySelector('h3')?.textContent || '';
-          const major = item.querySelector('p')?.textContent || '';
-          const period = item.querySelectorAll('span')[1]?.textContent || '';
-          eduData[`school_${idx}`] = school;
-          eduData[`major_${idx}`] = major;
-          eduData[`period_${idx}`] = period;
-        });
-        state['education'] = eduData;
-      }
+    interface EditableElement {
+      element: Element;
+      originalText: string;
     }
 
-    // 에디터 아이콘 클릭 핸들러
-    document.addEventListener('click', (e: MouseEvent) => {
-      const btn = e.target as HTMLButtonElement;
-      const sectionId = btn.dataset.editorIcon;
+    let currentEditing: EditableElement | null = null;
 
-      if (sectionId && !currentEditingSection) {
-        enterEditMode(sectionId);
-      }
+    // 편집 가능한 모든 텍스트 요소에 더블클릭 이벤트 추가
+    document.addEventListener('dblclick', (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+
+      // 이미 입력 중이면 무시
+      if (currentEditing) return;
+
+      // 편집 가능한 요소 찾기 (h1, h2, h3, p, span)
+      if (!['H1', 'H2', 'H3', 'P', 'SPAN'].includes(target.tagName)) return;
+
+      // 편집 불가능한 부분 제외
+      if (target.closest('a') || target.closest('button')) return;
+
+      // 부모 섹션이 editable-section인지 확인
+      const editableSection = target.closest('.editable-section');
+      if (!editableSection) return;
+
+      startEditing(target);
     });
 
-    // 인라인 편집 모드 진입
-    function enterEditMode(sectionId: string) {
-      if (currentEditingSection) return;
+    function startEditing(element: Element) {
+      const originalText = element.textContent || '';
+      currentEditing = { element, originalText };
 
-      currentEditingSection = sectionId;
-      const section = document.querySelector(`[data-editable="${sectionId}"]`);
-      if (!section) return;
+      // 입력 필드 생성
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = originalText;
+      input.className = 'resume-editor-inline-input';
+      input.style.cssText = `
+        width: 100%;
+        padding: 0.5rem;
+        border: 2px solid #2563eb;
+        border-radius: 0.375rem;
+        font-size: 1rem;
+        font-family: inherit;
+      `;
 
-      section.setAttribute('data-edit-mode', 'true');
+      // 원본 요소 숨기고 입력 필드 삽입
+      element.style.display = 'none';
+      element.parentNode?.insertBefore(input, element);
 
-      // 기존 콘텐츠 저장
-      const originalContent = section.innerHTML;
+      // 포커스 및 선택
+      input.focus();
+      input.select();
 
-      // 편집 필드 생성
-      const editContainer = document.createElement('div');
-      editContainer.className = 'resume-editor-inline-container';
-      editContainer.setAttribute('data-edit-mode-container', sectionId);
-
-      const data = state[sectionId] || {};
-
-      if (sectionId === 'hero') {
-        editContainer.appendChild(createInputField('name', 'Name', data['name'] || ''));
-        editContainer.appendChild(createInputField('title', 'Title', data['title'] || ''));
-        editContainer.appendChild(createInputField('email', 'Email', data['email'] || ''));
-        editContainer.appendChild(createInputField('github', 'GitHub', data['github'] || ''));
-      } else if (sectionId === 'professional-summary') {
-        editContainer.appendChild(createTextareaField('summary', data['summary'] || ''));
-      } else if (sectionId === 'professional-experience') {
-        Object.entries(data).forEach(([key, value]) => {
-          if (key.startsWith('company_')) {
-            editContainer.appendChild(createInputField(key, `Company ${key.split('_')[1]}`, value));
-          }
-        });
-      } else if (sectionId === 'core-technical-stack') {
-        let idx = 0;
-        while (data[`category_${idx}`] !== undefined) {
-          editContainer.appendChild(createInputField(`category_${idx}`, `Category ${idx}`, data[`category_${idx}`]));
-          editContainer.appendChild(createTextareaField(`skills_${idx}`, data[`skills_${idx}`]));
-          idx++;
+      // 저장 핸들러
+      function save() {
+        const newText = input.value.trim();
+        if (newText) {
+          element.textContent = newText;
         }
-      } else if (sectionId === 'education') {
-        let idx = 0;
-        while (data[`school_${idx}`] !== undefined) {
-          editContainer.appendChild(createInputField(`school_${idx}`, `School ${idx}`, data[`school_${idx}`]));
-          editContainer.appendChild(createInputField(`major_${idx}`, `Major ${idx}`, data[`major_${idx}`]));
-          editContainer.appendChild(createInputField(`period_${idx}`, `Period ${idx}`, data[`period_${idx}`]));
-          idx++;
+        cleanup();
+      }
+
+      // 정리 핸들러
+      function cleanup() {
+        element.style.display = '';
+        input.remove();
+        currentEditing = null;
+        input.removeEventListener('blur', save);
+        input.removeEventListener('keydown', handleKeydown);
+      }
+
+      // 키 이벤트
+      function handleKeydown(e: KeyboardEvent) {
+        if (e.key === 'Enter') {
+          save();
+        } else if (e.key === 'Escape') {
+          cleanup();
         }
       }
 
-      // 저장/취소 버튼
-      const actionsDiv = document.createElement('div');
-      actionsDiv.className = 'resume-editor-inline-actions';
-
-      const saveBtn = document.createElement('button');
-      saveBtn.type = 'button';
-      saveBtn.className = 'resume-editor-inline-btn resume-editor-inline-btn-save';
-      saveBtn.innerHTML = '✓';
-      saveBtn.title = 'Save';
-      saveBtn.addEventListener('click', () => saveEdit(sectionId, originalContent));
-
-      const cancelBtn = document.createElement('button');
-      cancelBtn.type = 'button';
-      cancelBtn.className = 'resume-editor-inline-btn resume-editor-inline-btn-cancel';
-      cancelBtn.innerHTML = '✕';
-      cancelBtn.title = 'Cancel';
-      cancelBtn.addEventListener('click', () => cancelEdit(sectionId, originalContent));
-
-      actionsDiv.appendChild(saveBtn);
-      actionsDiv.appendChild(cancelBtn);
-
-      editContainer.appendChild(actionsDiv);
-
-      // 섹션의 콘텐츠 전부 교체
-      section.innerHTML = '';
-      section.appendChild(editContainer);
-
-      // ESC 키 핸들러
-      const handleEsc = (e: KeyboardEvent) => {
-        if (e.key === 'Escape' && currentEditingSection === sectionId) {
-          cancelEdit(sectionId, originalContent);
-          document.removeEventListener('keydown', handleEsc);
-        }
-      };
-      document.addEventListener('keydown', handleEsc);
+      input.addEventListener('blur', save);
+      input.addEventListener('keydown', handleKeydown);
     }
 
-    // 입력 필드 생성
-    function createInputField(name: string, label: string, value: string): HTMLDivElement {
-      const div = document.createElement('div');
-      div.className = 'resume-editor-inline-field-group';
-
-      const labelEl = document.createElement('label');
-      labelEl.className = 'resume-editor-inline-label';
-      labelEl.htmlFor = name;
-      labelEl.textContent = label;
-
-      const inputEl = document.createElement('input');
-      inputEl.type = 'text';
-      inputEl.id = name;
-      inputEl.name = name;
-      inputEl.value = value;
-      inputEl.className = 'resume-editor-inline-input';
-
-      div.appendChild(labelEl);
-      div.appendChild(inputEl);
-      return div;
-    }
-
-    // 텍스트 영역 필드 생성
-    function createTextareaField(name: string, value: string): HTMLDivElement {
-      const div = document.createElement('div');
-      div.className = 'resume-editor-inline-field-group';
-
-      const labelEl = document.createElement('label');
-      labelEl.className = 'resume-editor-inline-label';
-      labelEl.htmlFor = name;
-      labelEl.textContent = name === 'summary' ? 'Summary' : name;
-
-      const textareaEl = document.createElement('textarea');
-      textareaEl.id = name;
-      textareaEl.name = name;
-      textareaEl.value = value;
-      textareaEl.className = 'resume-editor-inline-textarea';
-      textareaEl.rows = 4;
-
-      div.appendChild(labelEl);
-      div.appendChild(textareaEl);
-      return div;
-    }
-
-    // 편집 저장
-    function saveEdit(sectionId: string, _originalContent: string) {
-      const section = document.querySelector(`[data-editable="${sectionId}"]`) as HTMLElement;
-      if (!section) return;
-
-      const editContainer = section.querySelector(
-        `[data-edit-mode-container="${sectionId}"]`,
-      ) as HTMLElement;
-      if (!editContainer) return;
-
-      // 입력값 수집
-      const formData: Record<string, string> = {};
-      const inputs = editContainer.querySelectorAll('input, textarea');
-      inputs.forEach((input: Element) => {
-        const field = input as HTMLInputElement | HTMLTextAreaElement;
-        if (field.name) {
-          formData[field.name] = field.value;
-        }
-      });
-
-      // 상태 업데이트
-      state[sectionId] = formData;
-
-      // DOM 업데이트
-      updateDOM(sectionId, formData);
-
-      // 편집 모드 해제
-      exitEditMode(sectionId);
-    }
-
-    // 편집 취소
-    function cancelEdit(sectionId: string, originalContent: string) {
-      const section = document.querySelector(`[data-editable="${sectionId}"]`) as HTMLElement;
-      if (!section) return;
-
-      // 원본 내용 복구
-      section.innerHTML = originalContent;
-
-      // 편집 모드 해제
-      exitEditMode(sectionId);
-    }
-
-    // 편집 모드 해제
-    function exitEditMode(sectionId: string) {
-      const section = document.querySelector(`[data-editable="${sectionId}"]`);
-      if (section) {
-        section.setAttribute('data-edit-mode', 'false');
-      }
-      currentEditingSection = null;
-    }
-
-    // DOM 업데이트
-    function updateDOM(sectionId: string, data: Record<string, string>) {
-      const section = document.querySelector(`[data-editable="${sectionId}"]`);
-      if (!section) return;
-
-      if (sectionId === 'hero') {
-        const nameEl = section.querySelector('h1');
-        const titleEl = section.querySelector('p[style*="color-accent"]');
-        const emailEl = section.querySelector('a[href^="mailto:"]');
-        const githubEl = section.querySelector('a[href*="github"]');
-
-        if (nameEl) nameEl.textContent = data['name'];
-        if (titleEl) titleEl.textContent = data['title'];
-        if (emailEl) emailEl.textContent = data['email'];
-        if (githubEl) githubEl.textContent = data['github'];
-      } else if (sectionId === 'professional-summary') {
-        const p = section.querySelector('p');
-        if (p) p.textContent = data['summary'];
-      } else if (sectionId === 'professional-experience') {
-        const companies = section.querySelectorAll('h3');
-        companies.forEach((company, idx) => {
-          const newCompanyName = data[`company_${idx}`];
-          if (newCompanyName) {
-            const parts = company.textContent?.split('(');
-            if (parts && parts[1]) {
-              company.textContent = newCompanyName + ' (' + parts[1];
-            }
-          }
-        });
-      } else if (sectionId === 'core-technical-stack') {
-        const categories = section.querySelectorAll('.flex.flex-col');
-        categories.forEach((cat, idx) => {
-          const categoryEl = cat.querySelector('span');
-          const skillEls = cat.querySelectorAll('[style*="color-tag"]');
-
-          if (categoryEl) categoryEl.textContent = data[`category_${idx}`];
-
-          const skillsList = data[`skills_${idx}`]?.split(',').map((s: string) => s.trim()) || [];
-          skillEls.forEach((skill, skillIdx) => {
-            if (skillIdx < skillsList.length) {
-              skill.textContent = skillsList[skillIdx];
-            }
-          });
-        });
-      } else if (sectionId === 'education') {
-        const eduItems = section.querySelectorAll('.relative');
-        eduItems.forEach((item, idx) => {
-          const schoolEl = item.querySelector('h3');
-          const majorEl = item.querySelector('p');
-          const periodEl = item.querySelectorAll('span')[1];
-
-          if (schoolEl) schoolEl.textContent = data[`school_${idx}`];
-          if (majorEl) majorEl.textContent = data[`major_${idx}`];
-          if (periodEl) periodEl.textContent = data[`period_${idx}`];
-        });
-      }
-    }
-
-    // 초기화
-    initializeState();
-
-    console.log('Resume editor initialized (dev mode only)');
+    console.log('Resume double-click editor initialized (dev mode only)');
   }
 </script>
 
 <style>
-  /* Inline editor styles */
-  .resume-editor-inline-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem 2rem;
-    padding: 1.5rem;
-    background-color: var(--color-bg-secondary);
-    border: 2px solid var(--color-accent);
-    border-radius: 0.5rem;
-    max-width: 100%;
+  /* Double-click edit inline input styles */
+  .resume-editor-inline-input {
+    border: 2px solid var(--color-accent) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+    font-size: 1rem !important;
   }
 
-  .resume-editor-inline-field-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    min-width: 0;
+  .editable-section {
+    cursor: default;
   }
 
-  .resume-editor-inline-label {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    display: block;
-    text-transform: uppercase;
-    letter-spacing: 0.75px;
+  .editable-section h1,
+  .editable-section h2,
+  .editable-section h3,
+  .editable-section p,
+  .editable-section span {
+    cursor: text;
+    user-select: none;
+    transition: background-color 0.2s;
   }
 
-  .resume-editor-inline-input,
-  .resume-editor-inline-textarea {
-    padding: 0.75rem;
-    border: 2px solid var(--color-border);
-    border-radius: 0.375rem;
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    font-family: inherit;
-    font-size: 1rem;
-    line-height: 1.6;
-    transition: all 0.2s;
-    width: 100%;
-    box-sizing: border-box;
-    min-height: 44px;
-  }
-
-  .resume-editor-inline-input:focus,
-  .resume-editor-inline-textarea:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-    background-color: var(--color-bg);
-  }
-
-  .resume-editor-inline-textarea {
-    resize: vertical;
-    min-height: 120px;
-    grid-column: 1 / -1;
-  }
-
-  .resume-editor-inline-actions {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 1rem;
-    justify-content: flex-end;
-    grid-column: 1 / -1;
-  }
-
-  .resume-editor-inline-btn {
-    min-width: 44px;
-    height: 44px;
-    padding: 0.5rem 1rem;
-    border: 2px solid currentColor;
-    border-radius: 0.375rem;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  .resume-editor-inline-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .resume-editor-inline-btn-save {
-    background-color: #10b981;
-    color: #ffffff;
-    border-color: #10b981;
-  }
-
-  .resume-editor-inline-btn-save:hover {
-    background-color: #059669;
-    border-color: #059669;
-  }
-
-  .resume-editor-inline-btn-cancel {
-    background-color: #ef4444;
-    color: #ffffff;
-    border-color: #ef4444;
-  }
-
-  .resume-editor-inline-btn-cancel:hover {
-    background-color: #dc2626;
-    border-color: #dc2626;
+  .editable-section h1:hover,
+  .editable-section h2:hover,
+  .editable-section h3:hover,
+  .editable-section p:hover,
+  .editable-section span:hover {
+    background-color: rgba(37, 99, 235, 0.1);
   }
 </style>

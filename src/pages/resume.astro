@@ -14,20 +14,9 @@ const isDev = import.meta.env.DEV;
 
   <!-- Hero -->
   <section
-    class={isDev ? 'mb-12 pb-8 border-b editable-section group relative' : 'mb-12 pb-8 border-b'}
+    class={isDev ? 'mb-12 pb-8 border-b editable-section' : 'mb-12 pb-8 border-b'}
     style="border-color: var(--color-border);"
-    data-editable={isDev ? 'hero' : undefined}
   >
-    {isDev && (
-      <button
-        class="absolute top-0 right-0 p-2 text-2xl cursor-pointer hover:scale-120 transition-transform bg-yellow-100 rounded-lg"
-        style="color: #f59e0b; border: 2px solid #f59e0b;"
-        data-editor-icon="hero"
-        title="Edit Hero Section"
-      >
-        ✏️
-      </button>
-    )}
     <h1 class="text-4xl font-bold mb-2" style="color: var(--color-text);">{personal.name}</h1>
     <p class="text-xl font-medium mb-4" style="color: var(--color-accent);">{personal.title}</p>
     <div class="flex flex-wrap gap-4 text-sm" style="color: var(--color-text-muted);">
@@ -52,20 +41,8 @@ const isDev = import.meta.env.DEV;
 
   <!-- Professional Summary -->
   <section
-    class={isDev ? 'mb-12 editable-section group relative' : 'mb-12'}
-    data-editable={isDev ? 'professional-summary' : undefined}
+    class={isDev ? 'mb-12 editable-section' : 'mb-12'}
   >
-    {isDev && (
-      <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <button
-          class="text-lg cursor-pointer hover:scale-110 transition-transform"
-          data-editor-icon="professional-summary"
-          title="Edit Professional Summary"
-        >
-          ✏️
-        </button>
-      </div>
-    )}
     <h2 class="text-2xl font-bold mb-6" style="color: var(--color-text);">Professional Summary</h2>
     <p class="leading-relaxed" style="color: var(--color-text-muted);">
       {summary}
@@ -74,20 +51,8 @@ const isDev = import.meta.env.DEV;
 
   <!-- Professional Experience -->
   <section
-    class={isDev ? 'mb-12 editable-section group relative' : 'mb-12'}
-    data-editable={isDev ? 'professional-experience' : undefined}
+    class={isDev ? 'mb-12 editable-section' : 'mb-12'}
   >
-    {isDev && (
-      <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <button
-          class="text-lg cursor-pointer hover:scale-110 transition-transform"
-          data-editor-icon="professional-experience"
-          title="Edit Professional Experience"
-        >
-          ✏️
-        </button>
-      </div>
-    )}
     <h2 class="text-2xl font-bold mb-6" style="color: var(--color-text);">Professional Experience</h2>
 
     {experiences.map((exp, expIdx) => (
@@ -139,20 +104,8 @@ const isDev = import.meta.env.DEV;
 
   <!-- Core Technical Stack -->
   <section
-    class={isDev ? 'mb-12 editable-section group relative' : 'mb-12'}
-    data-editable={isDev ? 'core-technical-stack' : undefined}
+    class={isDev ? 'mb-12 editable-section' : 'mb-12'}
   >
-    {isDev && (
-      <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <button
-          class="text-lg cursor-pointer hover:scale-110 transition-transform"
-          data-editor-icon="core-technical-stack"
-          title="Edit Core Technical Stack"
-        >
-          ✏️
-        </button>
-      </div>
-    )}
     <h2 class="text-2xl font-bold mb-6" style="color: var(--color-text);">Core Technical Stack</h2>
     <div class="space-y-4">
       {techStack.map(({ category, skills }) => (
@@ -180,20 +133,8 @@ const isDev = import.meta.env.DEV;
 
   <!-- Education -->
   <section
-    class={isDev ? 'mb-4 editable-section group relative' : 'mb-4'}
-    data-editable={isDev ? 'education' : undefined}
+    class={isDev ? 'mb-4 editable-section' : 'mb-4'}
   >
-    {isDev && (
-      <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <button
-          class="text-lg cursor-pointer hover:scale-110 transition-transform"
-          data-editor-icon="education"
-          title="Edit Education"
-        >
-          ✏️
-        </button>
-      </div>
-    )}
     <h2 class="text-2xl font-bold mb-6" style="color: var(--color-text);">Education</h2>
     <div class="relative border-l-2 pl-6" style="border-color: var(--color-border);">
       {education.map((edu) => (
