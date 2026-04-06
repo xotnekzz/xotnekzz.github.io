@@ -1,5 +1,5 @@
 ---
-title: 전사 게임 로그 데이터 플랫폼 현대화 (Data Infra Modernization)
+title: HDFS/Impala
 description: (프로젝트 리드 및 아키텍처 설계/구축)
 date: 2026-03-28
 tags:

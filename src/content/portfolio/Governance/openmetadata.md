@@ -1,5 +1,5 @@
 ---
-title: 데이터 거버넌스 프로젝트
+title: OpenMetadata 사내 도입
 description: OpenMetadata 도입을 통한 전사 데이터 디스커버리 및 거버넌스 인프라 구축 — Airflow Lineage 커스텀 플러그인 개발
 date: 2026-02-01
 tags:

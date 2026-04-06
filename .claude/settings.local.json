@@ -41,7 +41,8 @@
       "Bash(python3 -c \"import sys; content=sys.stdin.read\\(\\); start=content.find\\('<script'\\); end=content.rfind\\('</script>'\\); print\\(content[start:end+9]\\)\")",
       "Bash(git restore:*)",
       "Bash(git stash:*)",
-      "Bash(kill 36304)"
+      "Bash(kill 36304)",
+      "Bash(ls -t docs/qa/*.md)"
     ]
   }
 }

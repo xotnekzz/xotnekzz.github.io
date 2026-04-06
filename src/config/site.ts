@@ -10,7 +10,7 @@ export const SITE = {
   },
   nav: [
     { href: '/blog/', label: 'Posts' },
-    { href: '/resume/', label: '이력서' },
+    { href: '/resume/', label: 'Resume' },
     { href: 'https://www.linkedin.com/in/%ED%83%9C%EC%88%98-%EA%B9%80-9734b3213/', label: 'LinkedIn' },
     { href: 'https://github.com/xotnekzz', label: 'GitHub' },
   ],
