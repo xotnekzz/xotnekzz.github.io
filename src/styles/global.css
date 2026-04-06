@@ -93,3 +93,10 @@ body {
 .editable-section:hover {
   background-color: var(--color-bg-secondary);
 }
+
+.editable-section[data-edit-mode="true"] {
+  padding: 0.75rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 0.375rem;
+  background-color: var(--color-bg);
+}
