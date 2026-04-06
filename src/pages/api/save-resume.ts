@@ -24,26 +24,41 @@ export const POST: APIRoute = async ({ request }) => {
     let resumeContent = readFileSync(RESUME_FILE, 'utf-8');
 
     // 각 수정사항을 파일에 반영
-    Object.entries(edits).forEach(([selector, newValue]) => {
-      const value = newValue as string;
+    Object.entries(edits).forEach(([fieldPath, newValue]) => {
+      const value = (newValue as string).replace(/'/g, "\\'");
 
-      // selector를 기반으로 정규식으로 값 찾기
-      if (selector.includes('personal')) {
-        // personal.name, personal.title 등
-        const field = selector.split('.')[1] || selector.split("'")[1];
-        const pattern = new RegExp(`(${field}\\s*:\\s*['\"])[^'"]*(['"])`, 'g');
-        resumeContent = resumeContent.replace(pattern, `$1${value.replace(/"/g, '\\"')}$2`);
-      } else if (selector.includes('summary') || selector.includes('Professional Summary')) {
-        // summary 필드
-        const pattern = /export const summary\s*=\s*(['"])[\s\S]*?\1(?=\s*;)/;
+      // fieldPath 형식: "personal.name", "personal.email", "summary", 등
+      if (fieldPath === 'personal.name') {
         resumeContent = resumeContent.replace(
-          pattern,
-          `export const summary =
-  '${value.replace(/'/g, "\\'")}'`,
+          /(\s*name:\s*')[^']*'/,
+          `$1${value}'`,
         );
-      } else if (selector.includes('h1') || selector.includes('h2') || selector.includes('h3')) {
-        // 다른 텍스트들은 정확한 매핑이 어려우므로 user에게 알림
-        console.log(`Modified: ${selector} = "${value}"`);
+      } else if (fieldPath === 'personal.title') {
+        resumeContent = resumeContent.replace(
+          /(\s*title:\s*')[^']*'/,
+          `$1${value}'`,
+        );
+      } else if (fieldPath === 'personal.email') {
+        resumeContent = resumeContent.replace(
+          /(\s*email:\s*')[^']*'/,
+          `$1${value}'`,
+        );
+      } else if (fieldPath === 'personal.github') {
+        resumeContent = resumeContent.replace(
+          /(\s*github:\s*')[^']*'/,
+          `$1${value}'`,
+        );
+      } else if (fieldPath === 'summary') {
+        // summary 필드: 여러 줄 문자열을 한 줄로 통합
+        const escapedValue = value.replace(/\n/g, ' ').replace(/'/g, "\\'");
+        // summary = '...' + '...' + '...' 패턴을 찾아서 한 줄로 변경
+        resumeContent = resumeContent.replace(
+          /export const summary\s*=[\s\S]*?;/,
+          `export const summary =\n  '${escapedValue}';`,
+        );
+      } else {
+        // 다른 필드들은 현재 미지원
+        console.log(`Unsupported field: ${fieldPath}`);
       }
     });
 

@@ -75,21 +75,53 @@
       const originalText = element.textContent || '';
       currentEditing = { element, originalText };
 
-      // 요소의 고유 selector 생성 (저장용)
-      let selector = '';
-      if (element.id) {
-        selector = `#${element.id}`;
-      } else {
-        const parent = element.parentElement;
-        const index = Array.from(parent?.children || []).indexOf(element as Element);
-        const className = (element as HTMLElement).className;
-        const tag = element.tagName.toLowerCase();
-        if (className) {
-          selector = `${tag}.${className.split(' ')[0]}`;
-        } else {
-          selector = `${tag}:nth-child(${index + 1})`;
+      // 요소의 필드 경로 생성 (resume.ts의 필드명을 정확히 파악)
+      const editableSection = element.closest('.editable-section');
+      let fieldPath = '';
+
+      if (editableSection?.classList.contains('editable-section')) {
+        const elementText = (element.textContent || '').trim();
+
+        // Hero 섹션 필드 식별
+        if (element.tagName === 'H1') {
+          fieldPath = 'personal.name';
+        } else if (element.tagName === 'P' && element.style.color?.includes('color-accent')) {
+          fieldPath = 'personal.title';
+        } else if (element.tagName === 'A' && element.getAttribute('href')?.startsWith('mailto:')) {
+          fieldPath = 'personal.email';
+        } else if (element.tagName === 'A' && element.getAttribute('href')?.includes('github')) {
+          fieldPath = 'personal.github';
+        }
+        // Summary 섹션 필드 식별
+        else if (editableSection.querySelector('h2')?.textContent?.includes('Professional Summary')) {
+          fieldPath = 'summary';
+        }
+        // Experience 섹션 필드 식별
+        else if (editableSection.querySelector('h2')?.textContent?.includes('Professional Experience')) {
+          if (element.tagName === 'H3') {
+            const companyText = element.textContent || '';
+            fieldPath = `experience.company|${companyText}`;
+          }
+        }
+        // Tech Stack 섹션 필드 식별
+        else if (editableSection.querySelector('h2')?.textContent?.includes('Core Technical Stack')) {
+          if (element.tagName === 'SPAN' && element.parentElement?.classList.contains('flex')) {
+            // category name
+            fieldPath = `techstack.category|${elementText}`;
+          }
+        }
+        // Education 섹션 필드 식별
+        else if (editableSection.querySelector('h2')?.textContent?.includes('Education')) {
+          if (element.tagName === 'H3') {
+            fieldPath = `education.school|${elementText}`;
+          } else if (element.tagName === 'P') {
+            fieldPath = `education.major|${elementText}`;
+          }
         }
       }
+
+      // fallback: 정확한 필드를 찾지 못한 경우
+      const fieldIdentifier = fieldPath || `${element.tagName.toLowerCase()}|${originalText.substring(0, 30)}`;
 
       // 텍스트 길이에 따라 input 또는 textarea 사용
       const isLongText = originalText.length > 100 || originalText.includes('\n');
@@ -137,8 +169,8 @@
         if (newText && newText !== originalText) {
           element.textContent = newText;
           // localStorage에 저장
-          if (selector) {
-            saveEditToStorage(selector, newText);
+          if (fieldIdentifier) {
+            saveEditToStorage(fieldIdentifier, newText);
           }
         }
         cleanup();
