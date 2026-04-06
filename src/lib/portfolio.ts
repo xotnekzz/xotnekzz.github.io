@@ -10,15 +10,22 @@ export function extractCategory(filePath: string): string {
 }
 
 /**
- * 포트폴리오 파일 ID를 기반으로 URL-safe한 슬러그 생성
+ * 포트폴리오 파일 경로를 기반으로 URL-safe한 슬러그 생성
  * 카테고리명 + 영문/숫자 부분 사용
  *
- * 예: "AIEnginerring/사내 통합 AI 에이전트 플랫폼 구축.md" -> "aienginerring-ai-platform"
- * 예: "DataEngineering/Columstore To StarRocks 전환.md" -> "dataengineering-columstore-starrocks"
- * 예: "AIEnginerring/AdTech AI Agent (Gemini CLI).md" -> "aienginerring-adtech-ai-agent"
+ * 예: "../content/portfolio/AIEnginerring/사내 통합 AI 에이전트 플랫폼 구축.md" -> "aienginerring-ai"
+ * 예: "../content/portfolio/DataEngineering/Columstore To StarRocks 전환.md" -> "dataengineering-columstore-starrocks"
+ * 예: "../content/portfolio/AIEnginerring/AdTech AI Agent (Gemini CLI).md" -> "aienginerring-adtech-ai-agent"
  */
-export function generateSlug(id: string): string {
-  const parts = id.split('/');
+export function generateSlug(filePath: string): string {
+  // portfolio 폴더 이후의 부분만 추출
+  // 예: "../content/portfolio/AIEnginerring/파일명.md" -> "AIEnginerring/파일명.md"
+  const portfolioMatch = filePath.match(/portfolio\/(.+)$/);
+  if (!portfolioMatch) return 'untitled';
+
+  const restPath = portfolioMatch[1]; // "AIEnginerring/파일명.md"
+  const parts = restPath.split('/');
+
   if (parts.length < 2) return 'untitled';
 
   const category = parts[0].toLowerCase();

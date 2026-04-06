@@ -52,7 +52,10 @@
       "Bash(grep -v \"^/Users/tskim/Project/blog/dist/portfolio$\")",
       "Bash(find /Users/tskim/Project/blog/dist/portfolio -name \"index.html\" -exec dirname {} \\\\;)",
       "Bash(git log:*)",
-      "Bash(tee /tmp/build.log)"
+      "Bash(tee /tmp/build.log)",
+      "Bash(kill 71796)",
+      "Bash(echo \"RESUME_EDITOR_EXIT:$?\")",
+      "Bash(echo \"RESUME_TS_EXIT:$?\")"
     ]
   }
 }
