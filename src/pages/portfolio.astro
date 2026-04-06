@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PortfolioTabs from '../components/PortfolioTabs.astro';
 import { getCollection } from 'astro:content';
 import type { Portfolio } from '../lib/types';
-import { extractCategory, groupByCategory, sortByDateDesc } from '../lib/portfolio';
+import { groupByCategory, sortByDateDesc } from '../lib/portfolio';
 
 // Astro Content Collection으로 포트폴리오 로드
 const portfolioEntries = await getCollection('portfolio');
@@ -12,17 +12,28 @@ interface PortfolioWithSlug extends Portfolio {
   slug: string;
 }
 
+// 카테고리명 매핑 (소문자로 정규화된 경로를 원본 대소문자로 복원)
+const categoryMap: Record<string, string> = {
+  aienginerring: 'AIEnginerring',
+  analyticsenginering: 'AnalyticsEnginering',
+  dataengineering: 'DataEngineering',
+  governance: 'Governance',
+};
+
 // 메타데이터 추출 및 정렬
 const projects: PortfolioWithSlug[] = portfolioEntries
   .map((entry) => {
     const { data } = entry;
+    const categoryLower = entry.id.split('/')[0];
+    const categoryDisplay = categoryMap[categoryLower] || categoryLower;
+
     return {
       title: data.title || '',
       description: data.description || '',
       date: data.date || '',
       tags: data.tags || [],
       featured: data.featured || false,
-      category: extractCategory(`portfolio/${entry.id}`),
+      category: categoryDisplay, // 원본 대소문자로 복원된 카테고리명
       slug: entry.id.split('/')[1].replace(/\.md$/, ''), // 파일명을 그대로 슬러그로 사용
     } as PortfolioWithSlug;
   })

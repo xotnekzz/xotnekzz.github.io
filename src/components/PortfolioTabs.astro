@@ -46,7 +46,7 @@ const { categories, data } = Astro.props;
           <div class="space-y-8">
             {data[category].map((project) => (
               <a
-                href={`/portfolio/${project.category}/${project.slug}/`}
+                href={`/portfolio/${project.category.toLowerCase()}/${project.slug}/`}
                 class="project-link pb-8 border-b last:border-b-0 block transition-opacity hover:opacity-80"
                 style="border-color: var(--color-border);"
               >

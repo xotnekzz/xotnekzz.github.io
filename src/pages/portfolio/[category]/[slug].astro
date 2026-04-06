@@ -1,18 +1,26 @@
 ---
 import { getCollection, render } from 'astro:content';
 import PortfolioDetailLayout from '../../../layouts/PortfolioDetailLayout.astro';
-import { extractCategory } from '../../../lib/portfolio';
 
 export async function getStaticPaths() {
   const portfolios = await getCollection('portfolio');
 
+  // 카테고리명 매핑 (소문자로 정규화된 경로를 원본 대소문자로 복원)
+  const categoryMap: Record<string, string> = {
+    aienginerring: 'AIEnginerring',
+    analyticsenginering: 'AnalyticsEnginering',
+    dataengineering: 'DataEngineering',
+    governance: 'Governance',
+  };
+
   return portfolios.map((portfolio) => {
-    const [category, filename] = portfolio.id.split('/');
+    const [categoryLower, filename] = portfolio.id.split('/');
+    const categoryDisplay = categoryMap[categoryLower] || categoryLower;
     const slug = filename.replace(/\.md$/, '');
 
     return {
       params: {
-        category: extractCategory(`portfolio/${category}/`),
+        category: categoryDisplay,
         slug: slug,
       },
       props: { portfolio },
