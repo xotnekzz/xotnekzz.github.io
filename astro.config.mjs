@@ -6,7 +6,11 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://xotnekzz.github.io',
   vite: { plugins: [tailwindcss()] },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => page !== 'https://xotnekzz.github.io/portfolio/',
+    }),
+  ],
   markdown: {
     shikiConfig: { theme: 'github-dark' },
   },

@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Portfolio | tskim"
+  description="김태수의 프로젝트 포트폴리오"
+>
+  <section class="mb-12 pb-8 border-b" style="border-color: var(--color-border);">
+    <h1 class="text-4xl font-bold mb-2" style="color: var(--color-text);">Portfolio</h1>
+    <p class="text-lg" style="color: var(--color-text-muted);">주요 프로젝트 및 경험</p>
+  </section>
+
+  <section>
+    <div class="space-y-8">
+      <div class="pb-8 border-b" style="border-color: var(--color-border);">
+        <h2 class="text-2xl font-bold mb-2" style="color: var(--color-text);">이 사이트</h2>
+        <p class="text-sm mb-4" style="color: var(--color-text-muted);">2025년 1월 - 진행 중</p>
+        <p class="mb-4" style="color: var(--color-text-muted);">
+          Notion CMS + Astro로 구축한 기술 블로그. 동적 콘텐츠 관리와 정적 사이트 생성의 장점을 결합.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="inline-block px-2 py-1 text-xs rounded" style="background: var(--color-tag-bg); color: var(--color-tag-text);">Astro</span>
+          <span class="inline-block px-2 py-1 text-xs rounded" style="background: var(--color-tag-bg); color: var(--color-tag-text);">Notion API</span>
+          <span class="inline-block px-2 py-1 text-xs rounded" style="background: var(--color-tag-bg); color: var(--color-tag-text);">TypeScript</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
