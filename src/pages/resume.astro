@@ -19,6 +19,7 @@ const summary = summaryBody.trim();
 >
   <!-- Hero -->
   <section
+    id="hero-section"
     class="mb-12 pb-8 border-b"
     style="border-color: var(--color-border);"
   >
@@ -255,8 +256,79 @@ const summary = summaryBody.trim();
     }
   }
 
-  // 버튼 이벤트 리스너 등록
+  // 우클릭 컨텍스트 메뉴
+  function setupContextMenu() {
+    const heroSection = document.getElementById('hero-section');
+    if (!heroSection) return;
+
+    heroSection.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+
+      // 기존 메뉴 제거
+      const existingMenu = document.getElementById('custom-context-menu');
+      if (existingMenu) {
+        existingMenu.remove();
+      }
+
+      // 커스텀 메뉴 생성
+      const menu = document.createElement('div');
+      menu.id = 'custom-context-menu';
+      menu.style.cssText = `
+        position: fixed;
+        top: ${e.clientY}px;
+        left: ${e.clientX}px;
+        background: var(--color-bg-secondary);
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        padding: 8px 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        z-index: 10000;
+        min-width: 200px;
+      `;
+
+      const menuItem = document.createElement('button');
+      menuItem.textContent = '이력서 PDF 다운로드';
+      menuItem.style.cssText = `
+        display: block;
+        width: 100%;
+        padding: 8px 16px;
+        border: none;
+        background: none;
+        text-align: left;
+        cursor: pointer;
+        color: var(--color-text);
+        font-size: 14px;
+        transition: background-color 0.2s;
+      `;
+
+      menuItem.addEventListener('mouseenter', () => {
+        menuItem.style.backgroundColor = 'var(--color-bg)';
+      });
+
+      menuItem.addEventListener('mouseleave', () => {
+        menuItem.style.backgroundColor = 'transparent';
+      });
+
+      menuItem.addEventListener('click', () => {
+        generatePDF();
+        menu.remove();
+      });
+
+      menu.appendChild(menuItem);
+      document.body.appendChild(menu);
+
+      // 다른 곳 클릭 시 메뉴 제거
+      document.addEventListener('click', () => {
+        menu.remove();
+      }, { once: true });
+    });
+  }
+
+  // 이벤트 리스너 등록
   document.addEventListener('DOMContentLoaded', () => {
+    setupContextMenu();
+
+    // 버튼도 여전히 사용 가능하게 유지 (숨김 상태)
     const btn = document.getElementById('pdf-download-btn');
     if (btn) {
       btn.addEventListener('click', generatePDF);
