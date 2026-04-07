@@ -52,6 +52,14 @@ const summary = summaryBody.trim();
           {personal.portfolio}
         </a>
       )}
+      <button
+        id="pdf-download-btn"
+        class="hover:underline cursor-pointer"
+        style="color: var(--color-accent);"
+        aria-label="이력서를 PDF로 다운로드"
+      >
+        PDF 다운로드
+      </button>
     </div>
   </section>
 
@@ -174,4 +182,76 @@ const summary = summaryBody.trim();
       ))}
     </div>
   </section>
+<script is:inline>
+  // html2pdf 라이브러리 동적 로드 및 PDF 생성 함수
+  function loadHtml2pdf() {
+    return new Promise((resolve) => {
+      if (window.html2pdf) {
+        resolve();
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+      script.onload = resolve;
+      script.onerror = () => {
+        console.error('Failed to load html2pdf library');
+        resolve(); // 실패해도 계속 진행
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  // PDF 생성 함수
+  async function generatePDF() {
+    try {
+      await loadHtml2pdf();
+
+      if (!window.html2pdf) {
+        console.error('html2pdf library not available');
+        return;
+      }
+
+      const element = document.querySelector('main');
+      if (!element) {
+        console.error('main element not found');
+        return;
+      }
+
+      // 현재 CSS 변수값 가져오기
+      const bgColor = getComputedStyle(document.documentElement)
+        .getPropertyValue('--color-bg')
+        .trim();
+
+      const options = {
+        margin: [10, 10, 10, 10],
+        filename: '김태수_이력서.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: bgColor
+        },
+        jsPDF: {
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        }
+      };
+
+      window.html2pdf().set(options).from(element).save();
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  }
+
+  // 버튼 이벤트 리스너 등록
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('pdf-download-btn');
+    if (btn) {
+      btn.addEventListener('click', generatePDF);
+    }
+  });
+</script>
+
 </BaseLayout>
