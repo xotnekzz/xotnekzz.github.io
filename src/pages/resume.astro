@@ -54,7 +54,7 @@ const summary = summaryBody.trim();
       )}
       <button
         id="pdf-download-btn"
-        class="hover:underline cursor-pointer"
+        class="hover:underline cursor-pointer hidden"
         style="color: var(--color-accent);"
         aria-label="이력서를 PDF로 다운로드"
       >
@@ -222,6 +222,12 @@ const summary = summaryBody.trim();
         .getPropertyValue('--color-bg')
         .trim();
 
+      // PDF 생성 전 80% 스케일 적용
+      const originalTransform = element.style.transform;
+      element.style.transform = 'scale(0.8)';
+      element.style.transformOrigin = 'top left';
+      element.style.width = '125%'; // 80% scale이므로 width를 125%로 설정하여 여백 유지
+
       const options = {
         margin: [10, 10, 10, 10],
         filename: '김태수_이력서.pdf',
@@ -240,6 +246,10 @@ const summary = summaryBody.trim();
       };
 
       window.html2pdf().set(options).from(element).save();
+
+      // PDF 생성 후 원래대로 복원
+      element.style.transform = originalTransform;
+      element.style.width = '';
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
