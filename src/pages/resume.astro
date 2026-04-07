@@ -41,6 +41,17 @@ const summary = summaryBody.trim();
       >
         {personal.github}
       </a>
+      {personal.portfolioUrl && (
+        <a
+          href={personal.portfolioUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:underline"
+          style="color: var(--color-accent);"
+        >
+          {personal.portfolio}
+        </a>
+      )}
     </div>
   </section>
 
