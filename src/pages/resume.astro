@@ -49,9 +49,13 @@ const summary = summaryBody.trim();
     class="mb-12"
   >
     <h2 class="text-2xl font-bold mb-6" style="color: var(--color-text);">Professional Summary</h2>
-    <p class="leading-relaxed" style="color: var(--color-text-muted);">
-      {summary}
-    </p>
+    <div class="space-y-4">
+      {summary.split('\n\n').map((paragraph) => (
+        <p class="leading-relaxed" style="color: var(--color-text-muted);">
+          {paragraph}
+        </p>
+      ))}
+    </div>
   </section>
 
   <!-- Professional Experience -->
