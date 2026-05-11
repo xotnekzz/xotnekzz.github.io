@@ -55,7 +55,9 @@
       "Bash(tee /tmp/build.log)",
       "Bash(kill 71796)",
       "Bash(echo \"RESUME_EDITOR_EXIT:$?\")",
-      "Bash(echo \"RESUME_TS_EXIT:$?\")"
+      "Bash(echo \"RESUME_TS_EXIT:$?\")",
+      "Bash(ln -s src/content content)",
+      "Bash(ln -s ../../public/images /Users/tskim/Project/blog/src/content/images)"
     ]
   }
 }

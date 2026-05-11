@@ -9,6 +9,7 @@ tags:
   - ETL
   - Python
 featured: false
+draft: false
 ---
 
 > **기간:** 2024
@@ -33,8 +34,7 @@ featured: false
 
 기존의 비효율적인 레거시 OLAP 환경을 고성능 StarRocks 독립 클러스터로 전면 전환하는 프로젝트를 수행했습니다.
 
-![image](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/3dfdc305-68b0-4dbd-8abc-e7473611582a/StarRocks.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4665KSKGCJD%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153143Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEML%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIGd84QK0mJo8qxIipxi9eXcqWXNGNIVZ7uO4q0ab6M0PAiEApGPMdSqRpoihwrxAMpAGf%2B47Zo9fsj2DK7g7sQuwpoMqiAQIi%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDKMCLCvatwAGLiOHFSrcA7WqCBZoHu89r4mwVLoJMqBwWOHN0HZtMZ7isFx%2F1WJ8rai3jCM5LUbcibJXqrCmnOmATevaD81GFFgF3dK4dL4bHkxYGbCq4TYQ9tRf9kdbVXo0XRuRB3YEGTHDw2PK69jZMHLKT%2FRH%2FlNZ%2BgrFZ8NgpqCS8Z4ty6wCtQsAuigyKo%2F5PQCKeKO3jVEtXAfzY8ndfV%2BKtsLlgSZCccown8DaUqAMja5QVkTDOMQd3fYaujnjSlBZWUFiZ9d9FhcZI5xAhUCpLHr3Vr%2FedkaI5ga8A3aoZzE7gLt776BKSuWPe3Znn0B4H0VZk1Paj0F7sXoQvMCrSLBA%2BRqq0hxaxnepS%2Fg5y6e3FABkd58S%2BXwM0yQXSMwDXtv%2F4PiEJkd1tOnXLFodWZTcpWjF1%2FArx0ql0XiqEq%2F7yYyNRN0Z5r5cELx8Vzt90fYVJHiVW%2BJRW2%2FjYq1dba9gOGFsS03hkJ105S1g5fHFPbeM5r6b2qzecRn9HWmrD9qBucgpu4GdVjR8%2FxSlQ7v5kku4tooNVBzIINoiNVKeripr07EzhYIpAlH%2F3Q1eHIr%2BOJlStOmAe0K0%2Fx1RziF4Ry%2B9sY%2FoaLlafFunTH0U3SyDGoaeHxeNLJNbGHOcbFgspCIWMLq9z80GOqUBItzJYFgG0zU5aZzwDOysSpwtLNL3FAAbMf3wsvUCMs7v23X0PLjaXK5MOYBkNO0GtrWyITM1HIWDK4VLg21g6gIXTGr2HueREpaWMxr4UJcpniBG95cZsEbY%2BKWogOoikuTY8d5nv5rX%2FkoC8GCN2qaoZq5ZNliQnACfjUvkgRVx5KeodHonYpnMicxoCC8qZRmQzKKdg6pOv9xdK5bxHSJaDq9t&X-Amz-Signature=a93845b897dc467c3840f789cd41a79e7e367f699d347c0922e1a1e473154c8a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
-
+![[StarRocks.svg|697]]
 ## 4. Solution & Technical Insights
 
 1. **대규모 독립 StarRocks 클러스터 설계 및 구축**

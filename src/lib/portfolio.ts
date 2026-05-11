@@ -10,6 +10,21 @@ export function extractCategory(filePath: string): string {
 }
 
 /**
+ * 파일명을 Astro URL-safe 슬러그로 정규화
+ * Astro는 route params의 공백을 하이픈으로 변환
+ *
+ * 예: "사내 통합 AI 에이전트 플랫폼 구축" -> "사내-통합-ai-에이전트-플랫폼-구축"
+ * 예: "AdTech AI Agent (Gemini CLI)" -> "adtech-ai-agent-gemini-cli"
+ */
+export function normalizeSlug(filename: string): string {
+  return filename
+    .replace(/\.md$/, '') // .md 확장자 제거
+    .replace(/\s+/g, '-') // 공백을 하이픈으로 변환
+    .replace(/[()]/g, '') // 괄호 제거
+    .toLowerCase(); // 소문자로 변환
+}
+
+/**
  * 포트폴리오 파일 경로를 기반으로 URL-safe한 슬러그 생성
  * 카테고리명 + 영문/숫자 부분 사용
  *

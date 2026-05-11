@@ -223,11 +223,11 @@ const summary = summaryBody.trim();
         .getPropertyValue('--color-bg')
         .trim();
 
-      // PDF 생성 전 80% 스케일 적용
-      const originalTransform = element.style.transform;
-      element.style.transform = 'scale(0.8)';
-      element.style.transformOrigin = 'top left';
-      element.style.width = '125%'; // 80% scale이므로 width를 125%로 설정하여 여백 유지
+      // PDF 생성 전 80% 너비 적용
+      const originalMaxWidth = element.style.maxWidth;
+      const originalMargin = element.style.margin;
+      element.style.maxWidth = '80%';
+      element.style.margin = '0 auto';
 
       const options = {
         margin: [10, 10, 10, 10],
@@ -249,8 +249,8 @@ const summary = summaryBody.trim();
       window.html2pdf().set(options).from(element).save();
 
       // PDF 생성 후 원래대로 복원
-      element.style.transform = originalTransform;
-      element.style.width = '';
+      element.style.maxWidth = originalMaxWidth;
+      element.style.margin = originalMargin;
     } catch (error) {
       console.error('Error generating PDF:', error);
     }

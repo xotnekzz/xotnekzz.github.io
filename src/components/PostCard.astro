@@ -1,6 +1,7 @@
 ---
 import TagBadge from './TagBadge.astro';
 import type { CollectionEntry } from 'astro:content';
+import { isDraft } from '../lib/content-visibility';
 
 interface Props {
   post: CollectionEntry<'posts'>;
@@ -13,6 +14,8 @@ function readingTime(description: string): string {
   const minutes = Math.max(1, Math.round(words / 200));
   return `${minutes}분 읽기`;
 }
+
+const showDraftBadge = import.meta.env.DEV && isDraft(post);
 ---
 <article class="group border rounded-lg overflow-hidden transition-shadow hover:shadow-md" style="border-color: var(--color-border); background-color: var(--color-bg);">
   {post.data.cover && (
@@ -26,7 +29,15 @@ function readingTime(description: string): string {
     </a>
   )}
   <div class="p-5">
-    <div class="flex flex-wrap gap-1.5 mb-3">
+    <div class="flex flex-wrap gap-1.5 mb-3 items-center">
+      {showDraftBadge && (
+        <span
+          class="inline-block px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded"
+          style="background-color: var(--color-accent); color: var(--color-bg);"
+        >
+          DRAFT
+        </span>
+      )}
       {post.data.tags.map((tag) => <TagBadge tag={tag} />)}
     </div>
     <h2 class="text-xl font-bold mb-2 leading-snug">

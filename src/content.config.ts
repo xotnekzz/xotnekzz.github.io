@@ -10,6 +10,7 @@ const posts = defineCollection({
     tags: z.array(z.string()).default([]),
     cover: z.string().optional(),
     featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
   }),
 });
 
@@ -21,6 +22,7 @@ const portfolio = defineCollection({
     date: z.coerce.date(),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
   }),
 });
 

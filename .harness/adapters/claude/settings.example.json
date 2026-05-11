@@ -1,0 +1,9 @@
+{
+  "_comment": "Claude Code 훅 등록 예시. 기존 .claude/settings.json이 있으면 이 내용을 병합하시오.",
+  "hooks": {
+    "pre-tool-use":       [{"command": ".harness/hooks/pre-tool-use/enforce-arch.sh"}],
+    "post-tool-use":      [{"command": ".harness/hooks/post-tool-use/capture-lesson.sh"}],
+    "user-prompt-submit": [{"command": ".harness/hooks/user-prompt-submit/inject-moc.sh"}],
+    "stop":               [{"command": ".harness/hooks/stop/handoff.sh"}]
+  }
+}

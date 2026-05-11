@@ -9,9 +9,10 @@ tags:
   - Python
   - AdTech
 featured: true
+draft: false
 ---
 
-> **기간:** 2025
+ **기간:** 2025
 **역할:** AI Engineer (Gemini CLI 기반 에이전트 설계 및 개발)
 **참여인원: 2명**
 **기술 스택:** Gemini CLI, MCP (Model Context Protocol), MySQL, Python, Natural Language Prompting, Human-in-the-loop (HITL)
@@ -24,10 +25,8 @@ featured: true
 
 에이전트는 Management API를 제공하는 Google Ads, Applsearchads, Meta Ads, Unity Ads, Applovin 총 5개 AdNetwork를 지원합니다.
 
-Gemini CLI와 MCP 기술을 접목하여 마케터가 자연어로 제어하고, 실행 전 인간의 검증을 거치는 안정적인 에이전트 구조를 설계했습니다.
-
-![image](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/4925db69-2066-46c4-b2c3-3e78227c46df/marketing_agent.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466QAWZUQRU%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153146Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEMT%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDZ0GvgU85NgcBcwqiqA6EZxt5IcnVS5DEN9e1reQGqLAIhAPonsc3EdsPfr3XXjFgakAHOI%2BLYr8uVoVG354a78qgXKogECI3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgyY3aZ57bZV8pd%2BqMMq3ANdSvj8%2B1t5e4CumaebB2woAhZLW1yNYLkfBNvH%2BtYUaB3rHhjxumzukQVBFpBBlnoMlMP%2F8ruG3oGoHyDTluSxyi%2Blm6y3MubDyE8NkHyuYEDUsZG5AAmQV6BvFAcP29OUnDQPIqLi5LkBt%2BfY0gRl4RiwgUZQOr9i6BDcfOiKusd8nUqdsNvt3UTIpJzGSfVzAtUV2Lu7sjeLchjSrJPMEiDfHkx1JWIrKmbDY3KI1eCQjYO5T9NJc5w1RxlB4%2FMpWcyylJgcJO52LPyFJ%2BKNfkC7DM2Zlg5zwnZO74syGNc%2BRdzwzhrPZtZ7DAcUDqc2dwy3BF9r6fhF5wTzvDEt5txGJl0kzLgadv1KJjcCkb0SOdqnm4ineFO%2BjElueCwS03YT8BJDAB8pUR%2FZ%2Be2%2BUk0oSUYVvNxXcqDq31qPhGW%2FmT4kCkn6Afug5wmGEMJDIqKKPmLScCpWT6%2FtF2BDk%2BF27x8OI9q3Oenil29%2BY98QxdMEJI5iERH5PPN5P0R4PDk91sMvmazA0p6AJpTc3LSVooYJuw5cjTPwN4vUUBIslwngBkoJIcBThsy%2B8atMpMa7jvIlRQ4Hsb5e1YS%2B9meSAF4OMTXI5IXrEcd7MMAAl5vF1aWGRzVULzCi%2B8%2FNBjqkAUH2R4d1PoLMwFj4J0dS7c6M7mLaYTGoy2eKhFXPH7sxAT6UDg32Lf2l0g88PlxS7OEyAtOD3zBmjEP2exOZQmYCNJKPlHzxde9QZeSLTt%2BywE6jZ4tzATmv5UNIxodn3nUm0P5EnJ7GB0Nu6kS9WLYAj1zIX2YIX32NY931j3%2BD%2BErt3bn6peWbjJuDwo8CWZWbQGCwkygqwtC5nqSberuvI11R&X-Amz-Signature=e43ce064db0680b5bf30731222995d3ffdba6c6dd8c260b32db6079febe74102&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
-
+Gemini CLI와 MCP 기술을 접목하여 마케터가 자연어로 제어하고, 실행 전 인간의 검증을 거치는 안정적인 에이전트 조를 설계했습니다.
+![[marketing agent.svg|697]]
 ## 3. Solution & Technical Insights
 
 1. **Gemini CLI 및 MCP를 활용한 실시간 데이터 주입**

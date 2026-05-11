@@ -1,0 +1,296 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1180" width="1200" height="1180" font-family="'Segoe UI', Arial, sans-serif">
+<defs>
+  <marker id="a"  viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#1d9e75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="aa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#ba7517" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="ap" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#7f77dd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="ao" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#d85a30" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<rect width="1200" height="1180" fill="#f8f7f4"/>
+<text x="590" y="34" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a18">개선 아키텍처 (To-Be)</text>
+
+<!-- ══ 레이어 라벨 컬럼 (y 52 ~ 1140) ══ -->
+<rect x="16" y="52" width="150" height="1088" rx="8" fill="#e8e6df" stroke="#b4b2a9" stroke-width="1"/>
+<text x="91" y="80"   text-anchor="middle" font-size="11" font-weight="600" fill="#5f5e5a">레이어</text>
+<text x="91" y="156"  text-anchor="middle" font-size="10" font-weight="600" fill="#5f5e5a">소스</text>
+<text x="91" y="292"  text-anchor="middle" font-size="10" font-weight="600" fill="#5f5e5a">스토리지 (원본)</text>
+<text x="91" y="424"  text-anchor="middle" font-size="10" font-weight="600" fill="#5f5e5a">수집 / ETL</text>
+<text x="91" y="564"  text-anchor="middle" font-size="10" font-weight="600" fill="#5f5e5a">오케스트레이션</text>
+<text x="91" y="680"  text-anchor="middle" font-size="10" font-weight="600" fill="#5f5e5a">OLAP</text>
+<text x="91" y="820"  text-anchor="middle" font-size="10" font-weight="600" fill="#5f5e5a">메달리온</text>
+<text x="91" y="980"  text-anchor="middle" font-size="10" font-weight="600" fill="#5f5e5a">분석</text>
+
+<!-- ══ 트랙 헤더 ══ -->
+<rect x="180" y="52" width="460" height="28" rx="6" fill="#c0dd97" stroke="#639922" stroke-width="1"/>
+<text x="410" y="71" text-anchor="middle" font-size="11" font-weight="600" fill="#173404">트랙 A — FastLog (게임 인앱 이벤트 로그)</text>
+<rect x="654" y="52" width="494" height="28" rx="6" fill="#fac775" stroke="#ba7517" stroke-width="1.5"/>
+<text x="901" y="71" text-anchor="middle" font-size="11" font-weight="600" fill="#412402">트랙 B — 마케팅 (StarRocks → Doris 통합)</text>
+
+<!-- ══════════════════════════════════════════
+     소스  y 90 ~ 200
+══════════════════════════════════════════ -->
+<!-- A 소스 -->
+<rect x="180" y="90" width="460" height="100" rx="8" fill="#fff" stroke="#b4b2a9" stroke-width="1"/>
+<rect x="196" y="106" width="130" height="68" rx="6" fill="#f1efe8" stroke="#b4b2a9" stroke-width="1"/>
+<text x="261" y="136" text-anchor="middle" font-size="11" font-weight="600" fill="#2c2c2a">log1 nginx</text>
+<text x="261" y="152" text-anchor="middle" font-size="10" fill="#5f5e5a">access.log · 매시 압축</text>
+<rect x="341" y="106" width="130" height="68" rx="6" fill="#f1efe8" stroke="#b4b2a9" stroke-width="1"/>
+<text x="406" y="136" text-anchor="middle" font-size="11" font-weight="600" fill="#2c2c2a">log2 nginx</text>
+<text x="406" y="152" text-anchor="middle" font-size="10" fill="#5f5e5a">access.log · 매시 압축</text>
+<rect x="486" y="106" width="130" height="68" rx="6" fill="#f1efe8" stroke="#b4b2a9" stroke-width="1"/>
+<text x="551" y="136" text-anchor="middle" font-size="11" font-weight="600" fill="#2c2c2a">log3 nginx</text>
+<text x="551" y="152" text-anchor="middle" font-size="10" fill="#5f5e5a">access.log · 매시 압축</text>
+
+<!-- B 소스 -->
+<rect x="654" y="90" width="494" height="100" rx="8" fill="#fff" stroke="#b4b2a9" stroke-width="1"/>
+<rect x="670" y="106" width="146" height="68" rx="6" fill="#f1efe8" stroke="#b4b2a9" stroke-width="1"/>
+<text x="743" y="134" text-anchor="middle" font-size="11" font-weight="600" fill="#2c2c2a">Google Ads</text>
+<text x="743" y="150" text-anchor="middle" font-size="10" fill="#5f5e5a">마케팅 API</text>
+<rect x="830" y="106" width="146" height="68" rx="6" fill="#f1efe8" stroke="#b4b2a9" stroke-width="1"/>
+<text x="903" y="134" text-anchor="middle" font-size="11" font-weight="600" fill="#2c2c2a">Meta Ads</text>
+<text x="903" y="150" text-anchor="middle" font-size="10" fill="#5f5e5a">마케팅 API</text>
+<rect x="990" y="106" width="142" height="68" rx="6" fill="#f1efe8" stroke="#b4b2a9" stroke-width="1"/>
+<text x="1061" y="134" text-anchor="middle" font-size="11" font-weight="600" fill="#2c2c2a">TikTok 등</text>
+<text x="1061" y="150" text-anchor="middle" font-size="10" fill="#5f5e5a">기타 플랫폼</text>
+
+<!-- 소스A → 스토리지(원본) 직선 -->
+<line x1="261" y1="190" x2="261" y2="218" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="406" y1="190" x2="406" y2="218" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="551" y1="190" x2="551" y2="218" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- 소스B → 수집B 직선 -->
+<line x1="743"  y1="190" x2="743"  y2="218" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="903"  y1="190" x2="903"  y2="218" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+<line x1="1061" y1="190" x2="1061" y2="218" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- ══════════════════════════════════════════
+     스토리지(원본)  y 218 ~ 340
+     A: SeaweedFS Hot Tier (access.log 보관)
+     B: PyAirbyte 수집 (원본 수집 역할)
+══════════════════════════════════════════ -->
+<!-- A 스토리지 원본 -->
+<rect x="180" y="218" width="460" height="112" rx="8" fill="#e1f5ee" stroke="#1d9e75" stroke-width="1"/>
+<text x="210" y="236" font-size="9" font-weight="600" fill="#085041">스토리지 (원본) — SeaweedFS 9대 클러스터</text>
+<rect x="196" y="244" width="426" height="72" rx="6" fill="#fff" stroke="#1d9e75" stroke-width="1"/>
+<text x="409" y="270" text-anchor="middle" font-size="12" font-weight="600" fill="#085041">SeaweedFS Hot Tier</text>
+<text x="409" y="288" text-anchor="middle" font-size="10" fill="#0f6e56">access.log 압축 파일 보관 (log1·2·3)</text>
+<text x="409" y="304" text-anchor="middle" font-size="10" fill="#0f6e56">FileSensor 감지 대상 · 매시 적재</text>
+
+<!-- B 수집(PyAirbyte) — 스토리지 행에 배치 -->
+<rect x="654" y="218" width="494" height="112" rx="8" fill="#eeedfe" stroke="#7f77dd" stroke-width="1.5"/>
+<text x="684" y="236" font-size="9" font-weight="600" fill="#26215c">수집 — PyAirbyte (NoCode 커넥터)</text>
+<rect x="670" y="244" width="462" height="72" rx="6" fill="#fff" stroke="#7f77dd" stroke-width="1.5"/>
+<text x="901" y="268" text-anchor="middle" font-size="12" font-weight="600" fill="#3c3489">PyAirbyte</text>
+<text x="901" y="286" text-anchor="middle" font-size="10" fill="#534ab7">Google Ads · Meta Ads · TikTok NoCode 관리 · 스키마 자동 감지</text>
+<text x="901" y="302" text-anchor="middle" font-size="10" fill="#534ab7">masterapi 대체 — 커스텀 커넥터 지원</text>
+
+<!-- ══════════════════════════════════════════
+     수집/ETL  y 350 ~ 490
+     A: FileSensor + fluentd ETL + TSV 재저장
+     B: StarRocks Raw (원본 적재)
+══════════════════════════════════════════ -->
+<!-- A 수집/ETL -->
+<rect x="180" y="350" width="460" height="130" rx="8" fill="#e1f5ee" stroke="#1d9e75" stroke-width="1.5"/>
+<text x="210" y="368" font-size="9" font-weight="600" fill="#085041">수집 / ETL — Airflow FileSensor + fluentd</text>
+
+<rect x="196" y="376" width="200" height="90" rx="6" fill="#fff" stroke="#1d9e75" stroke-width="1.5"/>
+<text x="296" y="400" text-anchor="middle" font-size="11" font-weight="600" fill="#085041">FileSensor</text>
+<text x="296" y="418" text-anchor="middle" font-size="10" fill="#0f6e56">log1·2·3 파일 존재 확인</text>
+<text x="296" y="434" text-anchor="middle" font-size="10" fill="#0f6e56">3개 모두 확인 후 진행</text>
+<text x="296" y="452" text-anchor="middle" font-size="9" fill="#3b6d11">트리거: 매시 정각</text>
+
+<line x1="396" y1="421" x2="416" y2="421" stroke="#1d9e75" stroke-width="1.5" marker-end="url(#ag)"/>
+
+<rect x="416" y="376" width="208" height="90" rx="6" fill="#fff" stroke="#1d9e75" stroke-width="1.5"/>
+<text x="520" y="400" text-anchor="middle" font-size="11" font-weight="600" fill="#085041">fluentd ETL</text>
+<text x="520" y="418" text-anchor="middle" font-size="10" fill="#0f6e56">fastlog 컨테이너 병렬처리</text>
+<text x="520" y="434" text-anchor="middle" font-size="10" fill="#0f6e56">TSV 정제 → SeaweedFS 재저장</text>
+<text x="520" y="452" text-anchor="middle" font-size="9" fill="#3b6d11">처리 후 완료 신호 → Airflow</text>
+
+<!-- B StarRocks Raw (수집 완료 후 원본 적재) -->
+<rect x="654" y="350" width="494" height="130" rx="8" fill="#fdf0ec" stroke="#d85a30" stroke-width="1" stroke-dasharray="5 3"/>
+<text x="684" y="368" font-size="9" font-weight="600" fill="#993c1d">스토리지 (원본) — StarRocks Raw (임시, Doris 이관 예정)</text>
+<rect x="670" y="376" width="462" height="90" rx="6" fill="#fff" stroke="#d85a30" stroke-width="1.5"/>
+<text x="901" y="408" text-anchor="middle" font-size="12" font-weight="600" fill="#993c1d">StarRocks</text>
+<text x="901" y="426" text-anchor="middle" font-size="10" fill="#d85a30">PyAirbyte → Stream Load · Batch 적재</text>
+<text x="901" y="444" text-anchor="middle" font-size="10" fill="#5f5e5a">마케팅 원본 데이터 보관</text>
+<text x="901" y="460" text-anchor="middle" font-size="9" fill="#993c1d">→ 단계적 Doris Bronze 이관 예정</text>
+
+<!-- ══════════════════════════════════════════
+     오케스트레이션  y 502 ~ 622
+══════════════════════════════════════════ -->
+<!-- A 오케스트레이션 -->
+<rect x="180" y="502" width="460" height="110" rx="8" fill="#faeeda" stroke="#ba7517" stroke-width="1.5"/>
+<text x="210" y="520" font-size="9" font-weight="600" fill="#412402">오케스트레이션 — Airflow DAG</text>
+
+<rect x="196" y="528" width="208" height="72" rx="6" fill="#fff" stroke="#ba7517" stroke-width="1.5"/>
+<text x="300" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#633806">FastLog ETL DAG</text>
+<text x="300" y="566" text-anchor="middle" font-size="10" fill="#854f0b">DELETE → INSERT 멱등성 보장</text>
+<text x="300" y="582" text-anchor="middle" font-size="9" fill="#3b6d11">스케줄: 매시 30분</text>
+
+<rect x="420" y="528" width="204" height="72" rx="6" fill="#fff" stroke="#ba7517" stroke-width="1"/>
+<text x="522" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#633806">dbt 변환 DAG</text>
+<text x="522" y="566" text-anchor="middle" font-size="10" fill="#854f0b">Silver · Gold 생성 + 품질검증</text>
+<text x="522" y="582" text-anchor="middle" font-size="9" fill="#3b6d11">스케줄: 일 1회</text>
+
+<!-- B 오케스트레이션 -->
+<rect x="654" y="502" width="494" height="110" rx="8" fill="#faeeda" stroke="#ba7517" stroke-width="1.5"/>
+<text x="684" y="520" font-size="9" font-weight="600" fill="#412402">오케스트레이션 — Airflow DAG</text>
+
+<rect x="670" y="528" width="220" height="72" rx="6" fill="#fff" stroke="#ba7517" stroke-width="1.5"/>
+<text x="780" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#633806">마케팅 수집 DAG</text>
+<text x="780" y="566" text-anchor="middle" font-size="10" fill="#854f0b">PyAirbyte → StarRocks 적재</text>
+<text x="780" y="582" text-anchor="middle" font-size="9" fill="#3b6d11">스케줄: 매시</text>
+
+<rect x="908" y="528" width="224" height="72" rx="6" fill="#fff" stroke="#ba7517" stroke-width="1"/>
+<text x="1020" y="550" text-anchor="middle" font-size="11" font-weight="600" fill="#633806">dbt 변환 DAG</text>
+<text x="1020" y="566" text-anchor="middle" font-size="10" fill="#854f0b">Silver · Mart 생성 + 품질검증</text>
+<text x="1020" y="582" text-anchor="middle" font-size="9" fill="#3b6d11">스케줄: 일 1회</text>
+
+<!-- ══════════════════════════════════════════
+     연결선 — 트랙 구분선 이전
+══════════════════════════════════════════ -->
+
+<!-- A: SeaweedFS Hot → FileSensor (왼쪽 바깥 우회) -->
+<path d="M196 280 L166 280 L166 421 L196 421" fill="none" stroke="#1d9e75" stroke-width="1.5" marker-end="url(#ag)"/>
+<text x="140" y="346" text-anchor="middle" font-size="9" fill="#1d9e75">파일</text>
+<text x="140" y="358" text-anchor="middle" font-size="9" fill="#1d9e75">감지</text>
+
+<!-- A: fluentd → SeaweedFS (오른쪽 바깥 우회, TSV 재저장) -->
+<path d="M624 421 L644 421 L644 280 L622 280" fill="none" stroke="#1d9e75" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ag)"/>
+<text x="648" y="342" text-anchor="start" font-size="9" fill="#1d9e75">TSV</text>
+<text x="648" y="354" text-anchor="start" font-size="9" fill="#1d9e75">재저장</text>
+
+<!-- A: SeaweedFS(TSV) → 오케스트레이션(Broker Load) 왼쪽 바깥 우회 -->
+<path d="M196 330 L152 330 L152 564 L196 564" fill="none" stroke="#ba7517" stroke-width="1.5" marker-end="url(#aa)"/>
+<text x="126" y="434" text-anchor="middle" font-size="9" fill="#ba7517">Broker</text>
+<text x="126" y="446" text-anchor="middle" font-size="9" fill="#ba7517">Load</text>
+
+<!-- A: fluentd 완료 → FastLog DAG (완료 신호) -->
+<line x1="406" y1="480" x2="406" y2="502" stroke="#ba7517" stroke-width="1.5" marker-end="url(#aa)"/>
+
+<!-- A: 오케스트레이션 → OLAP -->
+<line x1="300" y1="612" x2="300" y2="638" stroke="#7f77dd" stroke-width="1.5" marker-end="url(#ap)"/>
+<text x="318" y="627" font-size="9" fill="#7f77dd">Doris 적재</text>
+
+<!-- B: PyAirbyte → StarRocks -->
+<line x1="901" y1="330" x2="901" y2="350" stroke="#d85a30" stroke-width="1.5" marker-end="url(#ao)"/>
+
+<!-- B: StarRocks → 마케팅 수집 DAG -->
+<line x1="780" y1="480" x2="780" y2="502" stroke="#ba7517" stroke-width="1.5" marker-end="url(#aa)"/>
+
+<!-- B: 오케스트레이션 → OLAP -->
+<line x1="780" y1="612" x2="780" y2="638" stroke="#7f77dd" stroke-width="1.5" marker-end="url(#ap)"/>
+
+<!-- 트랙 구분선 — 오케스트레이션 끝까지만 -->
+<line x1="648" y1="52" x2="648" y2="612" stroke="#b4b2a9" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+<!-- ══════════════════════════════════════════
+     OLAP  y 638 ~ 766
+══════════════════════════════════════════ -->
+<rect x="180" y="638" width="968" height="118" rx="8" fill="#eeedfe" stroke="#7f77dd" stroke-width="1.5"/>
+<text x="210" y="656" font-size="9" font-weight="600" fill="#26215c" letter-spacing="0.05em">OLAP — Doris HA 클러스터 (AVX2)</text>
+
+<rect x="196" y="664" width="210" height="78" rx="7" fill="#fff" stroke="#7f77dd" stroke-width="1.5"/>
+<text x="301" y="690" text-anchor="middle" font-size="11" font-weight="600" fill="#3c3489">FE × 3</text>
+<text x="301" y="706" text-anchor="middle" font-size="10" fill="#534ab7">BDBJE HA · 자동 리더 선출</text>
+<text x="301" y="722" text-anchor="middle" font-size="10" fill="#534ab7">쿼리 수신 · 메타 관리</text>
+
+<rect x="424" y="664" width="210" height="78" rx="7" fill="#fff" stroke="#7f77dd" stroke-width="1.5"/>
+<text x="529" y="690" text-anchor="middle" font-size="11" font-weight="600" fill="#3c3489">BE × N (AVX2)</text>
+<text x="529" y="706" text-anchor="middle" font-size="10" fill="#534ab7">롤링 전환 완료 장비</text>
+<text x="529" y="722" text-anchor="middle" font-size="10" fill="#534ab7">데이터 저장 · 쿼리 실행</text>
+
+<rect x="652" y="664" width="220" height="78" rx="7" fill="#fff" stroke="#7f77dd" stroke-width="1"/>
+<text x="762" y="688" text-anchor="middle" font-size="11" font-weight="600" fill="#3c3489">Workload Group</text>
+<text x="762" y="704" text-anchor="middle" font-size="10" fill="#534ab7">RBAC · CPU/MEM 상한</text>
+<text x="762" y="720" text-anchor="middle" font-size="10" fill="#534ab7">Bronze 직접 접근 차단</text>
+
+<!-- Remote Tiering 박스 (OLAP 안에 위치 — Doris BE가 트리거) -->
+<rect x="890" y="664" width="242" height="78" rx="7" fill="#e1f5ee" stroke="#1d9e75" stroke-width="1.5"/>
+<text x="1011" y="686" text-anchor="middle" font-size="11" font-weight="600" fill="#085041">Remote Tiering</text>
+<text x="1011" y="702" text-anchor="middle" font-size="10" fill="#0f6e56">Doris BE → SeaweedFS Cold</text>
+<text x="1011" y="718" text-anchor="middle" font-size="10" fill="#0f6e56">로컬 60% 임계치 자동 트리거</text>
+<text x="1011" y="732" text-anchor="middle" font-size="9" fill="#3b6d11">Cold 태그 → OpenMetadata 연동</text>
+
+<!-- Remote Tiering → SeaweedFS Cold Tier (오른쪽 바깥 우회, 스토리지 행으로) -->
+<path d="M1132 703 L1160 703 L1160 280 L622 280" fill="none" stroke="#1d9e75" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#ag)"/>
+<text x="1164" y="492" text-anchor="start" font-size="9" fill="#1d9e75">Remote</text>
+<text x="1164" y="504" text-anchor="start" font-size="9" fill="#1d9e75">Tiering</text>
+
+<!-- OLAP → 메달리온 -->
+<line x1="529" y1="756" x2="529" y2="782" stroke="#888780" stroke-width="1.5" marker-end="url(#a)"/>
+
+<!-- ══════════════════════════════════════════
+     메달리온  y 782 ~ 930
+══════════════════════════════════════════ -->
+<rect x="180" y="782" width="968" height="148" rx="10" fill="#f1efe8" stroke="#888780" stroke-width="1.5"/>
+<text x="210" y="800" font-size="10" font-weight="600" fill="#2c2c2a" letter-spacing="0.04em">메달리온 아키텍처</text>
+
+<!-- Bronze -->
+<rect x="196" y="808" width="286" height="106" rx="8" fill="#d3d1c7" stroke="#888780" stroke-width="1.5"/>
+<text x="339" y="832" text-anchor="middle" font-size="13" font-weight="700" fill="#2c2c2a">Bronze</text>
+<text x="339" y="850" text-anchor="middle" font-size="10" fill="#444441">원본 적재 — 직접 쿼리 차단</text>
+<rect x="212" y="860" width="118" height="40" rx="5" fill="#fff" stroke="#888780" stroke-width="1"/>
+<text x="271" y="880" text-anchor="middle" font-size="10" fill="#2c2c2a">FastLog Raw</text>
+<text x="271" y="894" text-anchor="middle" font-size="9" fill="#5f5e5a">게임 이벤트</text>
+<rect x="348" y="860" width="118" height="40" rx="5" fill="#fdf0ec" stroke="#d85a30" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="407" y="876" text-anchor="middle" font-size="10" fill="#993c1d">Marketing Raw</text>
+<text x="407" y="892" text-anchor="middle" font-size="9" fill="#d85a30">StarRocks → Doris 이관</text>
+
+<!-- dbt B→S -->
+<line x1="482" y1="861" x2="512" y2="861" stroke="#888780" stroke-width="2" marker-end="url(#a)"/>
+<text x="497" y="851" text-anchor="middle" font-size="10" font-weight="600" fill="#633806">dbt</text>
+
+<!-- Silver -->
+<rect x="514" y="808" width="286" height="106" rx="8" fill="#9fe1cb" stroke="#1d9e75" stroke-width="1.5"/>
+<text x="657" y="832" text-anchor="middle" font-size="13" font-weight="700" fill="#04342c">Silver</text>
+<text x="657" y="850" text-anchor="middle" font-size="10" fill="#085041">정제 · 정규화 · 분석가 접근 허용</text>
+<rect x="530" y="860" width="118" height="40" rx="5" fill="#fff" stroke="#1d9e75" stroke-width="1"/>
+<text x="589" y="884" text-anchor="middle" font-size="10" fill="#085041">게임 이벤트</text>
+<rect x="662" y="860" width="118" height="40" rx="5" fill="#fff" stroke="#1d9e75" stroke-width="1"/>
+<text x="721" y="884" text-anchor="middle" font-size="10" fill="#085041">마케팅 정제</text>
+
+<!-- dbt S→G -->
+<line x1="800" y1="861" x2="830" y2="861" stroke="#888780" stroke-width="2" marker-end="url(#a)"/>
+<text x="815" y="851" text-anchor="middle" font-size="10" font-weight="600" fill="#633806">dbt</text>
+
+<!-- Gold -->
+<rect x="832" y="808" width="300" height="106" rx="8" fill="#fac775" stroke="#ba7517" stroke-width="1.5"/>
+<text x="982" y="832" text-anchor="middle" font-size="13" font-weight="700" fill="#412402">Gold</text>
+<text x="982" y="850" text-anchor="middle" font-size="10" fill="#633806">집계 마트 · Mat.View · Rollup</text>
+<rect x="848" y="860" width="128" height="40" rx="5" fill="#fff" stroke="#ba7517" stroke-width="1"/>
+<text x="912" y="884" text-anchor="middle" font-size="10" fill="#633806">인게임 마트</text>
+<rect x="990" y="860" width="128" height="40" rx="5" fill="#fff" stroke="#ba7517" stroke-width="1"/>
+<text x="1054" y="876" text-anchor="middle" font-size="10" fill="#633806">LTV · ROAS</text>
+<text x="1054" y="890" text-anchor="middle" font-size="9" fill="#633806">통합 마트</text>
+
+<!-- 메달리온 → 분석 -->
+<line x1="657" y1="930" x2="657" y2="956" stroke="#1d9e75" stroke-width="1.5" marker-end="url(#ag)"/>
+<line x1="982" y1="930" x2="982" y2="956" stroke="#1d9e75" stroke-width="1.5" marker-end="url(#ag)"/>
+
+<!-- ══════════════════════════════════════════
+     분석  y 956 ~ 1070
+══════════════════════════════════════════ -->
+<rect x="180" y="956" width="968" height="114" rx="10" fill="#e6f1fb" stroke="#185fa5" stroke-width="1"/>
+<text x="210" y="974" font-size="10" font-weight="600" fill="#042c53" letter-spacing="0.04em">분석 레이어</text>
+
+<rect x="196" y="982" width="200" height="72" rx="7" fill="#fff" stroke="#185fa5" stroke-width="1"/>
+<text x="296" y="1008" text-anchor="middle" font-size="11" font-weight="600" fill="#0c447c">분석가</text>
+<text x="296" y="1026" text-anchor="middle" font-size="10" fill="#185fa5">Silver · Gold만 접근</text>
+<text x="296" y="1042" text-anchor="middle" font-size="9" fill="#185fa5">Workload Group 보호</text>
+
+<rect x="414" y="982" width="200" height="72" rx="7" fill="#fff" stroke="#185fa5" stroke-width="1"/>
+<text x="514" y="1008" text-anchor="middle" font-size="11" font-weight="600" fill="#0c447c">Metabase</text>
+<text x="514" y="1026" text-anchor="middle" font-size="10" fill="#185fa5">내부 대시보드 BI</text>
+
+<rect x="632" y="982" width="200" height="72" rx="7" fill="#fff" stroke="#185fa5" stroke-width="1"/>
+<text x="732" y="1008" text-anchor="middle" font-size="11" font-weight="600" fill="#0c447c">Superset</text>
+<text x="732" y="1026" text-anchor="middle" font-size="10" fill="#185fa5">셀프서브 분석</text>
+
+<rect x="850" y="982" width="282" height="72" rx="7" fill="#eeedfe" stroke="#7f77dd" stroke-width="1"/>
+<text x="991" y="1006" text-anchor="middle" font-size="11" font-weight="600" fill="#3c3489">OpenMetadata</text>
+<text x="991" y="1024" text-anchor="middle" font-size="10" fill="#534ab7">Lineage · Glossary · Tier 태그</text>
+<text x="991" y="1040" text-anchor="middle" font-size="10" fill="#534ab7">거버넌스 전사 적용</text>
+</svg>

@@ -9,6 +9,7 @@ tags:
   - Python
   - Event-Driven Architecture
 featured: false
+draft: false
 ---
 
 > **기간:** 2024.09 ~ 2024.12
@@ -24,8 +25,7 @@ featured: false
 
 KRaft 기반의 Kafka 클러스터를 구축하여 시스템 간의 결합도를 낮추고 비동기적으로 이벤트를 처리하는 고성능 인프라를 설계했습니다. 특히, 이벤트 발행 시점으로부터 30분 뒤에 작업을 실행하는 지연 처리 로직과 다수의 컨수머를 통한 안정성 확보 구조를 핵심으로 합니다.
 
-![image](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/d6c914d3-8b88-4820-bc5d-e60113e56636/kafka_event.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TQJNTHLQ%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153147Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEML%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIArf3JxokL%2B%2BICh5iLkIWvwIqVCxDOqNy0WWDzbwlqTyAiBe5%2Bq87UwQk0ooR15IhhT%2Bokzr0U5Vk8oYY3wAXg0VryqIBAiL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMWyihPFQUGn4X1xqqKtwDctnbkkDNfvyf0eJZHZuGZzqG5Mazx2NmpnXkN%2FvhjR8pQFa5AeUDxBFhwKWPyzAl4JLrX9k1UuXkZ3%2FSztD5o8p4JV7%2Fh7SbeuYaGYUilDICqbjQvVB9RMbGO2QK1ye5ysiPw4f11WTZO1xEKmlpketqXugnhdoeopwShLbdZstNFmETsV9kvpFxf%2FVHsddD2vjp7V4g9FXcLPKo8xSw8AtN9cN6tU%2BGRqzfWuzRgkPewisq4R9Y2lHfwMnRlkOJU6qwK4u3V5fCMlv1%2FTWRbsuSZrLm4p3F6P6PwAWr37gel%2FSVzHLXIuPoF8MJ7VmQNOYw2RtdE46YJh4cLK0jsygHMYTm0jU0MTBz510pHT6%2B5Lo%2Bx%2BPeFIGvXJJxYmNCnaSW74E40zbYJ%2BoNH8GnsSocSc%2BNW8upwHFmFGqJS3StDUC4RmOw7EFQ5SIIOYmG5uj4E6EFTJXgV1UB1TxyjjRRM6%2BTBFV2Zig0vDiCtw4JXDfVNQMxti5jhudoMsjR8u1DzX0DMJCUFoD%2FHui41dPi2LIqfNNFMDTJPMZjIOllbj6v3a1%2FS94APihSRqIHKOPWZxp01%2FNLBOA1xpLYl%2B8T3IitpkR%2Bm0jkaRNwEkaGA89Er%2BBUM8JBsx0wubzPzQY6pgFKNwemHZrxfg20z4Rx2ltKFn%2FXvy0PyDpf%2FRf2F5fIcWCNozCxEgjyM9fS9XFlTnDuIfOcErfJNwGPT8UdEa2eyRq8bDZd2jcTICGx7E9yVqm8U01m356WUx6YxozAYTzmMG4BJmKyi1SU21z6ZEl4FAG%2FFETymUpVkf8HosFfwk0cm%2B%2B4qffq%2BdkQcIDgeIvQDgNa%2BwHCJs8l3HWmkjhTHuU4JRj2&X-Amz-Signature=57200d0d303f4960947cfa1ad64facaf7cb363d02e49abc48dc305bea90b584d&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
-
+![[kafka event.svg|697]]
 ## 3. Solution & Technical Insights
 
 1. **Zookeeper-less KRaft 기반 Kafka 클러스터 구축**

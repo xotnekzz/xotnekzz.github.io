@@ -9,6 +9,7 @@ tags:
   - Data Governance
   - Lineage
 featured: true
+draft: false
 ---
 
 > **기간:** 2026.2 ~ 현재 진행중
@@ -31,21 +32,15 @@ featured: true
 1. **API-First 기반 확장성:** 모든 객체가 JSON Schema로 표준화되어 있어, 이번 프로젝트에서 구현한 커스텀 Python Decorator와 같은 자체 자동화 도구와의 연동이 매우 용이했습니다.
 ## 3. Project Goal & Architecture: Data Discovery & Governance
 
-
-
-![image](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/c11ca625-89d8-4f7e-addd-2cc1920855a3/openmetadata.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XYMBLUF4%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153138Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEML%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIBHUAVrUVtiN6nSwBh51UuuE0P8Y2cHJYSejbd2OKAVBAiA9qHf1ELpiHtZ%2FbtrQlAYHWW37VP3Z%2FL9TKIKFFVlrJyqIBAiL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMZkaWDJfXQ6q5oup%2BKtwDup%2FsFdaVp%2BdUQ%2Bo%2FkUD%2BxaqfBoMyb%2FTImh3kIj7gIR22EyeLo7s6CRiJbQayyCNpiAaMOdv7SzX1k1U6YoOgWg3CyTIJoamFPwNK6wTPQiYRo%2BmoVJnGtOsQXEItgp3evn6XIE02g%2BYp0%2FalsGRx9d8p7Clwu92SMvG1jVPlxC4S%2BJlWDKpklsQep1qvobu%2FUZcWSoTERSHG11BUGriyv%2FD%2B8OHNoujt4E%2BwbmU9o%2FGEMbANN02i9ksJK7eKdDTF3zWb1I4Rsj1%2FRHJtlaSD1Zv3M%2FOc7feDxi85OYLCn%2BVB44J85rHdVD8ddquSWD%2FF5yQCRbP%2BnlQLgsqomNJ8TQNcv3dDJNlbGhb%2Fyi2fjyylFzgeSir19mmDoRVq2Ha6crnl5iFq5ata79%2BmuKal8pQvAnzAdX3vWumeZOcad5vZBbnI62w9Yge8EJLkvgO9b%2FqzV1%2Fl6lPh7J8ZBN4DuZp0ifPfaw814zkiezLgF953s%2BOLy0%2BSpZo9uvvatN8MFswvmYsYv8EgB1m3gyPN3aCIHnYckB88vC3ku1z3YxOSEv%2Fm3dlUh1xWLZDgagszKSZId07yEM7YilMCdYjrK6ug%2FqU5OZ3TwT%2Fd45sGifQts9sv3nBVivFrICAwrb7PzQY6pgEuScORQK4%2FBmuD5RruZLBViRU%2FA%2FkRudZtfhuderNyqDUYwkgW5P3l8V2aldBvfpmsps5UOyWZLJALNg8XQrt%2FCo%2FS%2FMp1LR%2BccoM%2FybrLhS23sGJGioL6F48cU%2Btw9RQ1wRf2ykRD3tU8T%2FMgKeejt04lSkfi1C%2BXipQtJgX0nvf087NGjeQOeEyWS9%2BLKibdh%2FDTfJRrJmMp2X358asap4SZN4Xw&X-Amz-Signature=92b8d18bdc09905ba9fd7a1ae86b7461b033b986cac42200fe8c87213c745c34&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
-
-
+![[om2.png|697]]
 
 이 프로젝트의 궁극적인 목표는 OpenMetadata를 중심으로 한 **전사 데이터 디스커버리 및 거버넌스 인프라를 구축**하는 것입니다. 
 
 사내에서 사용하는 각종 데이터베이스와 파이프라인(Airflow)을 연동하여 메타데이터와 계보(Lineage), 스키마 설명(Description)을 중앙 집중화하고, 이에 더해 거버넌스 체계(Human Governance) 도입하여 각 부서가 데이터의 소유권(Ownership)을 명확히 하고 생명주기를 관리하며, 품질 지표(Quality Metrics)를 지속적으로 검사할 수 있는 신뢰도 높은 데이터 환경을 조성하는 것입니다.
 
-## 4. Solution & Technical Insights
+## 4. Solution & Technical Insight
 
-![image](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/a7be87ec-1b9a-43ba-9d54-2ce3d9133812/om_lineage.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466XYMBLUF4%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153138Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEML%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIBHUAVrUVtiN6nSwBh51UuuE0P8Y2cHJYSejbd2OKAVBAiA9qHf1ELpiHtZ%2FbtrQlAYHWW37VP3Z%2FL9TKIKFFVlrJyqIBAiL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMZkaWDJfXQ6q5oup%2BKtwDup%2FsFdaVp%2BdUQ%2Bo%2FkUD%2BxaqfBoMyb%2FTImh3kIj7gIR22EyeLo7s6CRiJbQayyCNpiAaMOdv7SzX1k1U6YoOgWg3CyTIJoamFPwNK6wTPQiYRo%2BmoVJnGtOsQXEItgp3evn6XIE02g%2BYp0%2FalsGRx9d8p7Clwu92SMvG1jVPlxC4S%2BJlWDKpklsQep1qvobu%2FUZcWSoTERSHG11BUGriyv%2FD%2B8OHNoujt4E%2BwbmU9o%2FGEMbANN02i9ksJK7eKdDTF3zWb1I4Rsj1%2FRHJtlaSD1Zv3M%2FOc7feDxi85OYLCn%2BVB44J85rHdVD8ddquSWD%2FF5yQCRbP%2BnlQLgsqomNJ8TQNcv3dDJNlbGhb%2Fyi2fjyylFzgeSir19mmDoRVq2Ha6crnl5iFq5ata79%2BmuKal8pQvAnzAdX3vWumeZOcad5vZBbnI62w9Yge8EJLkvgO9b%2FqzV1%2Fl6lPh7J8ZBN4DuZp0ifPfaw814zkiezLgF953s%2BOLy0%2BSpZo9uvvatN8MFswvmYsYv8EgB1m3gyPN3aCIHnYckB88vC3ku1z3YxOSEv%2Fm3dlUh1xWLZDgagszKSZId07yEM7YilMCdYjrK6ug%2FqU5OZ3TwT%2Fd45sGifQts9sv3nBVivFrICAwrb7PzQY6pgEuScORQK4%2FBmuD5RruZLBViRU%2FA%2FkRudZtfhuderNyqDUYwkgW5P3l8V2aldBvfpmsps5UOyWZLJALNg8XQrt%2FCo%2FS%2FMp1LR%2BccoM%2FybrLhS23sGJGioL6F48cU%2Btw9RQ1wRf2ykRD3tU8T%2FMgKeejt04lSkfi1C%2BXipQtJgX0nvf087NGjeQOeEyWS9%2BLKibdh%2FDTfJRrJmMp2X358asap4SZN4Xw&X-Amz-Signature=b515d9620ff8af47195926224b851a74624d802c46c73f47c54f52deceefa8e1&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
-
-1. **Airflow 계보(Lineage) 커스텀 플러그인(Decorator) 개발**
+![[om3.png]]1. **Airflow 계보(Lineage) 커스텀 플러그인(Decorator) 개발**
 - **[Issue]** 최신 OpenMetadata 모듈과 사내 운영 중인 Airflow(v2.9.3) 간의 리니지 연동 라이브러리 버전이 충돌하여 사용이 불가능한 상태였습니다. 전사 Airflow 버전을 업그레이드하기에는 운영 리스크와 소요 시간이 너무 컸습니다.
 - **[Solution]** 버전의 의존성을 해결하기 보단 OpenMetadata의 Lineage API를 직접 호출하는 **Python Decorator 기반 커스텀 플러그인**을 자체 개발했습니다. 이를 통해 Airflow 버전 변경 없이도 전사 DAG에 즉시 적용 가능한 환경을 구축했습니다.
 ## 5. Impact & Result

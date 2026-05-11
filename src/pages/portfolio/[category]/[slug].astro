@@ -1,13 +1,15 @@
 ---
 import { getCollection, render } from 'astro:content';
 import PortfolioDetailLayout from '../../../layouts/PortfolioDetailLayout.astro';
+import { normalizeSlug } from '../../../lib/portfolio';
+import { filterVisible } from '../../../lib/content-visibility';
 
 export async function getStaticPaths() {
-  const portfolios = await getCollection('portfolio');
+  const portfolios = filterVisible(await getCollection('portfolio'));
 
   return portfolios.map((portfolio) => {
     const [categoryLower, filename] = portfolio.id.split('/');
-    const slug = filename.replace(/\.md$/, '');
+    const slug = normalizeSlug(filename);
 
     return {
       params: {

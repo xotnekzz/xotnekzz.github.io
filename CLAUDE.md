@@ -1,7 +1,20 @@
 # CLAUDE.md
 
-# Hard Rule
-- 개발요청시 반드시 [AGENTS.md](AGENTS.md)을 참고하여 에이전트 하네스 오케스트레이터로 개발해야합니다.
+## 하네스: 개인 홈페이지
+
+**목표:** 코드 개발과 콘텐츠 제작 모두를 에이전트 파이프라인으로 자동화한다.
+
+**트리거:**
+- 기능 개발, 버그 수정, UI 수정 등 코드 관련 요청 → `homepage-dev` 스킬을 사용하라.
+- 블로그 포스팅, 포트폴리오, 이력서 등 콘텐츠 제작 요청 → `homepage-content` 스킬을 사용하라.
+- 단순 질문/조회는 직접 응답 가능.
+
+**변경 이력:**
+| 날짜 | 변경 내용 | 대상 | 사유 |
+|------|----------|------|------|
+| 2026-04-14 | 초기 하네스 구성 | 전체 | docs/agents/ 기반 비공식 구조를 .claude/ 하네스로 공식화 |
+
+---
 
 이 프로젝트의 문서는 `docs/` 폴더에 있습니다.
 
@@ -9,7 +22,3 @@
 
 - [docs/stack.md](docs/stack.md) — 기술 스택, 의존성, 배포 환경 정보
 - [docs/notion-api.md](docs/notion-api.md) — Notion API 사용법, DB 프로퍼티 스키마, 이미지 처리, 콘텐츠 변환 파이프라인
-- [AGENTS.md](AGENTS.md) — 에이전트 하네스 오케스트레이터 가이드 및 사이클 운영 방법
-- [docs/agents/planner.md](docs/agents/planner.md) — 기획 에이전트 프롬프트
-- [docs/agents/developer.md](docs/agents/developer.md) — 개발 에이전트 프롬프트
-- [docs/agents/qa.md](docs/agents/qa.md) — 검증 에이전트 프롬프트

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema/v1",
+  "_comment": "MCP 서버 카탈로그. base는 항상 활성, optional은 필요 시 수동 활성화. 30일+ 미호출 시 /lint-harness가 제거 제안.",
+  "base": {
+    "filesystem": {
+      "description": "로컬 파일 읽기/쓰기",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
+    },
+    "fetch": {
+      "description": "HTTP fetch — 외부 문서/API 조회",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"]
+    }
+  },
+  "optional": {
+    "playwright": {
+      "description": "브라우저 자동화 — 웹 UI 개발/E2E 테스트 시",
+      "enable_when": "frontend | e2e",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-playwright"]
+    },
+    "chrome-devtools": {
+      "description": "Chrome DevTools — 프론트엔드 디버깅",
+      "enable_when": "frontend-debug",
+      "transport": "stdio"
+    },
+    "github": {
+      "description": "GitHub API — PR/이슈 작업 시",
+      "enable_when": "pr-ops",
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"]
+    }
+  },
+  "gc_policy": {
+    "prune_if_unused_days": 30,
+    "reviewer": "doc-gardener"
+  }
+}

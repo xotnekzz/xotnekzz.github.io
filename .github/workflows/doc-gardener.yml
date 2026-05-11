@@ -1,0 +1,60 @@
+name: doc-gardener
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"     # 매주 월요일 09:00 UTC
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "실제 PR 생성 (false면 dry-run)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Scan for drift
+        id: scan
+        run: |
+          python3 .harness/linters/doc_gardener_scan.py | tee /tmp/gardener-report.json
+
+      - name: Weekly PR count guard (cap 5/week)
+        id: guard
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          COUNT=$(gh pr list --label auto-gc --search "created:>$(date -u -d '7 days ago' +%Y-%m-%d)" --json number --jq 'length' || echo 0)
+          echo "recent_auto_gc=$COUNT" >> "$GITHUB_OUTPUT"
+          if [ "$COUNT" -ge 5 ]; then
+            echo "주간 auto-gc PR 상한 도달: $COUNT — 이번 실행은 스캔만" >&2
+            echo "blocked=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Post weekly summary issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          WEEK=$(date -u +%G-W%V)
+          TITLE="doc-gardener: $WEEK"
+          BODY="### 주간 드리프트 스캔\n\n최근 auto-gc PR 수: ${{ steps.guard.outputs.recent_auto_gc }}\n\n<details><summary>스캔 JSON</summary>\n\n\`\`\`json\n$(cat /tmp/gardener-report.json)\n\`\`\`\n\n</details>"
+          # 기존 이슈가 있으면 코멘트만
+          EXISTING=$(gh issue list --search "in:title \"$TITLE\"" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$(printf "%b" "$BODY")"
+          else
+            gh issue create --title "$TITLE" --label auto-gc --body "$(printf "%b" "$BODY")"
+          fi

@@ -1,0 +1,64 @@
+# CLI-agnostic harness config. Adapters compile this into CLI-specific formats.
+version: 1
+
+project:
+  name: "blog"
+  language: "mixed"        # python | typescript | go | mixed
+  stack: ""          # free-form hint
+
+context:
+  agents_md_max_lines: 100
+  doc_max_lines: 500
+  moc_injection: true         # user-prompt-submit hook injects relevant MOCs
+
+agents:
+  planner:   .harness/agents/planner.md
+  implementer: .harness/agents/implementer.md
+  evaluator: .harness/agents/evaluator.md
+  reviewer:  .harness/agents/reviewer.md
+  doc_gardener: .harness/agents/doc-gardener.md
+
+guardrails:
+  layer_order:
+    - types
+    - config
+    - repo
+    - service
+    - runtime
+    - ui
+  # 훅 게이트(A-2): 코드 파일에만 arch 린터 실행. 프로젝트별 확장 가능.
+  # 현재는 hooks/pre-tool-use/enforce-arch.sh에서 인라인 적용 (정규식).
+  # 향후 hook이 이 섹션을 읽도록 리팩터 예정.
+  arch_layers:
+    include_paths: [src/, app/, lib/, packages/]
+    include_exts: [.py, .ts, .tsx, .js, .jsx, .mjs, .go, .rs, .java, .kt, .swift]
+  block_on:
+    - arch_layer_violation
+    - naming_violation
+    - agents_md_size
+  warn_on:
+    - doc_freshness
+    - orphan_doc
+    - broken_link
+
+gc:
+  doc_gardener_schedule: "0 9 * * 1"   # Mon 09:00
+  max_prs_per_week: 5
+  cooldown_hours: 24
+  dry_run_default: true
+
+autopilot:
+  max_iter: 5                 # /autopilot 기본 최대 반복
+  thrashing_threshold: 5      # 동일 파일 수정 횟수 초과 시 ABORTED_THRASHING
+  fail_fast_default: false
+  time_limit_minutes: 0       # 0 = 무제한
+
+mcp:
+  base: [filesystem, fetch]
+  optional: [playwright, chrome-devtools, github]
+  prune_if_unused_days: 30
+
+adapters:
+  # harness init이 사용자 선택을 여기 기록. harness sync가 읽어 재컴파일한다.
+  # 키: claude | codex | gemini. 값이 비거나 키 자체가 없으면 디렉터리-감지 폴백.
+  active: [claude, gemini]

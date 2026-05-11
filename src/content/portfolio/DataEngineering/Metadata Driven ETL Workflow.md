@@ -9,6 +9,7 @@ tags:
   - Metadata
   - Architecture
 featured: false
+draft: false
 ---
 
 > **기간:** 2023
@@ -23,8 +24,6 @@ featured: false
 ## 2. Architecture: Single Codebase (Metadata-driven)
 
 복잡하고 중복적인 DAG 생성 방식을 탈피하여, 설정 데이터를 기반으로 동적으로 파이프라인을 생성하는 아키텍처를 구현했습니다.
-
-![image|48](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/75296cf8-81d0-4d26-a0ad-256bc71b5671/airflow.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466QZW2MYVE%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153146Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEML%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQD0KerAFx%2B1CUZmyolHnf4DBbaua8ETs5Y%2BQhB2M3eSBwIgT%2FX0ZnzyooETWdeybbFyiPl9wsfSwlRbnQis0H71UDMqiAQIi%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDB8Upk6SnuZSFp2rZSrcA0g27hYa8GF%2B%2FlG1x3GLw%2FgBQ2GZ9jcn%2BiK7R%2FDSpHn0RCdpEUyEWbyexwj6KzKND6jf9O4MxUCm1EIPhD0HORnE%2BPtIqO1Vg1%2F2P9%2B5rT9yaKB3fUVPrd5gaIvRbCzHDfMzhrKSw57bohPU%2FWiOF4H576p2n7kPQfl38bzUZKd9N92KSGD1BH81NLMNyV95AVHgf299ROiTAZPLUnJnOZuWdS5I4V9pR7IzOfQoTk07SnCZuBOKSgzKv%2BYmDDSc2T3HAuJKt6fu0Yka5t6PuBLC8SJaFl%2F%2FACj2fxmKIF0p1YsQSK%2F6MQ%2BhAv8DyE4lwf5JxEPVkCKrG9JHyB2nMh84v2gePiwSvjRRg9T6nDauEtN5XrSV3onTORUvGUJndQWi7wb9V0V%2BTZntI9UwA6z30Kf5R7WyCjyVarVuK5RjSE63kGUd1QpTB1JYeGLgDo3ZJ%2FEgj4%2FEZ2WlZ%2B%2BXnNnH%2FeGUPxW%2BqusL9H%2FuQonLAbLELD9bsx8dUA6Tm88ck0Rk6KRsyLSbwLMN1rv2gDeQiZY%2Ff3BBU5C41dD1bZIKqf4oEwuvSGLloKZbPhaCMcyRsHqkp0ySvlTVERGGG7n2HiFce5wk2XFe3DOWwSpiMab3Y2VUqG3ybfk0MKm9z80GOqUB4EmXDda0udqb5v%2BqXfDVYFOZOlrwKXMGbUQeo6atzQNW29jeNJdeWUzFibditqEndyMwzJK13o0uO7%2B2w3E7ogNMWCW5Q%2BnmB7lVRWVom89tRT5n%2FcdRonYWI4vUP41e5if%2BcqOl0LALB6SECPOTT1wPrkXTOEsmtu8UfgSIwpXbqubesrZPrVN16%2FhzrzjGcr8W%2B6SdA9EhMvP8Q2uKzJI100K1&X-Amz-Signature=d1db0421c84843a6b3e335a607f05a7b85a0ec642f99ce2af3e1a2a357e9a211&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 ## 3. Solution & Technical Insights
 

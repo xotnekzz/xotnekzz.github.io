@@ -6,6 +6,7 @@ tags:
   - Apache Doris
   - OLAP
 featured: false
+draft: false
 ---
 
 ## 1. Background & Challenges
@@ -19,7 +20,7 @@ featured: false
 
 ### As-Is Architecture
 
-![기존 HDFS/Impala 기반의 아키텍처는 총 40대 규모(NameNode 3대, DataNode 37대)로 구성되었으며, Hive Metastore와 Impala를 연동하여 SQL로 게임로그를 분석합니다.](/images/Legacy%20Pipeline.svg)
+![기존 HDFS/Impala 기반의 아키텍처는 총 40대 규모(NameNode 3대, DataNode 37대)로 구성되었으며, Hive Metastore와 Impala를 연동하여 SQL로 게임로그를 분석합니다.|697](/images/Legacy%20Pipeline.svg)
 
 1. **로그 발송:** 게임 유저가 이벤트 로그를 로그 서버로 발송
 2. **로그 수집:** 로그 서버(HTTP GET)가 수신 후 `access.log`에 기록
@@ -30,7 +31,7 @@ featured: false
 
 ### To-Be Architecture
 
-![Shared Nothing 방식의 자체 스토리지 엔진과 고성능 OLAP 데이터베이스 Doris를 도입하여 쾌적한 로그 분석 환경을 구축하는 것을 목표로 합니다.](/images/Fluentd%20to%20HDFS%20Data-2026-03-12-113747.svg)
+![Shared Nothing 방식의 자체 스토리지 엔진과 고성능 OLAP 데이터베이스 Doris를 도입하여 쾌적한 로그 분석 환경을 구축하는 것을 목표로 합니다.|697](/images/Fluentd%20to%20HDFS%20Data-2026-03-12-113747.svg)
 
 1. **로그 발송 & 수집:** (As-Is와 동일)
 2. **파싱 및 필터링:** (As-Is와 동일)

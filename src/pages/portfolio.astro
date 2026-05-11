@@ -3,10 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PortfolioTabs from '../components/PortfolioTabs.astro';
 import { getCollection } from 'astro:content';
 import type { Portfolio } from '../lib/types';
-import { groupByCategory, sortByDateDesc } from '../lib/portfolio';
+import { groupByCategory, sortByDateDesc, normalizeSlug } from '../lib/portfolio';
+import { filterVisible, isDraft } from '../lib/content-visibility';
 
-// Astro Content Collection으로 포트폴리오 로드
-const portfolioEntries = await getCollection('portfolio');
+// Astro Content Collection으로 포트폴리오 로드 (draft 필터 적용)
+const portfolioEntries = filterVisible(await getCollection('portfolio'));
 
 interface PortfolioWithSlug extends Portfolio {
   slug: string;
@@ -26,6 +27,7 @@ const projects: PortfolioWithSlug[] = portfolioEntries
     const { data } = entry;
     const categoryLower = entry.id.split('/')[0];
     const categoryDisplay = categoryMap[categoryLower] || categoryLower;
+    const filename = entry.id.split('/')[1];
 
     return {
       title: data.title || '',
@@ -33,8 +35,9 @@ const projects: PortfolioWithSlug[] = portfolioEntries
       date: data.date || '',
       tags: data.tags || [],
       featured: data.featured || false,
+      draft: isDraft(entry),
       category: categoryDisplay, // 원본 대소문자로 복원된 카테고리명
-      slug: entry.id.split('/')[1].replace(/\.md$/, ''), // 파일명을 그대로 슬러그로 사용
+      slug: normalizeSlug(filename), // Astro URL-safe 슬러그로 정규화
     } as PortfolioWithSlug;
   })
   .filter((p) => p.title && p.date) // 필수 필드 검증

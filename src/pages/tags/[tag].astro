@@ -3,9 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
+import { filterVisible } from '../../lib/content-visibility';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts');
+  const posts = filterVisible(await getCollection('posts'));
 
   const tagMap = new Map<string, CollectionEntry<'posts'>[]>();
   for (const post of posts) {

@@ -1,0 +1,27 @@
+name: harness-lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: AGENTS.md size cap
+        run: python3 .harness/linters/agents_md_size.py
+
+      - name: Architecture layer order
+        run: python3 .harness/linters/arch_layers.py
+
+      - name: Memory schema
+        run: python3 .harness/linters/memory_schema.py
+
+      - name: Doc freshness (warn only)
+        run: python3 .harness/linters/doc_freshness.py
+        continue-on-error: true

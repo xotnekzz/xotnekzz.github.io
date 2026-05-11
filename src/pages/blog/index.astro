@@ -2,8 +2,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostListItem from '../../components/PostListItem.astro';
 import { getCollection } from 'astro:content';
+import { filterVisible } from '../../lib/content-visibility';
 
-const posts = (await getCollection('posts')).sort(
+const posts = filterVisible(await getCollection('posts')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 

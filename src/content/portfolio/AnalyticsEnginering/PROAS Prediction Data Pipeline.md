@@ -9,6 +9,7 @@ tags:
   - Data Pipeline
   - Marketing
 featured: false
+draft: false
 ---
 
 > **기간:** 2022 ~ 2023
@@ -23,10 +24,7 @@ featured: false
 
 Ad-Network의 캠페인 퍼포먼스(Spend, Install, Impression, Click)와 MMP(Appsflyer)의 유저 행동 데이터(ROAS, Retention, Session 등)를 통합하여 마케팅 데이터 마트를 구축하고, 이를 기반으로 딥러닝 모델이 미래 매출을 예측하여 실무에 환류되는 구조를 설계했습니다.
 
-![image](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/9dde54c4-6364-4d39-ad48-07eb9409d439/ua_proas.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YKD5Z3AR%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153153Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEMT%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDgpt%2FjSpLAhrRofnvYxW%2FjPr%2FbzvitJZ7FT0756mV7OAIhAOafXKVmqVW%2BK2V5aV5SytUrPmCA9Jb9Jj%2BnOeUz0qlyKogECI3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igy5rJuw4FJiJ0UnE24q3AO8UHgvbevg9rU9LyOx5EZJcf5Iwah%2BaiOaWXQYSMRmRCk3eqSsegSBn28yRLy1XYqk5ychujCugZ5P9MPPfxAVmFx6oj0wAqA%2BhfZ5XjsR9bhEy5zj09SDqUV2Ean7epBxs7uq%2B%2B4w76xNy2GtS89Aaw7Enakj%2BrTiZL5wYOq02tuzHb%2FYL1tkD6TiIeW80Bl2%2FY2O16M7RCEegP%2BMRVpls%2FjNP%2B3gHJLwDwZDg36Vs8VJ4qd0KQFb5VqKZ8KucnWFJhzasWP6mLbpKx%2B3f5%2FUYeoMIJHAqPquumTeYLnbX2t9r6%2BfF%2BUNyeT8nSoFWDrc63IGtcOzYRcoZYt4rgLNhHPimYLOdi7pZjfvLuSF6XU%2F%2FV%2Fs%2FBQJ4pcStB4MAMVXMQk75X%2BVmIuGVrN0R60lwQfhFzkDiG3fjhcUyqzozB5%2FBdctca56l1sDqByGY61bKFZpx2WOTDUFwBH9X9z61HFjbi2kaWwBwYoPlv9Q1eU8ga5El72B3mZjwr1kpHZcYbhfydKrRlhZxUwwb98FUBxqyOS2yYIXMWqQrwWu5KRi8TKa630NYMMwQ2Vsnz7gYauyBryVIDSnR9bBmjK1WnjY1w%2BhVvONTuuINxW48Rq1XTH3Wf187RMwsjDv7M%2FNBjqkAWlIG%2FhylogepDfzCKe9QDCkBkvaAoMBn5%2Blv2bMjAVAofiboRCLauFwKlZRjSTxIWjCquZDQDrST28Htxn7UjBkgM6k%2BzhNMCTfwXAxGy%2BN9Bi5kwrmmFbNri9fhrkNZLWi2geHp%2FzwpOD%2Bjp8yTZk%2B0YVkwu5uF%2BE9IyQeNmOaztgWPEcbKJ6ouNuVhjpBenDKiyGZBjhxv3%2F4o2jv75PEIAls&X-Amz-Signature=e2f5013ed657f7d1cc735adb3847a50256cdfb1a8e87b95e3041ba1ab52ecc14&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
-
-
-
+![[ua_proas.svg|697]]
 ## 3. Solution & Technical Insights
 
 1. **딥러닝 학습 최적화를 위한 데이터 피딩(Feeding) 파이프라인**

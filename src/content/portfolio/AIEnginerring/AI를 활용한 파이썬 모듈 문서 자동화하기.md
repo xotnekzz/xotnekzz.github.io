@@ -9,6 +9,7 @@ tags:
   - Gemini
   - Sphinx
 featured: false
+draft: false
 ---
 
 > **기간:** 2024
@@ -22,10 +23,7 @@ featured: false
 ## 2. Architecture: Doc-as-Code Automation
 
 GitLab CI/CD 파이프라인에 LLM 분석 단계를 추가하여, 코드 변경 시 자동으로 문서가 생성되고 정적 웹 페이지로 배포되는 구조를 설계했습니다.
-
-
-
-![image|37](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/f452a5da-afdf-4363-b555-1f75b723dded/Fluentd_to_HDFS_Data-2026-03-13-142259.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466UZJHHKYU%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153151Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEML%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQC2AVeSOqUHAKXT2J9TqcYXSGAOkFDJu7LjKkW1x70LigIhAPwNIICw%2B3LdnhseF2NRLb%2Fg01QHPx%2BBTUKph7yqfmChKogECIv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgxHraSzPawlzPOs2VUq3AMfRmatF4bL8LJqzXOfCWChKnJiEoMPBZWQE4etMM%2B8SBc8KyLsY3mKyxo0EImbVH6Cnm9WimU5LnFCzS6I91vdvstpzrCE7PC%2FkLULODpyVGDF0MqUGM7iCllwzson%2FR97zo3dUs%2B3MXnXRBYDl9fDB%2F%2FUhvByHRoCzCjK%2FRi6IZPx8Q1LZ7YSO6LAU2vUjjmwXQwZxS2WNKjKaj9n2U%2FaHiNobnAm8CzZ5KajGumUKZy80tGTLdSVDXK3Cw2Ussg8jfDPGe8HUc9otaBTaXxAy2O0g1L8lTfFCtS7KuYNhQ6kE0j1LfcRowoQ6BhkxkFMJs4fwUUyeJnOoXEVNB4UNpSKQz3P3j19ivN6pZPcD48v4qUja2uAx2JJ7KlujR82h2wG0W%2B%2BvxLPAEx3BxFybPlDbnc0q5dmXV%2FuVQcw%2By0jre6XBgUxpEX2NrKB78wcAZlxSwGALPpgpTr5lkMhIobcV%2FVWd8CqTBrq%2F3lDb8Y3v2uyYBuR4AmeWppNS6fKjMLGaHyv8WpzLT3TK7jRSDA6T5%2FWl95ffKvD7N2OV6oDO%2BTkZMPqfDW8I1aX%2Ftd7svh0hq3P6RsN%2FFmLhHDyohrmLLpANzuNiwoMRZv1yJhT4DrW4myUr%2F4w4DD1vc%2FNBjqkAX%2FYYEM9P9lm%2BcEa8q7xx%2BvBHDJtOrxA%2BzlxmbwkZKos0xdUE%2FXu3RyuLmEbMs%2FLP2I%2FeheJw4h7JI3H4c61xKt8CiDtlbkGdt7FGaMRKyb6A814GIzes21gmKFdrLX%2BrN4FsnZUipY8jTvkzwCW%2BojdNzTbZo0joqhbecM10aEwf%2FSzh2G8xrAyf3NN1nP6FCA6rPmItGdjZRVca1AQ15aPhbXf&X-Amz-Signature=2c1e21d6d22519671f421f948eeddfed6d1a06fbc4e83b77dbd4db806f8a2c8b&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![[ai_docs_shpinx.png|697]]
 
 ## 3. Solution & Technical Insights
 

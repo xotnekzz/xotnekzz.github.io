@@ -9,6 +9,7 @@ tags:
   - Python
   - ELT
 featured: false
+draft: false
 ---
 
 > **기간:** 2026.2 ~ 2026.3
@@ -25,8 +26,7 @@ featured: false
 
 ## 3. Solution & Technical Insights
 
-![image](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/8994c290-6e7f-4854-be8a-3bfb3b186a79/pyairbyte.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TUHTQFGM%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153141Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEML%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQCJt9XdZqeTOwKMGHyi1%2FkHTOtbIr%2Bk03uuqck99N0nbwIhAN2W6pAeTByPC1%2FpcCG8bNTvsDsn%2FqyU%2BFtSclAc0ztzKogECIv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgxjHhp5KeFTbJG20XQq3APujIainksEbWGXNHXcvyH56zXO6QBtr%2FrKIKLVlfQ%2BmeFYXhuEI7%2Fz7SzCoBFHEA5uIwDsv2d%2FoKZJ%2FdjoPAl9UOTqdkjrr8jVQnDAXkAp61qc5Vds4Ck5k7264dsj0QOGySKANrn23o6aCPuDSeLZ4pH8QTUTqc2PCufDjfr0hDDJZ3LE6uNeXsu8MjAybGSCVQ72zGL%2B9wZzHN7z315dKDJKLbIkwwXXd5iRMZXHdWDhw1AzwDyDRk1cCUBfaV4bYbqxEy7mZS5Gl8RRyG7ZoZS%2Bvwm7sOGIq9mKANH8fho6OQ%2FMR3%2BtVHFuqMVyAGhR3sdG0vu21H7W1sRj5f3dQ46VnZGuqDSOnRxFYJBL02tuAA65RcJrO2MobrvWs7RcRRFpQB7f10TRtsV3Bd0baV1CZz7kd9pBVYeTwukPYQCAlLquJb0uO%2BmoCziFR9kwx4kdU%2BOg8UMgitZ95yq4mD0KnVjiF7u7vWstiAEKQlw11RmhwXnnBd25Z9wcU4t2%2BoEG8YONSKU7UTUxn%2BnUwnTzVApq5A70wY%2FnJ0Nvlhby0qqoPS9qG%2FD4yeb5%2FneXfgs7ETEA2%2BbA9mrlfeTNINMMDJPJ0o9%2FFTZJaw%2B6FzyCPbNlfwKYF3sApjCvvc%2FNBjqkASlR3IZ4%2FgTu4dnIJNMEc7BQa9EjCT6yBqXpxvtjPyTX67eMUA1oRCHCEu%2B8cSvlnKFuduNH5vC5I15Q%2F9lAQBVGr9Qg1NnivkvwbIw8ZohCeP8Rh07mYmq5ldJ4tM%2B1CIlJUKbpoSJtEIS5J5zCPN9u0tkUpMHWlHOkXhOlmXcEHVBnLfKqZjgKNsL3bZIzaqok9VVzb2uUqbmUk%2FTS1fH34%2FI8&X-Amz-Signature=6c859c120d91e16030867cec4f0851ebc701d4d5d8280eb28893e268c18e69b6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
-
+![[pyairbyte.svg|697]]
 1. **PyAirbyte + Airflow 결합을 통한 Ingestion 자동화**
 - **[Issue]** API 연동 시마다 개별 커넥터를 작성하고 유지보수해야 하는 부담이 컸습니다.
 - **[Solution]** **PyAirbyte**를 Airflow 환경에 도입하여 수천 개의 오픈소스 커넥터를 즉시 활용할 수 있는 기반을 마련했습니다. 이로 인해 신규 데이터 소스 추가 시 코딩 리소스를 80% 이상 절감하고 수집 프로세스의 표준화를 달성했습니다.

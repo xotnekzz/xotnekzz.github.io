@@ -11,6 +11,7 @@ tags:
   - RAG
   - AI Platform
 featured: true
+draft: false
 ---
 
 > **기간:** 2025.4 ~ 2024.6
@@ -33,7 +34,8 @@ Streamlit과 LangChain을 활용하여 특정 백오피스 업무를 자동화�
 - **Text-to-SQL 에이전트:** 비전문가가 자연어로 내부 데이터를 조회할 수 있는 환경 구축
 - **유저 리뷰 분석기:** 대량의 고객 VOC를 테마별로 요약 및 감정 분석하여 리포트 자동 생성
 - **성과:** AI의 실무 적용 가능성을 증명하고, 현업 부서의 강력한 도입 의지 확보
-![image](https://prod-files-secure.s3.us-west-2.amazonaws.com/d4ddb94b-7c9d-46ff-ae59-4df49feee0b8/75088e66-f7ce-4fdd-847b-113ae83a7b81/AI_Platform.svg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46645YJ54IY%2F20260313%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260313T153149Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEML%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDfEFbQAumFLOcsNuJu%2BEZ2%2BPZpLoqJobTIsK9%2BQQqmMwIhANSltHQmLVvrj8VAT3krl5P6JyFnLlZtOGzGnYcfTDRQKogECIv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgzN64FrCNGLU%2B6CN70q3AOSSlXOgLdCO8hGVrrT45TxXKjJo4pj3geJmcqbpzxICp3VEhdS4QOGEU%2F7LP6tjmUfZ%2FmD9ANT6jqt4nIiA5UYTqA0GxAWxavL5nDt7QeUMUXDlFcDVTjxTdFD15JWAPi4WKSXUiBoEyWct%2FrybSb00x4ekcWImzUwMCClNxbgusF%2BmLgMf2BZIJyTPjaX%2FXw8X%2BsVrkdvw1bq0MxZnfEwpZL6kQxO1XUx96B%2BH%2B7e2Ybj%2BAbCBYDxp2xwCeW6HDg%2BsDhE6M0T7EzL5vEklhIACowSlKVE3VJvoq3Ja1JdCo2tmNnso4usnyZQXSiwZo1C2RH%2B8k3PR9PGTYdWi4ZPQ9UWTD%2BAlN4fl4Q5a0QHcXtgTIT9KsgKLiSFD02E8OYlE8JfRkqCxkUs9KmncgEdETz2EcqEO2egdEFtxSJXY0bmqZOiDDc7xOXmHEzqip2YbXugM0fwQjQ7WS8Ek%2FZAbBPMNk%2FgzWUXLeMULPEmvgcY4cR2YnehKYldw9%2FGQ87K24z3Ac%2B926SjXZ4qpxx2L3bSR63ExkUEGf%2FDP7wtb7MUzrbHrgG9rI3%2Bzrs6ggu9q6Jov%2BSMmfhQmCs7uYeqrf6P6qjopTQ4M80GVw0GyJtdIMNQd5srtqEe%2BDCWvs%2FNBjqkAaumgFQSUDvDcKfZSQ4IsckPDsttT2qs0Bo3Q5sV6aE49dZT83UIG1rBE3xOyQKuVZ9daTsB3ZrL%2BhjFAVltS31NAATjtNpP%2ByLPnaXO%2BSyaArb%2FMH27wzw%2FOBaEfplZ8933AWzJfB1e8Jhgj1oISPmBTrbIelSgTcZjp8VxVVpI8gnHG%2FVzGzsXYTCXMkj5phWqMN9trRA4rZLO3yfc2AhmhrJE&X-Amz-Signature=b3db3681542d99a48b183035fb6a5ddba2176a11d524da9f29073ce07c1c2ed6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+
+![image|625](/images/ai_platform.svg)
 
 ### Phase 2: Open-source Based Agent Platform (2025~)
 
