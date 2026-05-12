@@ -5,7 +5,7 @@ date: 2026-05-12
 tags:
   - DataGovernance
 featured: false
-draft: false
+draft: true
 ---
 # 들어가며 - 왜 데이터 카탈로그가 필요했나?
 
