@@ -1,6 +1,5 @@
 ---
 title: StarRocks 클러스터 구축하기 with Ansible
-description: "1."
 date: 2025-12-11
 tags:
   - StarRocks

@@ -1,6 +1,5 @@
 ---
 title: "[Data Engineering Lab] #8. Debezium 커넥터 등록하기 — MariaDB와 Kafka CDC 구현하기"
-description: 지난 포스팅에서 Binlog가 활성화된 MariaDB에 실시간 이커머스 트래픽 데이터를 생성 및 저장하는 과정을 구현하였습니다.이번 시간에는 Debezium MariaDB Connecto 통해 MariaDB에 저장된 데이터를 실시간으로 Kafka에 전
 date: 2026-01-13
 tags:
   - Debezium

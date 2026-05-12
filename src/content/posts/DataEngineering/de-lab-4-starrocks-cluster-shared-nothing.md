@@ -1,6 +1,5 @@
 ---
 title: "[Data Engineering Lab] #4. StarRocks Cluster 구축하기 (Shared Nothing)"
-description: "[Data Engineering Lab] #3. KRaft 모드로 Kafka Cluster 로컬에 구축하기안녕하세요"
 date: 2025-12-27
 tags:
   - StarRocks

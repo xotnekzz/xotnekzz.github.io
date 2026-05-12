@@ -1,6 +1,5 @@
 ---
 title: Docker Container IP로 직접 접근하는 방법
-description: 맥북(macOS)환경에서 도커를 사용할 때 컨테이너 IP(172.17.0.x) 로는 직접 접근하지 못합니다. 그래서 매번 -p 옵션으로 포트 포워딩을 통해 localhost(127.0.0.1)로 접속해야만 했습니다.
 date: 2025-12-18
 tags:
   - Docker

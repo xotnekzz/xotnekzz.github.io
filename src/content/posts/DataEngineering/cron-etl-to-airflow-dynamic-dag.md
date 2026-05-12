@@ -1,6 +1,5 @@
 ---
 title: "Cron 기반의 레거시 ETL 파이프라인을 Airflow Dynamic DAG로 우아하게 전환하기"
-description: "1. 들어가며안녕하세요. 글로벌 모바일 게임사 BI팀에서 데이터 엔지니어링 및 백오피스 개발을 담당하고 있습니다."
 date: "2025-12-02"
 tags: ["Airflow", "ETL", "DAG", "DataEngineering"]
 featured: false

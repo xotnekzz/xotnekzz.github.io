@@ -1,6 +1,5 @@
 ---
 title: "Airflow 살펴보기"
-description: "1. Airflow ?Apache Airflow는 배치 기반의 데이터 워크플로우를 개발(develop), 스케쥴링(schedule), 모니터(Monitor)를 하는 오픈소스 플랫폼입니다. 쉽게 말해, \"A 작업을 하고, 성공하면 B 작업을 하라."
 date: "2025-12-01"
 tags: ["Airflow", "DataEngineering", "Workflow", "ETL"]
 featured: false

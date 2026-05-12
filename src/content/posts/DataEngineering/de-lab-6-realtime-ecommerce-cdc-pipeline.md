@@ -1,6 +1,5 @@
 ---
 title: "[Data Engineering Lab] #6. 실시간 이커머스 CDC 파이프라인 설계"
-description: 그동안 Kafka, StarRocks, MariaDB 등 데이터 엔지니어링을 위한 인프라 구축을 완료하였습니다.이번 포스팅 부터는 실제 상황과 비슷한 시나리오를 만들어 데이터 파이프라인 프로토타입을 구축해볼 예정입니다.1.
 date: 2025-12-28
 tags:
   - CDC

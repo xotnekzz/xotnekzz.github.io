@@ -1,6 +1,5 @@
 ---
 title: "[Data Engineering Lab] #1. Ansible, Vagrant 환경을 Docker로 변경한 이유"
-description: 1. 나는 데이터 엔지니어인가, 서버 관리자인가?지난 포스팅들에서는 Vagrant, Ansible을 사용한 이유는 실제 베어메탈 서버와 가장 유사한 환경에서 데이터 엔지니어링 플랫폼을 구축하고 싶었기 때문입니다.
 date: 2025-12-20
 tags:
   - Docker

@@ -1,6 +1,5 @@
 ---
 title: Gemini CLI로 경험한 바이브 코딩 후기
-description: 바이브 코딩은 2025년 2월 안드레이 카파시(Andrej Karpathy)가 소개하며 화제가 된 개념입니다.이는 개발자 코드를 한 줄 한 줄 직접 작성하는 것이 아니라 AI에게 자연어로 의도(Vibe)를 전달하고 결과물을 관리하는 '매니저'로서 코딩
 date: 2025-12-03
 tags:
   - Gemini

@@ -1,6 +1,5 @@
 ---
 title: OpenMetadata로 데이터 디스커버리하기
-description: ""
 date: 2026-05-12
 tags:
   - DataGovernance

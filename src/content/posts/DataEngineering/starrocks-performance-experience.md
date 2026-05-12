@@ -1,6 +1,5 @@
 ---
 title: StarRocks의 압도적 퍼포먼스 경험기
-description: 1. 들어가며현재 회사에서 MariaDB ColumnStore를 메인 OLAP 데이터베이스로 잘 사용해왔습니다.
 date: 2025-12-05
 tags:
   - StarRocks

@@ -1,6 +1,5 @@
 ---
 title: "[Data Engineering Lab] #5. CDC의 시작 — Binlog 활성화된 MariaDB 띄우기 (Docker)"
-description: 안녕하세요. 이번 포스팅은 OLTP DB인 MariaDB를 도커로 띄워볼건데요,CDC(capture data capture)활용을 고려하여 Binlog를 활성화하여 구축해보도록 하겠습니다.1.
 date: 2025-12-27
 tags:
   - CDC

@@ -1,6 +1,5 @@
 ---
 title: "[Data Engineering Lab] #3. KRaft 모드로 Kafka Cluster 로컬에 구축하기"
-description: "안녕하세요 지난 포스팅(/posts/DataEngineering/de-lab-2-docker-container-static-ip)에 이어 Kafka Cluster를 로컬 제 맥북에 구축해보도록 하겠습니다.[[Data Engineering Lab] #2."
 date: 2025-12-26
 tags:
   - Kafka

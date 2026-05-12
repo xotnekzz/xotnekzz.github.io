@@ -1,6 +1,5 @@
 ---
 title: "Kafka KRaft Cluster 구축하기 with Ansible"
-description: "1. 들어가며지난 포스팅에서 Starrocks 고성능 OLAP 분석환경을 구축하였습니다. (이전 글 : Starrocks 클러스터 구축하기 with Ansible) 하지만 고성능 DB가 준비되었다고 해서 데이터 플랫폼이 완성된 것은 아닙니다."
 date: "2025-12-13"
 tags: ["Kafka", "KRaft", "Ansible", "DataEngineering"]
 featured: false

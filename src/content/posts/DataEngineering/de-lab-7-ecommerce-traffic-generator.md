@@ -1,6 +1,5 @@
 ---
 title: "[Data Engineering Lab] #7. 실시간 이커머스 트래픽 생성기"
-description: 실제 이커머스 서비스 환경을 재현하기 위한 데이터 스키마 설계와 트래픽 생성기 파이썬 코드를 구현하도록 하겠습니다.1.
 date: 2026-01-02
 tags:
   - Python

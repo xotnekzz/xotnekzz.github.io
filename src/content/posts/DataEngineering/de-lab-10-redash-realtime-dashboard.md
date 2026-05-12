@@ -1,6 +1,5 @@
 ---
 title: "[Data Engineering Lab] #10. Redash로 실시간 분석 Dashboard 만들기 (BI)"
-description: 0. 서론우리는 지금까지 꽤 먼길을 달려왔습니다. MacBook의 리소스 한계를 극복하기 위해 Vagrant를 버리고 Docker로 전환했고,실제 서버환경 처럼 사용하기 위해 컨테이너마다
 date: 2026-01-26
 tags:
   - Redash

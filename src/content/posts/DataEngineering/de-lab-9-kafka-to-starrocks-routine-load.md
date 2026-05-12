@@ -1,6 +1,5 @@
 ---
 title: "[Data Engineering Lab] #9. Routine Load를 사용하여 Kafka 데이터를 StarRocks에 실시간 적재하기"
-description: 안녕하세요. 지난 포스팅(/posts/DataEngineering/de-lab-8-debezium-mariadb-kafka-cdc)에서 Debeziun 커넥터를 띄우고 이를 사용하여 "MariaDB (source) -> Debezium -> Kafka" 형태의 CDC 파이프라인 구축해 보았습니다.
 date: 2026-01-16
 tags:
   - StarRocks

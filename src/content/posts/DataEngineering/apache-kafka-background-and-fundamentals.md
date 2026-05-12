@@ -1,6 +1,5 @@
 ---
 title: Apache Kafka 1 - 카프카의 배경과 근본
-description: '1. 카프카의 배경과 근본: 데이터 배관공(Plumbers)에서 벗어나기Apache Kafka를 단순히 "데이터를 주고받는 큐(Queue)" 정도로 이해한다면, 카프카의 진정한 가치를 놓치게 됩니다.'
 date: 2025-12-17
 tags:
   - Kafka
