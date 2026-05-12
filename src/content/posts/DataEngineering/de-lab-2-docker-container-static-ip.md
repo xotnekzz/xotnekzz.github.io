@@ -1,7 +1,7 @@
 ---
 title: "[Data Engineering Lab] #2. Docker Container에 고정 IP 할당하기"
 description: 보통 Docker를 쓸 때는 localhost:9092 localhost:9093 처럼 포트 번호로 서비스를 구분하곤 합니다. 하지만 저는 이 방식이 마음에 들지 않았습니다. 실제 운영 환경에서는 서버마다
-date: 2025-12-20
+date: 2025-12-21
 tags:
   - Docker
   - Network
