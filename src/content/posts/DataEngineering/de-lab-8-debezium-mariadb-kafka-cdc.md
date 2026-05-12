@@ -175,7 +175,7 @@ Debezium은 테이블 구조 변경(`ALTER TABLE` 등) 내역을 별도의 Kafka
 
 ## 5. CDC 테스트 - 이커머스 데이터 생성기 실행
 
-[이전 글](/posts/DataEngineering/de-lab-7-ecommerce-traffic-generator) 에서 생성한 이커머스 데이터 생성기를 실행하여, 데이터 베이스에 데이터를 입력, 수정, 삭제를 진행해보겠습니다.
+[이전 글](./de-lab-7-ecommerce-traffic-generator.md) 에서 생성한 이커머스 데이터 생성기를 실행하여, 데이터 베이스에 데이터를 입력, 수정, 삭제를 진행해보겠습니다.
 
 ```sql
 (venv) tskim@MacBook-Pro mariadb % python3 gen_data.py

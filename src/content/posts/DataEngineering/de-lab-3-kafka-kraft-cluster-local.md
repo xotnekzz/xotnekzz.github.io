@@ -11,9 +11,9 @@ featured: false
 draft: false
 ---
 
-안녕하세요 지난 포스팅([이전 글](/posts/DataEngineering/de-lab-2-docker-container-static-ip))에 이어 Kafka Cluster를 로컬 제 맥북에 구축해보도록 하겠습니다.
+안녕하세요 지난 포스팅([이전 글](./de-lab-2-docker-container-static-ip.md))에 이어 Kafka Cluster를 로컬 제 맥북에 구축해보도록 하겠습니다.
 
-[[Data Engineering Lab] #2. Docker Container에 고정 IP 할당하기](/posts/DataEngineering/de-lab-2-docker-container-static-ip)
+[[Data Engineering Lab] #2. Docker Container에 고정 IP 할당하기](./de-lab-2-docker-container-static-ip.md)
 
 ## 1. 클러스터 아키텍처
 
@@ -200,7 +200,7 @@ docker-mac-net-connect을 통한 IP 직접접근
 
 Docker Desktop for Mac에서는 컨테이너 IP에 직접 접근이 불가능하기 때문에 컨테이너마다 외부 포트를 다르게 지정해야하는 불편함이 있습니다.
 
-그래서 지난포스팅( [/posts/DataEngineering/de-lab-2-docker-container-static-ip )](/posts/DataEngineering/de-lab-2-docker-container-static-ip) 에서 세팅을 했다면 도커 포트설정없이 IP로 접근이 가능합니다.
+그래서 지난포스팅( [/blog/dataengineering/de-lab-2-docker-container-static-ip )](./de-lab-2-docker-container-static-ip.md) 에서 세팅을 했다면 도커 포트설정없이 IP로 접근이 가능합니다.
 
 ## 3. Kafka Cluster 배포
 

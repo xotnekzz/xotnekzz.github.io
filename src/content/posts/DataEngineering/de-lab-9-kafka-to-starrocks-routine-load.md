@@ -11,7 +11,7 @@ featured: false
 draft: false
 ---
 
-안녕하세요. 지난 포스팅([이전 글](/posts/DataEngineering/de-lab-8-debezium-mariadb-kafka-cdc))에서 Debeziun 커넥터를 띄우고 이를 사용하여 "MariaDB (source) -> Debezium -> Kafka" 형태의 CDC 파이프라인 구축해 보았습니다.
+안녕하세요. 지난 포스팅([이전 글](./de-lab-8-debezium-mariadb-kafka-cdc.md))에서 Debeziun 커넥터를 띄우고 이를 사용하여 "MariaDB (source) -> Debezium -> Kafka" 형태의 CDC 파이프라인 구축해 보았습니다.
 
 이번에는 이 파이프라인의 핵심인 **분석(Analytics)** 단계입니다. Kafka에 쌓이고 있는 이커머스 주문 이벤트 데이터를 StarRock가 실시간으로 읽어들여(Consume), 분석용 테이블에 적재(Upsert)하는 과정을 다뤄보겠습니다.
 
