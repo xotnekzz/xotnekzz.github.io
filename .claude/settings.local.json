@@ -57,7 +57,11 @@
       "Bash(echo \"RESUME_EDITOR_EXIT:$?\")",
       "Bash(echo \"RESUME_TS_EXIT:$?\")",
       "Bash(ln -s src/content content)",
-      "Bash(ln -s ../../public/images /Users/tskim/Project/blog/src/content/images)"
+      "Bash(ln -s ../../public/images /Users/tskim/Project/blog/src/content/images)",
+      "Bash(python3 /tmp/convert_posts.py)",
+      "Bash(python3 -c ' *)",
+      "Bash(sed -n '10,20p' /Users/tskim/Project/01-web/blog/src/content/posts/DataEngineering/de-lab-3-kafka-kraft-cluster-local.md)",
+      "Bash(sed -n '10,20p' /Users/tskim/Project/01-web/blog/src/content/posts/DataEngineering/de-lab-4-starrocks-cluster-shared-nothing.md)"
     ]
   }
 }
