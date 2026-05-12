@@ -1,6 +1,6 @@
 ---
 title: "[Data Engineering Lab] #5. CDC의 시작 — Binlog 활성화된 MariaDB 띄우기 (Docker)"
-date: 2025-12-27
+date: 2025-12-28
 tags:
   - CDC
   - MariaDB

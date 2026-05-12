@@ -1,6 +1,6 @@
 ---
 title: "[Data Engineering Lab] #6. 실시간 이커머스 CDC 파이프라인 설계"
-date: 2025-12-28
+date: 2025-12-29
 tags:
   - CDC
   - Kafka

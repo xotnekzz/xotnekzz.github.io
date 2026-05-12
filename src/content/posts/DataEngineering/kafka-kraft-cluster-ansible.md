@@ -1,9 +1,13 @@
 ---
-title: "Kafka KRaft Cluster 구축하기 with Ansible"
-date: "2025-12-13"
-tags: ["Kafka", "KRaft", "Ansible", "DataEngineering"]
+title: Kafka KRaft Cluster 구축하기 with Ansible
+date: 2025-12-13
+tags:
+  - Kafka
+  - KRaft
+  - Ansible
+  - DataEngineering
 featured: false
-draft: true
+draft: false
 ---
 
 ## 1. 들어가며

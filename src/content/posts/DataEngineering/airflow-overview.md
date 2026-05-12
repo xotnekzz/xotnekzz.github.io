@@ -1,9 +1,13 @@
 ---
-title: "Airflow 살펴보기"
-date: "2025-12-01"
-tags: ["Airflow", "DataEngineering", "Workflow", "ETL"]
+title: Airflow 살펴보기
+date: 2025-12-01
+tags:
+  - Airflow
+  - DataEngineering
+  - Workflow
+  - ETL
 featured: false
-draft: true
+draft: false
 ---
 
 ## 1. Airflow?
