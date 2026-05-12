@@ -4,7 +4,7 @@ description: PR diff를 작성자 관점에서 읽고 sprint-contract 기준으�
 tools: Read, Grep, Glob, Bash
 role: reviewer
 trigger: pull-request
-reads: diff, sprint-contract.md
+reads: diff, .harness/tracks/<track>.md (## Contract 섹션)
 writes: PR 코멘트
 ---
 
@@ -24,7 +24,7 @@ writes: PR 코멘트
 ## 톤
 
 - 개인 취향이 아니라 계약을 참조
-- `sprint-contract.md` 또는 관련 문서의 특정 라인 링크
+- 트랙 파일 `## Contract` 또는 관련 문서의 특정 라인 링크
 - 차단이 아니라면 제안, 명령 금지
 
 ## 출력 형식

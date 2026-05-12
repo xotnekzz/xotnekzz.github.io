@@ -1,25 +1,22 @@
 ---
 name: lessons-learned
-description: 트랙 완료 시 docs/ 또는 memory/에 영속 학습 추출
+description: 트랙 완료 시 트랙 파일 ## Log 마지막에 회고를 기록하고 done/으로 이동
 ---
 
 # lessons-learned
 
 ## 단계
 
-1. 트랙 완료 시 `plan.md`, `progress.md`, `evaluation.md` 읽기
-2. 세 섹션 초안:
+1. `.harness/tracks/<track>.md`의 `## Plan`, `## Log`, `## Verdict` 읽기
+2. `## Log` 끝에 회고 3줄 이내 append:
    - **작동함** — 검증된 접근
-   - **작동 안 함** — 막다른 길과 이유
-   - **놀라움** — 비자명한 발견
-3. 각 라인을 라우팅:
-   - **재사용 패턴** (팀 공유) → `.harness/tracks/completed/<track>/lessons.md`
-   - **개인 선호 확정** (세션 수준) → `memory/feedback_<slug>.md`
-   - **프로젝트 상태 변경** → `memory/project_<slug>.md`
-4. 트랙 폴더를 `active/`에서 `completed/<track>/`으로 이동
-5. `docs/product-specs/index.md`에서 활성 링크 제거, 완료 섹션에 추가
+   - **놀라움** — 비자명한 발견 (없으면 생략)
+   - **다음엔** — 반복 방지 힌트 (없으면 생략)
+3. 트랙 파일을 `tracks/done/<track>.md`로 이동
+4. `Track.md`에서 `## Active` 링크 제거, `## Done`에 추가
 
 ## 금지
 
 - 수정 레시피 저장 금지 — 코드와 git history가 권위
-- 전체 progress.md 덤프 금지; 비자명한 것만 압축
+- 전체 Log 덤프 금지; 비자명한 것만 압축
+- lessons가 없으면 회고 섹션 생략 (파일 채우기 금지)

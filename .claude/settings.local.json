@@ -61,7 +61,8 @@
       "Bash(python3 /tmp/convert_posts.py)",
       "Bash(python3 -c ' *)",
       "Bash(sed -n '10,20p' /Users/tskim/Project/01-web/blog/src/content/posts/DataEngineering/de-lab-3-kafka-kraft-cluster-local.md)",
-      "Bash(sed -n '10,20p' /Users/tskim/Project/01-web/blog/src/content/posts/DataEngineering/de-lab-4-starrocks-cluster-shared-nothing.md)"
+      "Bash(sed -n '10,20p' /Users/tskim/Project/01-web/blog/src/content/posts/DataEngineering/de-lab-4-starrocks-cluster-shared-nothing.md)",
+      "Bash(xargs -0 perl -i -pe ' *)"
     ]
   }
 }

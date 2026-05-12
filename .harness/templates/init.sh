@@ -243,7 +243,7 @@ log "dest:   $DEST_DIR"
 log "mode:   $MODE  (dry-run=$DRY_RUN)"
 
 # --- adopt-mode guard: preserve existing top-level docs ---
-ADOPT_PRESERVE=(AGENTS.md CLAUDE.md GEMINI.md ARCHITECTURE.md)
+ADOPT_PRESERVE=(AGENTS.md CLAUDE.md GEMINI.md)
 if [[ "$MODE" == "adopt" ]]; then
   for f in "${ADOPT_PRESERVE[@]}"; do
     if [[ -f "$DEST_DIR/$f" ]]; then
@@ -253,12 +253,12 @@ if [[ "$MODE" == "adopt" ]]; then
 fi
 
 # --- copy harness tree ---
-for d in docs memory .harness .github; do
+for d in .harness .github; do
   copy_tree "$SRC_DIR" "$d"
 done
 
 # --- top-level markdown ---
-for f in AGENTS.md CLAUDE.md GEMINI.md ARCHITECTURE.md README.md; do
+for f in AGENTS.md CLAUDE.md GEMINI.md README.md; do
   if [[ "$MODE" == "adopt" && -f "$DEST_DIR/$f" && "$f" != "README.md" ]]; then
     # write sidecar
     if [[ "$DRY_RUN" == 1 ]]; then
@@ -281,9 +281,9 @@ done
 if [[ "$DRY_RUN" != 1 ]]; then
   while IFS= read -r -d '' f; do
     substitute "$f"
-  done < <(find "$DEST_DIR/.harness" "$DEST_DIR/docs" "$DEST_DIR/memory" \
+  done < <(find "$DEST_DIR/.harness" \
            -type f \( -name '*.md' -o -name '*.yaml' -o -name '*.yml' \) -print0 2>/dev/null || true)
-  for f in AGENTS.md CLAUDE.md GEMINI.md ARCHITECTURE.md; do
+  for f in AGENTS.md CLAUDE.md GEMINI.md; do
     substitute "$DEST_DIR/$f"
   done
 fi
@@ -300,28 +300,42 @@ if [[ "$DRY_RUN" != 1 ]]; then
       sha=$(sha256sum "$f" | awk '{print $1}')
     fi
     printf '%s  %s\n' "$sha" "$rel" >> "$MANIFEST"
-  done < <(find "$DEST_DIR/.harness" "$DEST_DIR/docs" "$DEST_DIR/memory" -type f -print0 2>/dev/null || true)
+  done < <(find "$DEST_DIR/.harness" -type f -print0 2>/dev/null || true)
   log "manifest: $MANIFEST"
 fi
 
 if [[ "$MODE" == "adopt" ]]; then
-  PLAN="$DEST_DIR/.harness/tracks/active/harness-adoption/plan.md"
+  PLAN="$DEST_DIR/.harness/tracks/harness-adoption.md"
   if [[ "$DRY_RUN" != 1 ]]; then
     mkdir -p "$(dirname "$PLAN")"
     cat > "$PLAN" <<'EOF'
-# Harness adoption plan
+---
+track: harness-adoption
+status: active
+started: auto
+---
 
-The harness was installed in **adopt** mode. Existing `AGENTS.md` / `CLAUDE.md`
-were preserved; sidecars were written as `AGENTS.harness.md`, etc.
+## Why
+adopt 모드로 하네스 설치. 기존 AGENTS.md/CLAUDE.md 보존, 사이드카(.harness.md)와 병합 필요.
 
-## Checklist
+## Plan
+- [ ] `config` AGENTS.md vs AGENTS.harness.md diff 후 ToC 병합
+- [ ] `config` `.harness/linters/` 중 이 스택에 적용할 린터 선택
+- [ ] `config` `.harness/mcp/servers.json` MCP 기본 세트 결정
+- [ ] `config` AGENTS.harness.md 사이드카 삭제 (병합 완료 후)
 
-- [ ] Diff `AGENTS.md` vs `AGENTS.harness.md`; merge ToC entries
-- [ ] Verify `docs/` does not collide with existing docs directory
-- [ ] Decide which linters in `.harness/linters/` apply to this stack
-- [ ] Pick MCP base set in `.harness/mcp/servers.json`
-- [ ] Remove `AGENTS.harness.md` sidecars once merged
+## Contract
+성공 기준: AGENTS.md 단일 파일로 통합, harness lint 통과
+
+## Log
+
+## Verdict
 EOF
+    # Track.md에 adopt 트랙 등록
+    TRACK_INDEX="$DEST_DIR/.harness/Track.md"
+    if [[ -f "$TRACK_INDEX" ]]; then
+      sed -i.bak 's/_(비어 있음 — `\/new-track <설명>`으로 생성)_/- [harness-adoption](tracks\/harness-adoption.md) — adopt 모드 마무리/' "$TRACK_INDEX" && rm -f "${TRACK_INDEX}.bak"
+    fi
     log "adopt plan: $PLAN"
   fi
 fi

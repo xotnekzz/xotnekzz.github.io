@@ -12,29 +12,25 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-DOCS = ROOT / "docs"
-MEMORY = ROOT / "memory"
+DOCS = ROOT / ".harness" / "docs"
+TRACKS = ROOT / ".harness" / "tracks"
+TRACK_INDEX = ROOT / ".harness" / "Track.md"
 AGENTS = ROOT / "AGENTS.md"
-TECHDEBT = ROOT / ".harness" / "tracks" / "tech-debt-tracker.md"
+TECHDEBT = ROOT / ".harness" / "docs" / "tech-debt-tracker.md"
 
 LINK_RE = re.compile(r"\]\(([^)]+\.md)\)")
 
 
-def find_orphans() -> list[str]:
-    """docs/ 하위 파일 중 어떤 index.md에서도 링크되지 않은 것."""
-    if not DOCS.exists():
+def find_orphan_tracks() -> list[str]:
+    """tracks/*.md 중 Track.md에서 링크되지 않은 것."""
+    if not TRACKS.exists() or not TRACK_INDEX.exists():
         return []
-    linked: set[Path] = set()
-    for idx in DOCS.rglob("index.md"):
-        base = idx.parent
-        for m in LINK_RE.findall(idx.read_text(encoding="utf-8")):
-            target = (base / m).resolve()
-            linked.add(target)
+    index_text = TRACK_INDEX.read_text(encoding="utf-8")
     orphans: list[str] = []
-    for f in DOCS.rglob("*.md"):
-        if f.name == "index.md":
+    for f in TRACKS.glob("*.md"):
+        if f.name == "_template.md":
             continue
-        if f.resolve() not in linked:
+        if f.name not in index_text:
             orphans.append(str(f.relative_to(ROOT)))
     return orphans
 
@@ -46,24 +42,11 @@ def agents_md_pressure() -> tuple[int, bool]:
     return n, n > 80
 
 
-def stale_memory(days: int = 180) -> list[str]:
-    if not MEMORY.exists():
-        return []
-    now = datetime.now(timezone.utc).timestamp()
-    cutoff = now - days * 86400
-    out: list[str] = []
-    for f in MEMORY.glob("project_*.md"):
-        if f.stat().st_mtime < cutoff:
-            out.append(str(f.relative_to(ROOT)))
-    return out
-
-
 def main() -> int:
     report = {
         "generated": datetime.now(timezone.utc).isoformat(),
-        "orphan_docs": find_orphans(),
+        "orphan_tracks": find_orphan_tracks(),
         "agents_md": dict(zip(("lines", "near_cap"), agents_md_pressure())),
-        "stale_project_memory": stale_memory(),
     }
     print(json.dumps(report, indent=2, ensure_ascii=False))
     return 0
