@@ -38,7 +38,7 @@ Linux와 달리 Docker Desktop for MAC은 가상 머신(VM)위에서 돌아가�
 
 ## 4. 해결책: docker-mac-net-connect
 
-[Docker Container IP로 직접 접근하는 방법 - (docker-mac-net-connect)](docker-container-direct-ip-access.md)
+[Docker Container IP로 직접 접근하는 방법 - (docker-mac-net-connect)](Docker/docker-container-direct-ip-access.md)
 
 ## 5. Docker Compose에서 고정 IP 적용 예시
 
