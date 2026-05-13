@@ -1,12 +1,12 @@
 ---
-title: OpenMetadata로 데이터 디스커버리하기
+title: "[OpenMetadata 도입기] #1 데이터 카탈로그가 필요했던 이유"
 date: 2026-05-12
 tags:
   - DataGovernance
 featured: false
 draft: false
 ---
-# 들어가며 - 왜 데이터 카탈로그가 필요했나?
+# 왜 데이터 카탈로그가 필요했나?
 
 제가 다니고 있는 회사 데이터 팀은  마케팅(UA, MO), CX, 게임 분석 파트 등 모든 부서 업무 도메인별로 데이터 분석환경 열어주어  누구나 데이터 기반 의사결정을 할 수 있는 환경을 구축해 왔습니다.
 
