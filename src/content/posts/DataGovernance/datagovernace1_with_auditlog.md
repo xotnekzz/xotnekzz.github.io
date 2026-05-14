@@ -20,7 +20,7 @@ featured: false
 
 ---
 
-## 1장. 출발 — 사용량을 데이터로
+## 1. Audit Log를 도입하여 사용량을 파악하자!
 
 데이터 정리는 늘 "한 번 다 같이 보고 정리합시다" 로 시작해서 흐지부지됩니다. 이유는 매번 똑같습니다:
 
@@ -39,7 +39,7 @@ featured: false
 | **StarRocks** | `starrocks_audit_db__.starrocks_audit_tbl__` | 별도 audit-loader 플러그인 |
 | **MariaDB** | `mysql-audit.log.*` (파일) | server_audit 플러그인 → 파일 → ETL → Doris |
 
-세 클러스터의 audit 를 한 화면에 모아 거버넌스 할 수 있게 만드는 것이 목표입니다.
+세 클러스터의 audit 를 한 화면에 모아 사용량을 파악하고 데이터 거버넌스 수립하는 것을 목료로 합니다.
 
 ### 각 클러스터의 audit log 수집 방식
 
@@ -68,7 +68,7 @@ featured: false
 
 ---
 
-## 2장. 전체 그림 — 데이터가 흐르고 패널이 되는 길
+## 2. Audit Log 수집 Architecture
 
 본격적인 디테일에 들어가기 전, 데이터가 어디서 시작해서 어떻게 대시보드 패널이 되는지 한 장에 정리해 두면 좋습니다.
 
@@ -92,7 +92,7 @@ featured: false
 
 ---
 
-## 3장. 데이터를 한 줄로 모으기
+## 3. 데이터를 한 줄로 모으기
 
 가장 어려웠던 건 단순해 보이는 문제였습니다. **"이 SQL 이 어떤 테이블을 건드리는가?"**
 
@@ -139,7 +139,7 @@ FROM idb_log.idb_audit_log a
 LATERAL VIEW explode_split(a.`tables`, ',') t AS col
 ```
 
-### 95M rows 가 너무 무거워서 Doris 로 옮긴 이야기
+### MariaDB Audit Log를 Apache Doris에서 분석하기
 
 처음엔 MariaDB audit 테이블을 그대로 Grafana 가 조회했습니다. 7일 윈도우에 약 9천5백만 행. KPI 한 개에 ~30초씩 걸렸고 detail 패널은 timeout. 사람이 보기 전에 Grafana 가 먼저 토라졌습니다.
 
@@ -158,7 +158,7 @@ curl --location-trusted \
 
 `label` 이 멱등 키 — 같은 날짜를 재시도해도 중복 적재가 없습니다.
 
-### Cross-DB Join — Mixed Datasource
+### Cross-DB Join — Mixed Datasource 활용하기
 
 MariaDB 의 audit 는 Doris 로 옮겼는데, `information_schema` 는 여전히 MariaDB 에 있습니다. 둘을 JOIN 해야 "정말로 안 쓰는 테이블" 이 보이는데 single SQL 로 묶을 수 없죠.
 
@@ -170,7 +170,7 @@ MariaDB 의 audit 는 Doris 로 옮겼는데, `information_schema` 는 여전히
 
 추가 트랜스폼으로 NULL 필터링까지 (`audit_hit IS NULL` 인 행이 진짜 dormant). SQL JOIN 만큼 깔끔하진 않아도 인프라 비용 없이 작동합니다.
 
-### 노이즈 필터링
+### 순수 SELECT 만 필터링
 
 순수 사용량만 보려면 이런 것들은 제외:
 
@@ -182,7 +182,7 @@ Doris/StarRocks 에선 `stmt_type = 'SELECT'` / `isQuery = 1`. MariaDB 는 ETL �
 
 ---
 
-## 4장. 거버넌스 룰을 대시보드로
+## 4. 거버넌스 룰 수립하기
 
 데이터가 갖춰지면 그 다음은 "어떤 규칙으로 정리할 것인가" 입니다.
 
@@ -201,26 +201,7 @@ Doris/StarRocks 에선 `stmt_type = 'SELECT'` / `isQuery = 1`. MariaDB 는 ETL �
 - **30일**: 월 단위 보고나 분석 주기를 한 번 거치는 시간
 - **90일**: 분기 보고를 한 번 거치는 시간. 분기에 한 번도 안 본 테이블이라면 사실상 안 쓰는 것
 
-### "Reclaimable rows" 에서 "Reclaimable GB" 로
-
-처음엔 KPI 에 "Delete 후보들의 row 수 합" 을 넣었습니다. 같이 보던 분이 한마디 했죠:
-
-> "이 테이블은 row 수가 적은데 한 row 가 큰 텍스트 컬럼이라 GB 단위로 큰데, 이건 row 수만으로는 안 보이네요?"
-
-거버넌스의 핵심은 **비용 절감 효과** 입니다. row 수보다 실제 스토리지 용량이 더 직관적인 신호:
-
-```sql
--- 변경 전
-SUM(CASE WHEN delete_condition THEN t.TABLE_ROWS ELSE 0 END) AS reclaimable_rows
-
--- 변경 후
-SUM(CASE WHEN delete_condition AND t.TABLE_TYPE = 'BASE TABLE'
-         THEN COALESCE(t.DATA_LENGTH, 0) ELSE 0 END) AS reclaimable_bytes
-```
-
-`AND t.TABLE_TYPE = 'BASE TABLE'` 한 줄이 추가된 건 **View 는 logical 이라 storage 가 0** 이라는 사실을 늦게 깨달았기 때문입니다. View 도 정리 대상에는 들어가지만 회수량은 0.
-
-### 2계층 구조 — 거버넌스와 클러스터
+## 5. 거버넌스 대시비보드 구축
 
 대시보드 자체는 두 레벨로 나눴습니다.
 
@@ -256,7 +237,7 @@ SUM(CASE WHEN delete_condition AND t.TABLE_TYPE = 'BASE TABLE'
 
 ---
 
-## 5장. 실제 운영과 남은 과제
+## 6. 실제 운영과 남은 과제
 
 대시보드는 만들어졌지만, 진짜 가치는 운영 흐름이 정착할 때 나옵니다. 우리 워크플로우는 이렇습니다.
 
@@ -283,8 +264,6 @@ Lineage (OpenMetadata) 와 Usage (이 대시보드) 가 결합되면:
 
 - "Direct usage 없음 + view 5개 의존" → Warning, owner 협의
 - "Direct usage 없음 + 의존 객체 없음" → Delete 안전
-
-이게 다음 글의 주제입니다.
 
 ### 남은 과제
 
