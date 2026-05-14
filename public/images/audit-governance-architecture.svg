@@ -1,0 +1,116 @@
+<svg width="1100" height="760" viewBox="0 0 1100 760" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6e7781"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#cf222e"/>
+    </marker>
+    <style>
+      .layer-label { font: bold 13px -apple-system,BlinkMacSystemFont,sans-serif; fill: #57606a; }
+      .title { font: 600 13px -apple-system,BlinkMacSystemFont,sans-serif; fill: #1f2328; text-anchor: middle; }
+      .subtitle { font: 11px -apple-system,BlinkMacSystemFont,sans-serif; fill: #6e7781; text-anchor: middle; }
+      .stage-num { font: bold 14px -apple-system,BlinkMacSystemFont,sans-serif; fill: #6e7781; }
+      .dashboard-text { font: bold 17px -apple-system,BlinkMacSystemFont,sans-serif; fill: white; text-anchor: middle; }
+      .cron-label { font: italic 11px -apple-system,BlinkMacSystemFont,sans-serif; fill: #cf222e; }
+    </style>
+  </defs>
+
+  <!-- (1) Sources -->
+  <text x="20" y="35" class="layer-label">(1) 원본 Audit Log</text>
+  <rect x="50" y="50" width="280" height="60" rx="8" fill="#ddf4ff" stroke="#54aeff" stroke-width="1.5"/>
+  <text x="190" y="78" class="title">Doris audit_log</text>
+  <text x="190" y="96" class="subtitle">__internal_schema.audit_log</text>
+
+  <rect x="410" y="50" width="280" height="60" rx="8" fill="#ddf4ff" stroke="#54aeff" stroke-width="1.5"/>
+  <text x="550" y="78" class="title">StarRocks audit</text>
+  <text x="550" y="96" class="subtitle">starrocks_audit_db__.starrocks_audit_tbl__</text>
+
+  <rect x="770" y="50" width="280" height="60" rx="8" fill="#ddf4ff" stroke="#54aeff" stroke-width="1.5"/>
+  <text x="910" y="78" class="title">MariaDB (IDB) audit file</text>
+  <text x="910" y="96" class="subtitle">mysql-audit.log.* (file-based)</text>
+
+  <!-- Source -> Store arrows -->
+  <line x1="190" y1="110" x2="190" y2="195" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="550" y1="110" x2="550" y2="195" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="910" y1="110" x2="910" y2="195" stroke="#cf222e" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#arrow-red)"/>
+  <text x="922" y="158" class="cron-label" text-anchor="start">Stream Load · cron</text>
+
+  <!-- (2) Stores -->
+  <text x="20" y="185" class="layer-label">(2) Audit Store (Grafana datasource)</text>
+  <rect x="50" y="200" width="280" height="60" rx="8" fill="#dafbe1" stroke="#1f883d" stroke-width="1.5"/>
+  <text x="190" y="228" class="title">Doris audit_log</text>
+  <text x="190" y="246" class="subtitle">doris_mysql</text>
+
+  <rect x="410" y="200" width="280" height="60" rx="8" fill="#dafbe1" stroke="#1f883d" stroke-width="1.5"/>
+  <text x="550" y="228" class="title">StarRocks audit</text>
+  <text x="550" y="246" class="subtitle">starrocks_mysql</text>
+
+  <rect x="770" y="200" width="280" height="60" rx="8" fill="#dafbe1" stroke="#1f883d" stroke-width="1.5"/>
+  <text x="910" y="228" class="title">Doris idb_log.idb_audit_log</text>
+  <text x="910" y="246" class="subtitle">doris_mysql (ETL 적재본)</text>
+
+  <!-- Stores -> Transform -->
+  <line x1="190" y1="260" x2="190" y2="335" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="550" y1="260" x2="550" y2="335" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="910" y1="260" x2="910" y2="335" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- (3) Transform -->
+  <text x="20" y="325" class="layer-label">(3) 논리 변환 (Grafana SQL)</text>
+  <rect x="50" y="340" width="1000" height="100" rx="12" fill="#fff8e0" stroke="#d4a72c" stroke-width="1.5"/>
+
+  <rect x="65" y="358" width="225" height="64" rx="6" fill="#fff8c5" stroke="#d4a72c" stroke-width="1"/>
+  <text x="78" y="378" class="stage-num" text-anchor="start">1</text>
+  <text x="177" y="380" class="title">테이블명 추출</text>
+  <text x="177" y="400" class="subtitle">regex / explode_split</text>
+
+  <rect x="305" y="358" width="225" height="64" rx="6" fill="#fff8c5" stroke="#d4a72c" stroke-width="1"/>
+  <text x="318" y="378" class="stage-num" text-anchor="start">2</text>
+  <text x="417" y="380" class="title">last_hit 집계</text>
+  <text x="417" y="400" class="subtitle">MAX(time) per fqdn</text>
+
+  <rect x="545" y="358" width="225" height="64" rx="6" fill="#fff8c5" stroke="#d4a72c" stroke-width="1"/>
+  <text x="558" y="378" class="stage-num" text-anchor="start">3</text>
+  <text x="657" y="380" class="title">info_schema JOIN</text>
+  <text x="657" y="400" class="subtitle">OUTER — 실재 ∩ 사용</text>
+
+  <rect x="785" y="358" width="250" height="64" rx="6" fill="#fff8c5" stroke="#d4a72c" stroke-width="1"/>
+  <text x="798" y="378" class="stage-num" text-anchor="start">4</text>
+  <text x="910" y="380" class="title">severity 분류</text>
+  <text x="910" y="400" class="subtitle">Active / Warning / Delete</text>
+
+  <line x1="291" y1="390" x2="304" y2="390" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="531" y1="390" x2="544" y2="390" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="771" y1="390" x2="784" y2="390" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Transform -> Panels -->
+  <line x1="550" y1="440" x2="550" y2="505" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- (4) Panels -->
+  <text x="20" y="495" class="layer-label">(4) 패널 합성</text>
+  <rect x="50" y="510" width="230" height="70" rx="8" fill="#fbefff" stroke="#8250df" stroke-width="1.5"/>
+  <text x="165" y="540" class="title">KPI 카드 12개</text>
+  <text x="165" y="560" class="subtitle">Tracked · Warning · Delete · Reclaim</text>
+
+  <rect x="305" y="510" width="230" height="70" rx="8" fill="#fbefff" stroke="#8250df" stroke-width="1.5"/>
+  <text x="420" y="540" class="title">Cleanup Candidates</text>
+  <text x="420" y="560" class="subtitle">Doris+SR Merge · IDB Mixed</text>
+
+  <rect x="560" y="510" width="230" height="70" rx="8" fill="#fbefff" stroke="#8250df" stroke-width="1.5"/>
+  <text x="675" y="540" class="title">Schema-Level Rollup</text>
+  <text x="675" y="560" class="subtitle">스키마별 dormant 비율</text>
+
+  <rect x="815" y="510" width="230" height="70" rx="8" fill="#fbefff" stroke="#8250df" stroke-width="1.5"/>
+  <text x="930" y="540" class="title">Upcoming Warning</text>
+  <text x="930" y="560" class="subtitle">25~30일 사전 경고</text>
+
+  <!-- Panels -> Dashboard -->
+  <line x1="165" y1="580" x2="165" y2="660" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="420" y1="580" x2="420" y2="660" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="675" y1="580" x2="675" y2="660" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="930" y1="580" x2="930" y2="660" stroke="#6e7781" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- (5) Dashboard -->
+  <rect x="50" y="665" width="1000" height="60" rx="8" fill="#1f2328"/>
+  <text x="550" y="700" class="dashboard-text">Governance Dashboard</text>
+</svg>
