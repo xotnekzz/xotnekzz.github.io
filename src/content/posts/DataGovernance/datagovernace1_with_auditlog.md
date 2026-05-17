@@ -11,12 +11,12 @@ featured: false
 
 데이터 플랫폼 운영에서 답하기 가장 까다로운 질문 중 하나입니다. 누군가 분명 쓰고 있을 것 같은데, 누구인지는 모릅니다. 안 쓰는 것 같지만 함부로 지울 수도 없습니다. 그렇게 데이터 웨어하우스에는 **안 쓰이지만 안 지워지는 테이블**이 시간이 갈수록 쌓여갑니다.
 
-이걸 자동화하려면 두 가지 정보가 필요했습니다.
+이걸 자동화하려면 두 가지 정보가 필요합니다.
 
 - **연결 정보** — 이 테이블을 누가, 어떻게 참조하는가? → **Lineage**
 - **사용 정보** — 이 테이블이 실제로 쓰이고 있는가? → **Usage**
 
-첫 번째는 **OpenMetadata 의 Lineage 기능**으로 해결했습니다 *(별도 글 작성 예정)*. 이번 글은 두 번째 — 사용 정보를 audit_log 에서 뽑아내 거버넌스 대시보드로 만든 이야기입니다.
+이번에는 데이터 자산이 실제로 쓰이고 있는 가를 확인하기 위한 Usage를 측정환경을 구축한 내용을 공유하고자합니다.
 
 ---
 
@@ -29,40 +29,34 @@ featured: false
 - 정리한 다음 누군가가 "그거 우리가 쓰는데요?" 라고 등장
 - 결국 무서워서 아무것도 못 지움
 
-거버넌스를 사람의 기억력 대신 **데이터로** 옮기려면 audit_log 가 자연스러운 후보였습니다. 모든 쿼리는 audit_log 에 기록되고, 어느 사용자가 어떤 SQL 을 실행했는지 정확히 알 수 있으니까요.
+거버넌스를 사람의 기억력 대신 **데이터로** 옮기려면 `audit_log` 가 자연스러운 후보였습니다. 모든 쿼리는 audit_log 에 기록되고, 어느 사용자가 어떤 SQL 을 실행했는지 정확히 알 수 있으니까요.
 
-다만 우리 환경에는 3개의 OLAP/OLTP 클러스터가 있고, 각자 audit_log 의 형태가 다릅니다.
+다만 우리 환경에는 3개의 OLAP/OLTP 클러스터가 있고, 각자 audit_log 의 형태 수집 방식이 다릅니다.
 
-| 클러스터 | Audit 위치 | 수집 방식 |
-|---|---|---|
-| **Doris** | `__internal_schema.audit_log` | 기본 설정만으로 자동 수집 |
-| **StarRocks** | `starrocks_audit_db__.starrocks_audit_tbl__` | 별도 audit-loader 플러그인 |
-| **MariaDB** | `mysql-audit.log.*` (파일) | server_audit 플러그인 → 파일 → ETL → Doris |
+| 클러스터          | Audit 위치                                     | 수집 방식                         |
+| ------------- | -------------------------------------------- | ----------------------------- |
+| **Doris**     | `__internal_schema.audit_log`                | 기본 설정만으로 자동 수집                |
+| **StarRocks** | `starrocks_audit_db__.starrocks_audit_tbl__` | 별도 audit-loader 플러그인 설치       |
+| **MariaDB**   | `mysql-audit.log.*` (파일)                     | Mariadb 설정 → 파일 → ETL → Doris |
 
-세 클러스터의 audit 를 한 화면에 모아 사용량을 파악하고 데이터 거버넌스 수립하는 것을 목료로 합니다.
+세 클러스터의 audit 를 한 화면(대시보드)에 모아 사용량을 파악하고 생애주기를 설정하여 데이터 거버넌스 환경을 구축하는 것을 목표로 합니다.
 
 ### 각 클러스터의 audit log 수집 방식
 
-같은 "audit log" 라고 부르지만, 세 클러스터의 수집 경로는 꽤 다릅니다.
+같은 "audit log" 라고 부르지만, 세 클러스터의 수집 경로는 다릅니다.
 
-**Apache Doris** — 가장 간단한 케이스. FE 설정 (`enable_audit_log = true`) 만 켜두면 `__internal_schema.audit_log` 테이블에 자동으로 적재됩니다. 별도 인프라 없이 SQL 로 바로 조회 가능 — 거의 "공짜" 입니다.
+**Apache Doris** — 가장 간단한 케이스. FE 설정 (`enable_audit_log = true`) 만 켜두면 `__internal_schema.audit_log` 테이블에 자동으로 적재됩니다. 별도 인프라 없이 SQL 로 바로 조회 가능합니다.
 
 **StarRocks** — 기본 제공이 아니라 **별도 audit-loader 플러그인** 을 설치해야 합니다. FE 가 자체적으로 audit log 를 파일로 떨어뜨리면, audit-loader 가 그 파일을 Routine Load 로 `starrocks_audit_db__.starrocks_audit_tbl__` 에 적재. 플러그인 설치 + audit 테이블 DDL 한 번만 해두면 그 다음은 자동입니다.
 
-**MariaDB** — 가장 손이 많이 가는 케이스. `server_audit` 플러그인이 audit 를 **파일** (`mysql-audit.log.*`) 로만 떨어뜨립니다. 이 파일을 어떻게 적재할 것인가가 문제였습니다.
+**MariaDB** — 테이블에 AuditLog를 적재해도되지만 Mariadb에 AuditLog를 적재하기엔 조회성능이 떨어집니다. 설정을 통해 audit 를 **파일** (`mysql-audit.log.*`) 로만 떨어뜨리고 이파일을 OLAP DB인 Doris Stream Load로 입력하는 ETL 파이프라인을 추가하였습니다.
 
-처음엔 cron 으로 파일을 `grep` → CSV 변환 → `mariadb-import` 로 **같은 MariaDB 안의 `log_report.idb_audit_log` 테이블에 적재**했습니다. 단순하고 데이터 위치가 한 군데라 좋아 보였죠.
-
-문제는 곧 드러났습니다. 7일치 audit 가 9천5백만 행에 달했고, 거버넌스 쿼리 — 특히 `GROUP BY tables` 같은 집계 — 가 Grafana panel timeout 을 매번 넘었습니다. MariaDB 는 OLTP 라 이런 풀스캔 집계에 약합니다.
-
-해법은 **적재 위치를 Doris 로 옮기기**. 같은 데이터지만 OLAP 인 Doris 는 동일한 집계를 1~2초에 끝냅니다. ETL 스크립트도 `mariadb-import` → **Doris Stream Load (HTTP PUT)** 로 갈아탔습니다 (자세한 스크립트는 3장 참고).
-
-| 단계 | 도구 | 비고 |
-|---|---|---|
-| audit 생성 | MariaDB `server_audit` 플러그인 | 파일로만 출력 |
-| 일일 추출 | cron + `grep` + Python 정제 스크립트 | `SELECT` 만 필터링 |
-| 적재 | `curl --location-trusted` → Doris Stream Load | `label` 로 멱등성 보장 |
-| 분석 | Doris `idb_log.idb_audit_log` | OLAP 컬럼나리 — 집계 빠름 |
+| 단계       | 도구                                            | 비고                |
+| -------- | --------------------------------------------- | ----------------- |
+| audit 생성 | MariaDB `server_audit` 플러그인                   | 파일로만 출력           |
+| 일일 추출    | cron + `grep` + Python 정제 스크립트                | `SELECT` 만 필터링    |
+| 적재       | `curl --location-trusted` → Doris Stream Load | `label` 로 멱등성 보장  |
+| 분석       | Doris `idb_log.idb_audit_log`                 | OLAP 컬럼나리 — 집계 빠름 |
 
 이렇게 세 클러스터의 audit 가 모두 SQL 로 접근 가능한 형태가 되었습니다.
 
@@ -98,7 +92,7 @@ featured: false
 
 audit_log 에는 SQL 본문 (`stmt`) 만 기록됩니다. 어떤 테이블을 참조했는지 알려면 직접 파싱해야 합니다.
 
-### 정규식으로 시작했다 — 그리고 한계
+### 정규식으로 분석하기 그러나?
 
 처음엔 단순한 정규식이면 되겠다 싶었습니다:
 
@@ -113,7 +107,7 @@ REGEXP_EXTRACT(stmt,
 - 줄바꿈/탭이 잔뜩 있는 멀티라인 SQL
 - JOIN 이 5~6개 걸린 복잡한 쿼리
 
-이걸 다 잡으려면 사전 정제가 필요했습니다:
+이걸 다 잡으려면 사전 정제가 필요합니다.:
 
 ```sql
 REGEXP_EXTRACT(
@@ -138,25 +132,6 @@ SELECT LOWER(TRIM(t.col)) AS fqdn
 FROM idb_log.idb_audit_log a
 LATERAL VIEW explode_split(a.`tables`, ',') t AS col
 ```
-
-### MariaDB Audit Log를 Apache Doris에서 분석하기
-
-처음엔 MariaDB audit 테이블을 그대로 Grafana 가 조회했습니다. 7일 윈도우에 약 9천5백만 행. KPI 한 개에 ~30초씩 걸렸고 detail 패널은 timeout. 사람이 보기 전에 Grafana 가 먼저 토라졌습니다.
-
-해법은 **적재 위치를 옮기기**. Doris 는 같은 7일치를 1~2초에 GROUP BY 합니다. 기존 `mariadb-import` 셸 스크립트를 **Doris Stream Load** 로 바꿨습니다:
-
-```bash
-curl --location-trusted \
-  -u "${DORIS_USER}:${DORIS_PASS}" \
-  -H "label:idb_audit_${TARGET_DATE}" \
-  -H "format:csv" -H "column_separator:," \
-  -H "enclose:\"" -H "skip_lines:1" \
-  -H "columns:\`timestamp\`,username,ip_address,session_id,query_id,\`database\`,\`tables\`,query" \
-  -T ${TEMP_CSV} -XPUT \
-  "http://${FE_HOST}:8030/api/idb_log/idb_audit_log/_stream_load"
-```
-
-`label` 이 멱등 키 — 같은 날짜를 재시도해도 중복 적재가 없습니다.
 
 ### Cross-DB Join — Mixed Datasource 활용하기
 
