@@ -10,9 +10,9 @@ tags:
 featured: false
 draft: false
 ---
-[[Data Engineering Lab] #3. KRaft 모드로 Kafka Cluster 로컬에 구축하기](./de-lab-3-kafka-kraft-cluster-local.md)
+[[Data Engineering Lab] #3. KRaft 모드로 Kafka Cluster 로컬에 구축하기](de-lab-3-kafka-kraft-cluster-local.md)
 
-지난 포스팅 Kafka Cluster 구축기 ([이전 글](./de-lab-3-kafka-kraft-cluster-local.md))에 이어 차세대 OLAP 엔진으로 부상하고 있는 **StarRocks** 클러스터를 구축해보겠습니다.
+지난 포스팅 Kafka Cluster 구축기 ([이전 글](de-lab-3-kafka-kraft-cluster-local.md))에 이어 차세대 OLAP 엔진으로 부상하고 있는 **StarRocks** 클러스터를 구축해보겠습니다.
 
 ## 1. StarRocks Architecture 선정
 

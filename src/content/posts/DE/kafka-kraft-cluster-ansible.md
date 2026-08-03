@@ -12,7 +12,7 @@ draft: false
 
 ## 1. 들어가며
 
-지난 포스팅에서 Starrocks 고성능 OLAP 분석환경을 구축하였습니다. [(이전 글: Starrocks 클러스터 구축하기 with Ansible)](./starrocks-cluster-ansible.md)
+지난 포스팅에서 Starrocks 고성능 OLAP 분석환경을 구축하였습니다. [(이전 글: Starrocks 클러스터 구축하기 with Ansible)](starrocks-cluster-ansible.md)
 
 하지만 고성능 DB가 준비되었다고 해서 데이터 플랫폼이 완성된 것은 아닙니다. DB에 실시간으로 데이터를 안정적으로 공급해 줄 **파이프라인** 이 필요합니다. 저는 이 프로젝트의 최종 목표로 CDC(Capture Data Capture)나 로그 스트림을 처리하여 Starrocks에 적재하는 데이터 파이프라인 아키텍처를 완성하는 것이며 그 중심에 Apache kafka를 배치하고자 합니다.
 
@@ -350,7 +350,7 @@ CurrentObservers:       []
 
 | [Docker Container IP로 직접 접근하는 방법 - (docker-mac-net-connect)](docker-container-direct-ip-access.md) (0) | 2025.12.18 |
 | --- | --- |
-| [Starrocks 클러스터 구축하기 with Ansible](./starrocks-cluster-ansible.md) (1) | 2025.12.11 |
+| [Starrocks 클러스터 구축하기 with Ansible](starrocks-cluster-ansible.md) (1) | 2025.12.11 |
 | [맥북에 리눅스 서버 5대 구성하기 - Ansible, Vagrant](https://tedi.tistory.com/48) (0) | 2025.12.10 |
 | [Ansible을 사용한 Provisioning](https://tedi.tistory.com/39) (0) | 2025.12.09 |
 | [Icinga2 Monitoring Basic](https://tedi.tistory.com/29) (4) | 2022.12.21 |

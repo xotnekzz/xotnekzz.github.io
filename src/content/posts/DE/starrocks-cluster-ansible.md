@@ -14,7 +14,7 @@ draft: false
 
 지난 포스팅 [[Ansible 실습] 맥북에 리눅스 서버 5대 구성하기](https://tedi.tistory.com/48) 에서는 Vagrant와 Ansible을 이용해 로컬 환경에 리눅스 서버 5대를 구축했습니다.
 
-이번에는 이 인프라 위에 [StarRocks의 압도적 퍼포먼스 경험기](./starrocks-performance-experience.md) 에서 다룬 Starrocks 클러스터를 구축해보겠습니다. Starrocks는 분산 OLAP 데이터베이스로 FE노드의 고가용성(HA) 구성 BE 노드의 등록과정이 필요합니다.
+이번에는 이 인프라 위에 [StarRocks의 압도적 퍼포먼스 경험기](starrocks-performance-experience.md) 에서 다룬 Starrocks 클러스터를 구축해보겠습니다. Starrocks는 분산 OLAP 데이터베이스로 FE노드의 고가용성(HA) 구성 BE 노드의 등록과정이 필요합니다.
 
 이를 일일이 수동으로 설정하지 않고, Ansible Playbook을 작성하여 "코드 한 줄로 클러스터를 띄우는" 자동화 과정을 진행해보겠습니다.
 

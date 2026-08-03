@@ -223,9 +223,9 @@ Airflow Variable (JSON)을 직접 수정 하는 것은 문법 에러 등 실수�
 
 #### 'Data Engineering' 카테고리의 다른 글
 
-| [Apache Kafka [1] - 카프카의 배경과 근본](./apache-kafka-background-and-fundamentals.md) (0) | 2025.12.17 |
+| [Apache Kafka [1] - 카프카의 배경과 근본](apache-kafka-background-and-fundamentals.md) (0) | 2025.12.17 |
 | --- | --- |
-| [StarRocks의 압도적 퍼포먼스 경험기](./starrocks-performance-experience.md) (0) | 2025.12.05 |
-| [Airflow 살펴보기](./airflow-overview.md) (0) | 2025.12.01 |
+| [StarRocks의 압도적 퍼포먼스 경험기](starrocks-performance-experience.md) (0) | 2025.12.05 |
+| [Airflow 살펴보기](airflow-overview.md) (0) | 2025.12.01 |
 | [MongoDB 설정파일 세팅 및 Mongod 실행 방법](https://tedi.tistory.com/7) (0) | 2019.07.03 |
 | [MongoDB 계정 설정 방법](https://tedi.tistory.com/6) (0) | 2019.07.03 |

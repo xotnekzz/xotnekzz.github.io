@@ -62,7 +62,15 @@
       "Bash(python3 -c ' *)",
       "Bash(sed -n '10,20p' /Users/tskim/Project/01-web/blog/src/content/posts/DataEngineering/de-lab-3-kafka-kraft-cluster-local.md)",
       "Bash(sed -n '10,20p' /Users/tskim/Project/01-web/blog/src/content/posts/DataEngineering/de-lab-4-starrocks-cluster-shared-nothing.md)",
-      "Bash(xargs -0 perl -i -pe ' *)"
+      "Bash(xargs -0 perl -i -pe ' *)",
+      "Read(//Users/tskim/**)",
+      "Read(//Users/tskim/.claude/**)",
+      "Bash(python3 -)",
+      "Bash(python3 -c \"import json; print\\(json.load\\(open\\('/Users/tskim/.claude.json'\\)\\)['projects']['/Users/tskim/Project/01-web/blog']['mcpServers']['openmetadata']['headers']['Authorization'].replace\\('Bearer ',''\\)\\)\")",
+      "Bash(python3 -m json.tool /Users/tskim/Project/01-web/blog/.claude/settings.json)",
+      "mcp__openmetadata__search_metadata",
+      "mcp__openmetadata__get_test_definitions",
+      "mcp__openmetadata__get_entity_details"
     ]
   }
 }
