@@ -66,19 +66,19 @@ experiences:
 
 techStack:
   - category: Languages
-    skills: [Python, Java, SQL, Bash]
+    skills: [Python, SQL, Bash]
   - category: Data Infra
     skills: [Apache Doris, SeaweedFS, DuckDB, Apache Airflow, PyAirbyte, dbt, Parquet, HDFS, Impala]
   - category: AI
-    skills: ["LLM API (OpenAI·Claude·Gemini)", "Local LLM (MLX)", MCP, "Agent Skills", "Hermes Agent"]
+    skills: [LLM API (OpenAI·Claude·Gemini), "Local LLM (MLX)", MCP, "Agent Skills", "Hermes Agent"]
   - category: "BI & Governance"
-    skills: ["Apache Superset", Metabase, Redash, OpenMetadata, Glossary, "Data Quality"]
+    skills: [Apache Superset, Metabase, OpenMetadata]
   - category: Database
     skills: [MariaDB, MongoDB, Milvus]
   - category: Backend
     skills: [FastAPI, Django]
   - category: DevOps
-    skills: [Docker, "Docker Compose", Ansible, Grafana, Prometheus, "Git/GitLab CI-CD"]
+    skills: [Docker, "Docker Compose", Ansible, Grafana, Prometheus, "CI/CD"]
 
 education:
   - school: 성공회대학교
