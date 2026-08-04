@@ -12,12 +12,12 @@ experiences:
   - company: 비트망고
     companyEn: BitMango
     period: "2019.08 ~ 현재 (약 7년)"
-    role: Data Part Lead / Senior Data Engineer
+    role: "Senior Data Engineer → Data Part Lead (2026~)"
     projects:
       - title: "데이터 플랫폼 구축 및 운영"
-        problem: "클라우드 관리형 서비스 없이, 온프레미스에서 성능·안정성·확장성을 갖춘 데이터 플랫폼을 직접 구축·운영"
+        problem: "수년간 운영해온 HDFS/Impala 환경의 한계에서 출발 — 클라우드 관리형 서비스 없이 온프레미스에서 성능·안정성·확장성을 갖춘 데이터 플랫폼을 직접 구축·운영"
         bullets:
-          - "단순 집계 쿼리 응답 최대 1,715배 단축(50ms 이내), 복잡한 Join 집계 쿼리 250s → 40s 단축"
+          - "단순 집계 쿼리 85s → 50ms, 복잡한 Join 집계 쿼리 250s → 40s"
           - "온프레미스 HDFS 레거시 데이터 웨어하우스를 SeaweedFS + Apache Doris 기반 데이터레이크하우스로 전환 — 스토리지·컴퓨팅 분리"
           - "게임 이벤트 로그 수집을 fluentd 실시간에서 시간 단위 배치로 재설계 — DuckDB로 정제해 Parquet 변환·적재, 네트워크 불안정 환경에서 수집 안정성 확보"
           - "DAG Factory 패턴: 유형이 같은 파이프라인을 단일 코드베이스로 묶고, 설정을 DB화해 UI에서 등록·운영 — 신규 파이프라인 추가 시 코드 배포 없이 대응"
@@ -39,11 +39,10 @@ experiences:
       - title: "데이터 거버넌스"
         problem: "AI 활용의 근간이 되는 데이터 자산·계보·품질 체계 부재 및 도메인 간 데이터 사일로"
         bullets:
-          - "OpenMetadata 전사 도입 리드 — 데이터 자산 카탈로그 및 파이프라인 계보(lineage) 연동"
+          - "OpenMetadata 도입 리드 — 데이터 자산 카탈로그 및 파이프라인 계보(lineage) 연동"
           - "사내 비즈니스 흐름을 Glossary로 정의하고 데이터 자산과 연결해 데이터 온톨로지(ontology) 구축"
           - "Data Quality as Code 도입 — 적재 이전 단계에서 오염 데이터를 차단해 전사 데이터 신뢰도 확보"
-          - "AI Ready Data 기반의 데이터 민주화 — 전담 분석가 없이도 업무 담당자가 직접 데이터를 조회·리포팅하는 환경 마련"
-        tags: ["OpenMetadata", "Data Lineage", "Data Catalog", "Glossary", "Data Quality", "AI Ready Data"]
+        tags: ["OpenMetadata", "Data Lineage", "Data Catalog", "Glossary", "Data Quality"]
         accent: true
 
       - title: "AI Engineering (LLM)"
@@ -71,7 +70,7 @@ techStack:
   - category: Data Infra
     skills: [Apache Doris, SeaweedFS, DuckDB, Apache Airflow, PyAirbyte, dbt, Parquet, HDFS, Impala]
   - category: AI
-    skills: ["LLM API (OpenAI·Claude·Gemini)", "Local LLM (MLX)", LangChain, MCP, "Agent Skills", LibreChat, Streamlit]
+    skills: ["LLM API (OpenAI·Claude·Gemini)", "Local LLM (MLX)", MCP, "Agent Skills", "Hermes Agent"]
   - category: "BI & Governance"
     skills: ["Apache Superset", Metabase, Redash, OpenMetadata, Glossary, "Data Quality"]
   - category: Database
@@ -80,8 +79,6 @@ techStack:
     skills: [FastAPI, Django]
   - category: DevOps
     skills: [Docker, "Docker Compose", Ansible, Grafana, Prometheus, "Git/GitLab CI-CD"]
-  - category: "개인 프로젝트"
-    skills: [Kafka]
 
 education:
   - school: 성공회대학교
@@ -89,8 +86,8 @@ education:
     period: "2012.02 ~ 2017.02 (졸업)"
 ---
 
-온프레미스 데이터 플랫폼을 스토리지·쿼리 엔진 계층부터 다시 설계해 온 데이터 엔지니어입니다. 마케팅(UA) 도메인에서 딥러닝 기반 예측 캠페인 매출 파이프라인을 구축했고, 2026년부터 데이터 파트 리드를 맡고 있습니다.
+비트망고 데이터 파트 리드로서 온프레미스 데이터레이크하우스 전환을 주도하고, 데이터 거버넌스 기반의 AI 에이전트 분석 환경 구축을 통해 조직의 데이터 민주화 실현을 향해 나아가고 있습니다
 
-3명의 팀원과 함께 데이터 플랫폼 전반(인프라·분석 파이프라인·거버넌스)의 구조 개선을 주도하고 있습니다. 10년 이상 된 HDFS/Impala 환경을 SeaweedFS(오브젝트 스토리지)와 Apache Doris(OLAP 엔진) 기반으로 전환해 스토리지와 컴퓨팅을 분리했고, 단순 집계 쿼리 기준 최대 1,715배 단축했습니다. 메달리온 아키텍처를 도입해 파편화되어 있던 전사 도메인 마트를 표준화했습니다.
+3명의 팀원과 함께 데이터 플랫폼 전반(인프라·분석 파이프라인·거버넌스)의 구조 개선과 실행을 담당하고 있습니다. 10년 이상 된 HDFS/Impala 레거시 환경을 SeaweedFS와 Apache Doris 기반으로 전환해 스토리지와 컴퓨팅을 분리했으며, 리포트 대기시간 5분 → 30초 이내로 성능을 개선하였습니다. 또한 메달리온 아키텍처를 도입해 전사 도메인 마트를 표준화했습니다.
 
-요즘은 OpenMetadata 기반 거버넌스에 시간을 쓰고 있습니다. 데이터 자산의 설명·계보·계층·분류를 정의하고 품질 검증(DQ)을 붙여, 추측이 아닌 사실에 근거한 데이터 환경을 만드는 일입니다. 이 위에서 동작하는 데이터 분석 에이전트를 목표로 하고 있고, 그 밖에도 인프라 장애 처방·코드리뷰 자동화 에이전트를 만들며 반복 업무를 AI로 넘기는 실험을 이어가고 있습니다.
+현재는 OpenMetadata 기반으로 데이터 자산의 계보·품질 검증(DQ) 체계를 구축하여 추측이 아닌 사실에 근거한 데이터 환경을 조성하고 있습니다. 나아가 이 거버넌스 위에서 동작하는 데이터 분석 에이전트 및 인프라 장애 처방·코드리뷰 자동화 에이전트를 개발하며 전사 업무 효율을 극대화하는 AI 전환을 이끌고 있습니다.
