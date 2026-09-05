@@ -41,7 +41,7 @@ experiences:
         bullets:
           - "OpenMetadata 도입 리드 — 데이터 자산 카탈로그 및 파이프라인 계보(lineage) 연동"
           - "사내 비즈니스 흐름을 Glossary로 정의하고 데이터 자산과 연결해 데이터 온톨로지(ontology) 구축"
-          - "Data Quality as Code 도입 — 적재 이전 단계에서 오염 데이터를 차단해 전사 데이터 신뢰도 확보"
+          - "Data Quality as Code 도입 — 적재 이전 단계와 입력 이후 단계 모두 퀄리티 게이트를 통한 신뢰도 확보
         tags: ["OpenMetadata", "Data Lineage", "Data Catalog", "Glossary", "Data Quality"]
         accent: true
 
@@ -50,7 +50,7 @@ experiences:
         bullets:
           - "Apple Silicon MLX 기반 로컬 LLM 서버 구축 — GitLab hook 연동 코드리뷰·릴리즈 문서 자동 작성 에이전트 운영"
           - "인프라 장애 처방전 에이전트 개발 — Slack 장애 알림을 해석해 매시간 대응 처방전 발행"
-          - "Data Analyst 에이전트 개발 — OpenMetadata(OM API·MCP) 기반으로 자연어 요청을 fact 기반 분석·리포팅으로 처리"
+          - "Data Analyst 에이전트 개발 — OpenMetadata(OM API·MCP) 기반으로 자연어 요청만으로 분석·리포팅"
         tags: ["LLM API (OpenAI·Claude·Gemini)", "Local LLM (MLX)", "MCP", "RAG", "Milvus", "Openrouter", "Hermes Agent"]
         accent: true
 
@@ -65,20 +65,20 @@ experiences:
         accent: false
 
 techStack:
-  - category: Languages
-    skills: [Python, SQL, Bash]
-  - category: Data Infra
-    skills: [Apache Doris, SeaweedFS, DuckDB, Apache Airflow, PyAirbyte, dbt, Parquet, HDFS, Impala]
-  - category: AI
-    skills: [LLM API (OpenAI·Claude·Gemini), "Local LLM (MLX)", MCP, "Agent Skills", "Hermes Agent"]
-  - category: "BI & Governance"
-    skills: [Apache Superset, Metabase, OpenMetadata]
-  - category: Database
-    skills: [MariaDB, MongoDB, Milvus]
+  - category: Data Platform
+    skills: [Apache Doris,  DuckDB, SeaweedFS, MariaDB, Postgresql, Apache Airflow]
+  - category: Analytics Engineering
+    skills: [dbt, airbyte]
+  - category: "BI & Data Governance"
+    skills: [Metabase, Apache Superset, OpenMetadata]
+  - category: AI & Agent Engineering
+    skills: ["Local LLM (MLX)", MCP, "Agent Skills", "Hermes Agent"]
   - category: Backend
     skills: [FastAPI, Django]
-  - category: DevOps
-    skills: [Docker, "Docker Compose", Ansible, Grafana, Prometheus, "CI/CD"]
+  - category: Languages
+    skills: [Python, SQL, Bash]
+  - category: DevOps & Observability
+    skills: [Docker, Docker Compose, Ansible, Grafana, Prometheus, CI/CD]
 
 education:
   - school: 성공회대학교
@@ -88,6 +88,6 @@ education:
 
 비트망고 데이터 파트 리드로서 온프레미스 데이터레이크하우스 전환을 주도하고, 데이터 거버넌스 기반의 AI 에이전트 분석 환경 구축을 통해 조직의 데이터 민주화 실현을 향해 나아가고 있습니다
 
-3명의 팀원과 함께 데이터 플랫폼 전반(인프라·분석 파이프라인·거버넌스)의 구조 개선과 실행을 담당하고 있습니다. 10년 이상 된 HDFS/Impala 레거시 환경을 SeaweedFS와 Apache Doris 기반으로 전환해 스토리지와 컴퓨팅을 분리했으며, 리포트 대기시간 5분 → 30초 이내로 성능을 개선하였습니다. 또한 메달리온 아키텍처를 도입해 전사 도메인 마트를 표준화했습니다.
+3명의 팀원과 함께 데이터 플랫폼 전반(인프라·분석 파이프라인·거버넌스)의 구조 개선과 실행을 담당하고 있습니다. 10년 이상 된 HDFS/Impala 레거시 환경을 SeaweedFS와 Apache Doris 기반으로 전환해 리포트 대기시간 5분 → 30초 이내로 성능을 개선하였습니다. 또한 메달리온 아키텍처를 도입해 전사 도메인 마트를 표준화했습니다.
 
 현재는 OpenMetadata 기반으로 데이터 자산의 계보·품질 검증(DQ) 체계를 구축하여 추측이 아닌 사실에 근거한 데이터 환경을 조성하고 있습니다. 나아가 이 거버넌스 위에서 동작하는 데이터 분석 에이전트 및 인프라 장애 처방·코드리뷰 자동화 에이전트를 개발하며 전사 업무 효율을 극대화하는 AI 전환을 이끌고 있습니다.
