@@ -41,7 +41,7 @@ experiences:
         bullets:
           - "OpenMetadata 도입 리드 — 데이터 자산 카탈로그 및 파이프라인 계보(lineage) 연동"
           - "사내 비즈니스 흐름을 Glossary로 정의하고 데이터 자산과 연결해 데이터 온톨로지(ontology) 구축"
-          - "Data Quality as Code 도입 — 적재 이전 단계와 입력 이후 단계 모두 퀄리티 게이트를 통한 신뢰도 확보
+          - "Data Quality as Code 도입 — 적재 이전 단계와 입력 이후 단계 모두 퀄리티 게이트를 통한 신뢰도 확보"
         tags: ["OpenMetadata", "Data Lineage", "Data Catalog", "Glossary", "Data Quality"]
         accent: true
 
