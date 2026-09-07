@@ -1,12 +1,11 @@
 ---
-title: <% tp.file.title %>
-description: 
-date: <% tp.date.now("YYYY-MM-DD") %>
-tags:
-  - 
+title: SeaweedFS 백업 전략
+description: ""
+date: 2026-09-08
+tags: []
 featured: false
 # draft: true 로 설정 시 프로덕션 빌드(사이트)에서 노출되지 않습니다. 개발 모드에서는 DRAFT 배지와 함께 보입니다.
-draft: false
+draft: true
 ---
 > **기간:** 
 > **참여인원:** 
