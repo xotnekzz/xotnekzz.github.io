@@ -8,7 +8,7 @@ tags:
   - Medallion Architecture
   - Data Platform
 featured: false
-draft: false
+draft: true
 ---
 > **기간:** 
 > **참여인원:** 

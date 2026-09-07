@@ -9,7 +9,7 @@ tags:
   - Gemini
   - Sphinx
 featured: false
-draft: false
+draft: true
 ---
 > **기간:** 2024
 > **참여인원:** 

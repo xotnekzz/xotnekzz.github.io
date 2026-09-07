@@ -9,7 +9,7 @@ tags:
   - Python
   - Event-Driven Architecture
 featured: false
-draft: false
+draft: true
 ---
 > **기간:** 2024.09 ~ 2024.12
 > **참여인원:** 2명

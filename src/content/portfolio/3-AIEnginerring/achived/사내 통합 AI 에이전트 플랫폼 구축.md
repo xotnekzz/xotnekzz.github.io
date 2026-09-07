@@ -10,8 +10,8 @@ tags:
   - Python
   - RAG
   - AI Platform
-featured: true
-draft: false
+featured: false
+draft: true
 ---
 > **기간:** 2025.4 ~ 2025.6
 > **참여인원:** 

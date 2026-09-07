@@ -8,8 +8,8 @@ tags:
   - MCP
   - Python
   - AdTech
-featured: true
-draft: false
+featured: false
+draft: true
 ---
 > **기간:** 2025
 > **참여인원:** 2명
