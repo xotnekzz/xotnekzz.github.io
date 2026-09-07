@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">OpenMetadata 기반 자연어 데이터 분석 에이전트 아키텍처</title>
+  <desc id="desc">Mattermost 요청이 Hermes Gateway와 Hermes Agent를 거쳐 OpenMetadata에서 신뢰할 데이터 자산을 찾고 SQL 실행과 Metabase 시각화 및 분석 보고로 이어지는 흐름</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#28253d"/>
+    </marker>
+    <style>
+      text { font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif; fill: #28253d; }
+      .lane { fill: #f9f9fb; stroke: #d9d7e3; stroke-width: 2; rx: 18; }
+      .lane-title { font-size: 20px; font-weight: 700; }
+      .node { fill: #fff; stroke: #6d6980; stroke-width: 2; rx: 14; }
+      .agent { fill: #e3f2fd; stroke: #1565c0; }
+      .store { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 2; }
+      .output { fill: #fff3e0; stroke: #e65100; }
+      .node-title { font-size: 20px; font-weight: 700; text-anchor: middle; }
+      .node-sub { font-size: 15px; text-anchor: middle; fill: #57536a; }
+      .arrow { fill: none; stroke: #28253d; stroke-width: 2.5; marker-end: url(#arrow); }
+      .arrow-label { font-size: 14px; font-weight: 600; text-anchor: middle; fill: #57536a; }
+      .note { fill: #fff8e1; stroke: #d6a400; stroke-width: 1.5; rx: 12; }
+      .note-text { font-size: 16px; font-weight: 600; text-anchor: middle; fill: #755b00; }
+    </style>
+  </defs>
+  <rect width="1400" height="820" fill="#ffffff"/>
+  <text x="60" y="58" font-size="30" font-weight="800">OpenMetadata 기반 자연어 데이터 분석 에이전트</text>
+  <text x="60" y="88" font-size="17" fill="#6d6980">자산 탐색 → SQL 실행 → 시각화 → 분석 보고</text>
+
+  <rect class="lane" x="40" y="125" width="230" height="550"/>
+  <text class="lane-title" x="65" y="165">[1] Request</text>
+  <rect class="node" x="70" y="235" width="170" height="105"/>
+  <text class="node-title" x="155" y="275">Mattermost</text>
+  <text class="node-sub" x="155" y="305">자연어 분석 요청</text>
+
+  <rect class="lane" x="295" y="125" width="330" height="550"/>
+  <text class="lane-title" x="320" y="165">[2] Agent Orchestration</text>
+  <rect class="node agent" x="330" y="210" width="260" height="100"/>
+  <text class="node-title" x="460" y="250">Hermes Gateway</text>
+  <text class="node-sub" x="460" y="280">요청 전달 · 세션 연결</text>
+  <rect class="node agent" x="330" y="405" width="260" height="120"/>
+  <text class="node-title" x="460" y="450">Hermes Agent</text>
+  <text class="node-sub" x="460" y="480">분석 계획 · 도구 실행</text>
+  <rect class="note" x="335" y="580" width="255" height="60"/>
+  <text class="note-text" x="462" y="605">SQL보다 먼저</text>
+  <text class="note-text" x="462" y="628">신뢰할 자산을 선택</text>
+
+  <rect class="lane" x="650" y="125" width="370" height="550"/>
+  <text class="lane-title" x="675" y="165">[3] Context &amp; Query</text>
+  <rect class="node agent" x="690" y="200" width="290" height="110"/>
+  <text class="node-title" x="835" y="242">OpenMetadata Skill</text>
+  <text class="node-sub" x="835" y="272">자산 검색 · 후보 선별</text>
+  <path class="store" d="M710 402 C710 382 960 382 960 402 L960 480 C960 500 710 500 710 480 Z"/>
+  <ellipse class="store" cx="835" cy="402" rx="125" ry="20"/>
+  <text class="node-title" x="835" y="438">OpenMetadata</text>
+  <text class="node-sub" x="835" y="466">계보 · 소유권 · 품질 · 용어</text>
+  <rect class="node store" x="710" y="555" width="250" height="85"/>
+  <text class="node-title" x="835" y="589">분석 데이터베이스</text>
+  <text class="node-sub" x="835" y="616">Silver · Gold / SQL 실행</text>
+
+  <rect class="lane" x="1045" y="125" width="315" height="550"/>
+  <text class="lane-title" x="1070" y="165">[4] Visualization &amp; Report</text>
+  <rect class="node output" x="1080" y="245" width="245" height="110"/>
+  <text class="node-title" x="1202" y="286">Metabase</text>
+  <text class="node-sub" x="1202" y="316">차트 · 대시보드</text>
+  <rect class="node output" x="1080" y="435" width="245" height="110"/>
+  <text class="node-title" x="1202" y="476">분석 보고</text>
+  <text class="node-sub" x="1202" y="506">핵심 수치 · 해석</text>
+
+  <path class="arrow" d="M240 287 H330"/>
+  <text class="arrow-label" x="285" y="270">요청</text>
+  <path class="arrow" d="M460 310 V405"/>
+  <text class="arrow-label" x="515" y="362">작업 시작</text>
+  <path class="arrow" d="M590 445 C635 445 645 255 690 255"/>
+  <text class="arrow-label" x="640" y="330">Skill 호출</text>
+  <path class="arrow" d="M835 310 V382"/>
+  <text class="arrow-label" x="900" y="350">API · MCP</text>
+  <path class="arrow" d="M835 500 V555"/>
+  <text class="arrow-label" x="900" y="535">자산 기반 SQL</text>
+  <path class="arrow" d="M960 597 C1040 597 1015 300 1080 300"/>
+  <text class="arrow-label" x="1030" y="418">쿼리 결과</text>
+  <path class="arrow" d="M1202 355 V435"/>
+  <text class="arrow-label" x="1260" y="400">시각화</text>
+  <path class="arrow" d="M1080 490 C1005 490 1030 715 155 715 C95 715 95 340 155 340"/>
+  <text class="arrow-label" x="650" y="738">Mattermost로 차트와 분석 내용 반환</text>
+</svg>

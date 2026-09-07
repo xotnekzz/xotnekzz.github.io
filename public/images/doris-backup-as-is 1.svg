@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500" role="img" aria-labelledby="title desc">
+  <title id="title">Apache Doris 외부 백업 적용 전 구조</title>
+  <desc id="desc">Doris FE와 BE의 내부 고가용성 및 복제만 존재하고 외부 데이터 백업과 FE Metadata 백업 경로가 없는 구조</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#000" flood-opacity=".06"/></filter>
+    <marker id="arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto"><path d="M0 0L12 7L0 14Z" fill="#333"/></marker>
+    <style>text{font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;fill:#28253d}.layer{fill:#f9f9fb;stroke:#28253d;stroke-width:2;rx:10;filter:url(#shadow)}.title{font-size:18px;font-weight:650;text-anchor:middle}.node{fill:#fff3e0;stroke:#e65100;stroke-width:2;rx:8;filter:url(#shadow)}.store{fill:#ffebee;stroke:#c62828;stroke-width:2;filter:url(#shadow)}.danger{fill:#ffebee;stroke:#c62828;stroke-width:2.5;rx:8;filter:url(#shadow)}.label{font-size:17px;font-weight:650;text-anchor:middle}.sub{font-size:14px;text-anchor:middle;fill:#4b4b5e}.edge{fill:none;stroke:#333;stroke-width:2.2;marker-end:url(#arrow)}.red{fill:#c62828}.orange{fill:#e65100}</style>
+  </defs>
+  <rect width="1500" height="500" fill="#fff"/>
+  <rect class="layer" x="25" y="40" width="1020" height="415"/><text class="title" x="535" y="75">[1] Apache Doris 운영 클러스터</text>
+  <rect class="layer" x="1075" y="40" width="400" height="415"/><text class="title" x="1275" y="75">[2] 클러스터 외부 복구</text>
+  <rect class="node" x="75" y="132" width="230" height="105"/><text class="label orange" x="190" y="170">Doris FE</text><text class="sub" x="190" y="195">Metadata · FE HA</text><text class="sub" x="190" y="216">독립 백업 없음</text>
+  <g><path class="store" d="M430 137C430 113 805 113 805 137V282C805 306 430 306 430 282Z"/><ellipse class="store" cx="617.5" cy="137" rx="187.5" ry="22"/><text class="label red" x="617" y="196">Doris BE Local Storage</text><text class="sub" x="617" y="224">Storage / Compute Coupled</text><text class="sub" x="617" y="250">클러스터 내부 Replica</text><text class="sub" x="617" y="276">외부 데이터 백업 없음</text></g>
+  <path class="edge" d="M305 184H422"/>
+  <rect class="danger" x="1115" y="132" width="320" height="180"/><text class="label red" x="1275" y="173">⚠ 복구 지점 부재</text><text class="sub" x="1275" y="205">운영 실수 · 논리적 손상</text><text class="sub" x="1275" y="229">다중 노드 및 클러스터 장애</text><line x1="1155" y1="250" x2="1395" y2="250" stroke="#ef9a9a"/><text class="sub" x="1275" y="280">데이터와 FE Metadata를</text><text class="sub" x="1275" y="302">외부에서 복원할 수 없음</text>
+  <path d="M805 214H1107" fill="none" stroke="#c62828" stroke-width="3" stroke-dasharray="8 6"/>
+  <rect class="danger" x="432" y="370" width="565" height="50"/><text class="label red" x="714" y="401">내부 복제는 존재하지만 독립된 백업·복구 경로는 없음</text>
+</svg>

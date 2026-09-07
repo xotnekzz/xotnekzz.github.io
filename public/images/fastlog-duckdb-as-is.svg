@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="450" viewBox="0 0 1320 450" role="img" aria-labelledby="title desc"><title id="title">AS-IS · 비압축 TSV 배치 전송과 공유망 경합</title><desc id="desc">AS-IS · 비압축 TSV 배치 전송과 공유망 경합. 왼쪽부터 수집, 전송 및 저장, 변환, 분석 연계 순서.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#28253d"/></marker><style>text{font-family:Pretendard,'Apple SD Gothic Neo','Noto Sans KR',Arial,sans-serif;fill:#28253d}.title{font-size:27px;font-weight:700}.label{font-size:20px;font-weight:600;text-anchor:middle}.sub{font-size:17px;text-anchor:middle}</style></defs><rect width="1320" height="450" fill="#fff"/>
+<text x="30" y="45" class="title">AS-IS · 비압축 TSV 배치 전송과 공유망 경합</text>
+<rect x="30" y="82" width="285" height="240" rx="12" fill="#f9f9fb" stroke="#28253d"/><text x="172.5" y="117" class="label">[1] 로그 수집 · 배치 경계</text>
+<rect x="42" y="153" width="261" height="140" rx="10" fill="#e3f2fd" stroke="#1565c0"/><text x="172.5" y="191" class="label">Nginx → Fluentd</text><text x="172.5" y="231" class="sub">실시간 파싱 · TSV 변환</text><text x="172.5" y="263" class="sub">TSV는 1시간 단위 누적</text>
+<path d="M316 223H353" fill="none" stroke="#1565c0" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="355" y="82" width="285" height="240" rx="12" fill="#f9f9fb" stroke="#28253d"/><text x="497.5" y="117" class="label">[2] 전송 · 원본 저장</text>
+<rect x="367" y="153" width="261" height="140" rx="10" fill="#ffebee" stroke="#c62828"/><text x="497.5" y="191" class="label">공유 1 Gbps 경로</text><text x="497.5" y="231" class="sub">비압축 TSV 집중 전송</text><text x="497.5" y="263" class="sub">게임 서비스 트래픽과 경합</text>
+<path d="M641 223H678" fill="none" stroke="#c62828" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="680" y="82" width="285" height="240" rx="12" fill="#f9f9fb" stroke="#28253d"/><text x="822.5" y="117" class="label">[3] 변환 · 분석 데이터</text>
+<path d="M692 166 A130.5 13 0 0 1 953 166 V280 A130.5 13 0 0 1 692 280 Z" fill="#e8f5e9" stroke="#2e7d32"/><ellipse cx="822.5" cy="166" rx="130.5" ry="13" fill="#e8f5e9" stroke="#2e7d32"/><text x="822.5" y="204" class="label">HDFS</text><text x="822.5" y="231" class="sub">시간 단위 TSV 저장</text><text x="822.5" y="263" class="sub">후속 분석 처리의 입력</text>
+<path d="M966 223H1003" fill="none" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1005" y="82" width="285" height="240" rx="12" fill="#f9f9fb" stroke="#28253d"/><text x="1147.5" y="117" class="label">[4] 분석 연계</text>
+<rect x="1017" y="153" width="261" height="140" rx="10" fill="#e3f2fd" stroke="#1565c0"/><text x="1147.5" y="191" class="label">분석 파이프라인</text><text x="1147.5" y="231" class="sub">수집 데이터에 의존</text><text x="1147.5" y="263" class="sub">누락 데이터 복구 필요</text>
+<rect x="30" y="350" width="1260" height="78" rx="10" fill="#ffebee"/><text x="660" y="380" class="label">실시간 로그 변환 이후에도 실제 데이터 전달은 1시간 배치</text><text x="660" y="411" class="sub">피크타임 서비스 트래픽과 TSV 전송이 겹치며 게임 서비스 장애 및 로그 수집 누락 발생</text></svg>

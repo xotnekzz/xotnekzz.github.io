@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">OpenMetadata CMDB 온톨로지 기반 인프라 장애 분석 흐름</title>
+  <desc id="desc">상단은 인프라 데이터 소스를 YAML Ontology as Code로 모델링하여 OpenMetadata 용어집 CMDB를 갱신하는 과정이고, 하단은 Slack 장애 알림을 받은 Hermes Agent가 CMDB 관계와 관측 Skill 및 MCP를 사용해 영향 범위와 원인을 분석하고 담당자에게 처방전을 전달하는 과정이다.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#3f3b53"/>
+    </marker>
+    <marker id="blueArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#1565c0"/>
+    </marker>
+    <marker id="greenArrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2e7d32"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-15%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#28253d" flood-opacity="0.10"/>
+    </filter>
+    <style>
+      text { font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif; fill: #28253d; }
+      .title { font-size: 30px; font-weight: 750; }
+      .subtitle { font-size: 15px; fill: #666175; }
+      .lane-title { font-size: 20px; font-weight: 700; }
+      .node-title { font-size: 17px; font-weight: 700; }
+      .node-body { font-size: 14px; fill: #575268; }
+      .arrow-label { font-size: 13px; font-weight: 650; }
+      .step { font-size: 13px; font-weight: 750; fill: #ffffff; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="820" fill="#ffffff"/>
+  <text x="56" y="58" class="title">CMDB 온톨로지 기반 장애 자율 분석</text>
+  <text x="56" y="86" class="subtitle">구성 정보는 지속 갱신하고, 장애 시점에는 관계 탐색과 관측 근거를 결합해 원인을 좁힌다</text>
+
+  <rect x="40" y="116" width="1320" height="272" rx="22" fill="#f5f9ff" stroke="#bbdefb" stroke-width="2"/>
+  <rect x="58" y="136" width="214" height="38" rx="19" fill="#1565c0"/>
+  <text x="165" y="161" text-anchor="middle" class="step">[1] CMDB 지속 갱신</text>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="210" width="260" height="116" rx="16" fill="#ffffff" stroke="#7c7890" stroke-width="2"/>
+    <rect x="400" y="210" width="260" height="116" rx="16" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <rect x="720" y="210" width="260" height="116" rx="16" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <rect x="1040" y="210" width="260" height="116" rx="16" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  </g>
+  <text x="210" y="244" text-anchor="middle" class="node-title">인프라 데이터 소스</text>
+  <text x="210" y="273" text-anchor="middle" class="node-body">하드웨어 서버 장비</text>
+  <text x="210" y="296" text-anchor="middle" class="node-body">네트워크 구성 · 서비스 흐름</text>
+  <text x="530" y="244" text-anchor="middle" class="node-title">수집·정규화</text>
+  <text x="530" y="274" text-anchor="middle" class="node-body">소스별 데이터를 공통 모델로 변환</text>
+  <text x="850" y="244" text-anchor="middle" class="node-title">Ontology as Code</text>
+  <text x="850" y="274" text-anchor="middle" class="node-body">YAML 개념·관계 정의 및 검증</text>
+  <text x="1170" y="244" text-anchor="middle" class="node-title">OpenMetadata CMDB</text>
+  <text x="1170" y="273" text-anchor="middle" class="node-body">용어집 온톨로지와 관계 지도</text>
+  <text x="1170" y="296" text-anchor="middle" class="node-body">변경 내용을 지속 반영</text>
+
+  <line x1="340" y1="268" x2="390" y2="268" stroke="#1565c0" stroke-width="2.5" marker-end="url(#blueArrow)"/>
+  <line x1="660" y1="268" x2="710" y2="268" stroke="#1565c0" stroke-width="2.5" marker-end="url(#blueArrow)"/>
+  <line x1="980" y1="268" x2="1030" y2="268" stroke="#2e7d32" stroke-width="2.5" marker-end="url(#greenArrow)"/>
+  <text x="370" y="251" text-anchor="middle" class="arrow-label" fill="#1565c0">수집</text>
+  <text x="690" y="251" text-anchor="middle" class="arrow-label" fill="#1565c0">모델링</text>
+  <text x="1010" y="251" text-anchor="middle" class="arrow-label" fill="#2e7d32">동기화</text>
+
+  <rect x="40" y="414" width="1320" height="350" rx="22" fill="#f7fbf7" stroke="#c8e6c9" stroke-width="2"/>
+  <rect x="58" y="434" width="260" height="38" rx="19" fill="#2e7d32"/>
+  <text x="188" y="459" text-anchor="middle" class="step">[2] 장애 발생 후 자율 진단</text>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="526" width="205" height="108" rx="16" fill="#ffffff" stroke="#7c7890" stroke-width="2"/>
+    <rect x="325" y="526" width="205" height="108" rx="16" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <rect x="580" y="526" width="205" height="108" rx="16" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+    <rect x="835" y="526" width="205" height="108" rx="16" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+    <rect x="1090" y="526" width="240" height="108" rx="16" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  </g>
+  <text x="172" y="563" text-anchor="middle" class="node-title">Slack 장애 알림</text>
+  <text x="172" y="593" text-anchor="middle" class="node-body">장애 리소스와 발생 맥락</text>
+  <text x="427" y="563" text-anchor="middle" class="node-title">Hermes Agent</text>
+  <text x="427" y="593" text-anchor="middle" class="node-body">조사 계획 수립</text>
+  <text x="682" y="563" text-anchor="middle" class="node-title">CMDB 관계 탐색</text>
+  <text x="682" y="590" text-anchor="middle" class="node-body">상·하류 영향 범위</text>
+  <text x="682" y="613" text-anchor="middle" class="node-body">확인할 리소스와 순서</text>
+  <text x="937" y="563" text-anchor="middle" class="node-title">관측 Skill·MCP</text>
+  <text x="937" y="590" text-anchor="middle" class="node-body">Metric · Log · Network</text>
+  <text x="937" y="613" text-anchor="middle" class="node-body">리소스별 근거 수집</text>
+  <text x="1210" y="563" text-anchor="middle" class="node-title">장애 처방전</text>
+  <text x="1210" y="590" text-anchor="middle" class="node-body">조치 · 원인 · 영향 범위</text>
+  <text x="1210" y="613" text-anchor="middle" class="node-body">근거 링크 · 확신도</text>
+
+  <line x1="275" y1="580" x2="315" y2="580" stroke="#3f3b53" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="530" y1="580" x2="570" y2="580" stroke="#2e7d32" stroke-width="2.5" marker-end="url(#greenArrow)"/>
+  <line x1="785" y1="580" x2="825" y2="580" stroke="#1565c0" stroke-width="2.5" marker-end="url(#blueArrow)"/>
+  <line x1="1040" y1="580" x2="1080" y2="580" stroke="#3f3b53" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <path d="M937 634 V686 H427 V644" fill="none" stroke="#1565c0" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#blueArrow)"/>
+  <text x="682" y="710" text-anchor="middle" class="arrow-label" fill="#1565c0">관측 결과를 비교하고 다음 조사 대상을 선택하는 반복 루프</text>
+
+  <rect x="70" y="676" width="205" height="42" rx="10" fill="#fff8e1" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="172" y="702" text-anchor="middle" class="arrow-label" fill="#9a6700">장애 발생 시 시작</text>
+  <rect x="1090" y="676" width="240" height="42" rx="10" fill="#fff8e1" stroke="#f9a825" stroke-width="1.5"/>
+  <text x="1210" y="702" text-anchor="middle" class="arrow-label" fill="#9a6700">담당자가 근거 검토 후 조치</text>
+</svg>

@@ -1,0 +1,30 @@
+flowchart TB
+    WAN["Internet / IDC 회선"] -->|"WAN / 전용회선"| FW["FortiGate 100F\nFirewall / NAT / VPN / IPS"]
+    FW -->|"10G 이상 L3 Transit"| SPINE["L3 Spine / Core\nTP-Link SX6632YF\n26×10G SFP+ · 6×25G SFP28"]
+
+    SPINE -->|"10G SFP+ · Routed Link"| R1["Rack 1 · L3 Leaf\nSG6654X · 48 Port"]
+    SPINE -->|"10G SFP+ · Routed Link"| R2["Rack 2 · L3 Leaf\nSG6654X · 48 Port"]
+    SPINE -->|"10G SFP+ · Routed Link"| R3["Rack 3 · L3 Leaf\nSG6654X · 48 Port"]
+    SPINE -->|"10G SFP+ · Routed Link"| R4["Rack 4 · L3 Leaf\nSG6654X · 48 Port"]
+    SPINE -->|"10G SFP+ · Routed Link"| R5["Rack 5 · L3 Leaf\nSG6654X · 48 Port"]
+
+    R1 --> S1["Web / DB · Game Service"]
+    R2 --> S2["Hadoop / Data Cluster"]
+    R3 --> S3["Application / Cluster"]
+    R4 --> S4["Proxy / Kong / Log\nDMZ VLAN"]
+    R5 --> S5["기타 서버 / 증설 영역"]
+
+    SPARE["운영 예비 Leaf 1대\nSG6654X"] -. "장애 시 교체" .-> SPINE
+
+    classDef wan fill:#eef5ff,stroke:#2563eb,color:#172554
+    classDef firewall fill:#fff1f2,stroke:#e11d48,color:#881337
+    classDef core fill:#f5f3ff,stroke:#7c3aed,color:#4c1d95
+    classDef leaf fill:#ecfdf5,stroke:#059669,color:#064e3b
+    classDef server fill:#f8fafc,stroke:#64748b,color:#0f172a
+    classDef spare fill:#fffbeb,stroke:#d97706,color:#78350f
+    class WAN wan
+    class FW firewall
+    class SPINE core
+    class R1,R2,R3,R4,R5 leaf
+    class S1,S2,S3,S4,S5 server
+    class SPARE spare

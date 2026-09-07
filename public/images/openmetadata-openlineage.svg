@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="520" viewBox="0 0 1600 520" role="img" aria-labelledby="title desc">
+  <title id="title">Airflow 3와 OpenLineage 기반 데이터 계보 수집 구조</title>
+  <desc id="desc">Airflow 3의 DAG Task가 om_lineage를 통해 OpenLineage 이벤트를 생성하고 OpenMetadata Server가 이를 데이터베이스 메타데이터와 연결해 계보로 제공하는 흐름</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#000" flood-opacity="0.06"/></filter>
+    <marker id="arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto"><path d="M0 0L12 7L0 14Z" fill="#333"/></marker>
+    <style>
+      text { font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif; fill: #28253d; }
+      .layer { fill: #f9f9fb; stroke: #28253d; stroke-width: 2; rx: 10; filter: url(#shadow); }
+      .title { font-size: 19px; font-weight: 700; text-anchor: middle; }
+      .process { fill: #e3f2fd; stroke: #1565c0; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .standard { fill: #fff8e1; stroke: #9a6700; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .storage { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 2; filter: url(#shadow); }
+      .node { fill: #fff; stroke: #28253d; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .label { font-size: 17px; font-weight: 650; text-anchor: middle; }
+      .sub { font-size: 14px; text-anchor: middle; fill: #4b4b5e; }
+      .edge { fill: none; stroke: #333; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-label { font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .blue { fill: #1565c0; } .green { fill: #2e7d32; } .amber { fill: #9a6700; }
+    </style>
+  </defs>
+  <rect width="1600" height="520" fill="#fff"/>
+  <rect class="layer" x="25" y="45" width="430" height="390"/>
+  <text class="title" x="240" y="82">[1] 운영 Airflow 3</text>
+  <rect class="layer" x="485" y="45" width="330" height="390"/>
+  <text class="title" x="650" y="82">[2] 표준 계보 이벤트</text>
+  <rect class="layer" x="845" y="45" width="450" height="390"/>
+  <text class="title" x="1070" y="82">[3] OpenMetadata</text>
+  <rect class="layer" x="1325" y="45" width="250" height="390"/>
+  <text class="title" x="1450" y="82">[4] 데이터 활용</text>
+
+  <rect class="process" x="70" y="135" width="150" height="90"/>
+  <text class="label blue" x="145" y="171">DAG Task</text>
+  <text class="sub" x="145" y="196">데이터 처리 실행</text>
+  <rect class="process" x="265" y="125" width="150" height="110"/>
+  <text class="label blue" x="340" y="163">om_lineage</text>
+  <text class="sub" x="340" y="188">입력 · 출력 자산</text>
+  <text class="sub" x="340" y="211">실행 Context 수집</text>
+
+  <rect class="standard" x="530" y="125" width="240" height="110"/>
+  <text class="label amber" x="650" y="163">OpenLineage Event</text>
+  <text class="sub" x="650" y="188">Run · Job · Dataset</text>
+  <text class="sub" x="650" y="211">표준 이벤트로 전달</text>
+
+  <rect class="node" x="890" y="125" width="220" height="110"/>
+  <text class="label" x="1000" y="163">OpenMetadata Server</text>
+  <text class="sub" x="1000" y="188">이벤트 수신 · 자산 매핑</text>
+  <text class="sub" x="1000" y="211">계보 관계 생성</text>
+  <g>
+    <path class="storage" d="M1135 130C1135 111 1255 111 1255 130V218C1255 237 1135 237 1135 218Z"/>
+    <ellipse class="storage" cx="1195" cy="130" rx="60" ry="18"/>
+    <text class="label green" x="1195" y="169">MariaDB</text>
+    <text class="sub" x="1195" y="194">Lineage 저장</text>
+  </g>
+  <rect class="node" x="1365" y="125" width="170" height="110"/>
+  <text class="label" x="1450" y="163">자산 상세 화면</text>
+  <text class="sub" x="1450" y="188">Upstream · Downstream</text>
+  <text class="sub" x="1450" y="211">영향 범위 탐색</text>
+
+  <path class="edge" d="M220 180H257"/>
+  <path class="edge" d="M415 180H522"/>
+  <text class="edge-label" x="469" y="166">표준화</text>
+  <path class="edge" d="M770 180H882"/>
+  <text class="edge-label" x="826" y="166">전송</text>
+  <path class="edge" d="M1110 180H1127"/>
+  <path class="edge" d="M1255 180H1357"/>
+
+  <rect class="standard" x="265" y="310" width="845" height="70"/>
+  <text class="label amber" x="688" y="338">변경 효과</text>
+  <text class="sub" x="688" y="362">OpenMetadata API 직접 호출 의존성을 제거하고, 리니지 생성과 저장 책임을 OpenLineage 표준으로 분리</text>
+</svg>

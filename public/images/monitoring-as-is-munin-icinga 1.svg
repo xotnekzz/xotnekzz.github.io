@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500" role="img" aria-labelledby="title desc">
+  <title id="title">Munin과 Icinga2가 분리된 기존 모니터링 구조</title>
+  <desc id="desc">서버 하드웨어 메트릭은 Munin에서 조회하고 장애 알림은 Icinga2에서 별도로 운영하여 컨테이너와 애플리케이션 관측이 빠진 구조</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#000" flood-opacity=".06"/></filter>
+    <marker id="arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto"><path d="M0 0L12 7L0 14Z" fill="#333"/></marker>
+    <marker id="redArrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto"><path d="M0 0L12 7L0 14Z" fill="#c62828"/></marker>
+    <style>
+      text{font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;fill:#28253d}.layer{fill:#f9f9fb;stroke:#28253d;stroke-width:2;rx:10;filter:url(#shadow)}.title{font-size:18px;font-weight:650;text-anchor:middle}.node{fill:#fff;stroke:#28253d;stroke-width:2;rx:8;filter:url(#shadow)}.legacy{fill:#fff8e1;stroke:#f9a825;stroke-width:2;rx:8;filter:url(#shadow)}.danger{fill:#ffebee;stroke:#c62828;stroke-width:2.5;rx:8;filter:url(#shadow)}.label{font-size:17px;font-weight:650;text-anchor:middle}.sub{font-size:14px;text-anchor:middle;fill:#4b4b5e}.edge{fill:none;stroke:#333;stroke-width:2.2;marker-end:url(#arrow)}.rededge{fill:none;stroke:#c62828;stroke-width:3;stroke-dasharray:7 5;marker-end:url(#redArrow)}.red{fill:#c62828}.amber{fill:#9a6700}
+    </style>
+  </defs>
+  <rect width="1500" height="500" fill="#fff"/>
+  <rect class="layer" x="25" y="38" width="330" height="415"/><text class="title" x="190" y="72">[1] 모니터링 대상</text>
+  <rect class="layer" x="385" y="38" width="710" height="415"/><text class="title" x="740" y="72">[2] 분리된 수집 및 운영 도구</text>
+  <rect class="layer" x="1125" y="38" width="350" height="415"/><text class="title" x="1300" y="72">[3] 운영자 인터페이스</text>
+
+  <rect class="node" x="70" y="113" width="240" height="82"/><text class="label" x="190" y="146">물리 서버</text><text class="sub" x="190" y="171">CPU · Memory · Disk</text>
+  <rect class="danger" x="70" y="229" width="240" height="72"/><text class="label red" x="190" y="259">컨테이너 메트릭</text><text class="sub" x="190" y="282">통합 수집 범위 밖</text>
+  <rect class="danger" x="70" y="335" width="240" height="72"/><text class="label red" x="190" y="365">애플리케이션 메트릭</text><text class="sub" x="190" y="388">Doris · SeaweedFS 관측 공백</text>
+
+  <rect class="legacy" x="435" y="104" width="190" height="100"/><text class="label amber" x="530" y="141">Munin Agent</text><text class="sub" x="530" y="165">하드웨어 중심</text><text class="sub" x="530" y="185">느린 감지 주기</text>
+  <rect class="legacy" x="700" y="104" width="190" height="100"/><text class="label amber" x="795" y="141">Munin Server</text><text class="sub" x="795" y="165">메트릭 저장</text><text class="sub" x="795" y="185">대시보드</text>
+  <rect class="danger" x="700" y="292" width="190" height="100"/><text class="label red" x="795" y="329">Icinga2</text><text class="sub" x="795" y="353">별도 장애 감지</text><text class="sub" x="795" y="373">별도 알림 설정</text>
+
+  <path class="edge" d="M310 154H427"/><path class="edge" d="M625 154H692"/>
+  <path class="rededge" d="M310 176C505 176 512 342 692 342"/>
+
+  <rect class="legacy" x="1175" y="104" width="250" height="100"/><text class="label amber" x="1300" y="141">Munin UI</text><text class="sub" x="1300" y="165">서버 메트릭 조회</text><text class="sub" x="1300" y="185">유지보수 불편</text>
+  <rect class="danger" x="1175" y="292" width="250" height="100"/><text class="label red" x="1300" y="329">Icinga2 UI</text><text class="sub" x="1300" y="353">장애 알림 관리</text><text class="sub" x="1300" y="373">인터페이스 분리</text>
+  <path class="edge" d="M890 154H1167"/><path class="edge" d="M890 342H1167"/>
+
+  <rect class="danger" x="432" y="420" width="612" height="46"/><text class="label red" x="738" y="449">관측 범위 부족 · 초 단위 감지 불가 · 조회와 알림 분리</text>
+</svg>

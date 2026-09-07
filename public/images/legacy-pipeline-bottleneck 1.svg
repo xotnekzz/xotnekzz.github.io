@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="610" viewBox="0 0 1800 610" role="img" aria-labelledby="title desc">
+  <title id="title">AS-IS 시간 단위 로그 배치 파이프라인과 네트워크 장애 위험</title>
+  <desc id="desc">게임 로그가 Nginx와 Fluentd에서 실시간 처리되지만 TSV는 1시간 동안 버퍼링된 후 게임 서비스와 공유하는 네트워크로 집중 전송되고, Airflow와 Impala가 다시 1시간 배치로 Parquet를 생성하는 기존 구조</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#000" flood-opacity="0.06"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto">
+      <path d="M0 0L12 7L0 14Z" fill="#333"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto">
+      <path d="M0 0L12 7L0 14Z" fill="#c62828"/>
+    </marker>
+    <style>
+      text { font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif; fill: #28253d; }
+      .layer { fill: #f9f9fb; stroke: #28253d; stroke-width: 2; rx: 10; filter: url(#shadow); }
+      .layer-title { font-size: 18px; font-weight: 650; text-anchor: middle; }
+      .node { fill: #fff; stroke: #28253d; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .process { fill: #e3f2fd; stroke: #1565c0; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .storage { fill: #ffebee; stroke: #c62828; stroke-width: 2; filter: url(#shadow); }
+      .batch { fill: #fff8e1; stroke: #f9a825; stroke-width: 2.5; rx: 8; filter: url(#shadow); }
+      .danger { fill: #ffebee; stroke: #c62828; stroke-width: 2.5; rx: 8; filter: url(#shadow); }
+      .node-label { font-size: 16px; font-weight: 650; text-anchor: middle; }
+      .sub-label { font-size: 13px; font-weight: 450; text-anchor: middle; fill: #4b4b5e; }
+      .edge { fill: none; stroke: #333; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-red { fill: none; stroke: #c62828; stroke-width: 4; marker-end: url(#arrow-red); }
+      .edge-dash { fill: none; stroke: #f9a825; stroke-width: 2; stroke-dasharray: 7 5; }
+      .edge-label-bg { fill: #fff; opacity: .97; rx: 5; }
+      .edge-label { font-size: 13px; font-weight: 650; text-anchor: middle; }
+      .blue { fill: #1565c0; }
+      .red { fill: #c62828; }
+      .amber { fill: #9a6700; }
+    </style>
+  </defs>
+
+  <rect width="1800" height="610" fill="#fff"/>
+
+  <rect class="layer" x="20" y="42" width="630" height="500"/>
+  <text class="layer-title" x="335" y="76">[1] 실시간 수집 · 변환 / 시간 단위 Flush</text>
+
+  <rect class="layer" x="675" y="42" width="250" height="500"/>
+  <text class="layer-title" x="800" y="76">[2] 공유 네트워크</text>
+
+  <rect class="layer" x="950" y="42" width="570" height="500"/>
+  <text class="layer-title" x="1235" y="76">[3] 레거시 저장 · 1시간 배치 ETL</text>
+
+  <rect class="layer" x="1545" y="42" width="235" height="500"/>
+  <text class="layer-title" x="1662" y="76">[4] 분석 및 활용</text>
+
+  <rect class="node" x="45" y="221" width="100" height="64"/>
+  <text class="node-label" x="95" y="259">게임 유저</text>
+
+  <rect class="node" x="181" y="205" width="130" height="96"/>
+  <text class="node-label" x="246" y="243">로그 서버</text>
+  <text class="sub-label" x="246" y="267">Nginx access.log</text>
+  <text class="sub-label" x="246" y="286">실시간 누적</text>
+
+  <rect class="process" x="347" y="205" width="120" height="96"/>
+  <text class="node-label blue" x="407" y="243">Fluentd</text>
+  <text class="sub-label" x="407" y="267">실시간 Transform</text>
+  <text class="sub-label" x="407" y="286">TSV 변환</text>
+
+  <rect class="batch" x="503" y="188" width="122" height="130"/>
+  <text class="node-label amber" x="564" y="226">TSV Buffer</text>
+  <text class="sub-label" x="564" y="250">1시간 누적</text>
+  <text class="sub-label" x="564" y="271">정각 Flush</text>
+  <text class="node-label amber" x="564" y="298">BATCH 1h</text>
+
+  <path class="edge" d="M145 253H173"/>
+  <path class="edge" d="M311 253H339"/>
+  <path class="edge" d="M467 253H495"/>
+
+  <rect class="danger" x="701" y="163" width="198" height="180"/>
+  <text class="node-label red" x="800" y="203">⚠ 장애 위험 구간</text>
+  <text class="sub-label" x="800" y="231">게임 서비스와 로그 전송이</text>
+  <text class="sub-label" x="800" y="252">동일 네트워크 대역 공유</text>
+  <line x1="724" y1="271" x2="876" y2="271" stroke="#ef9a9a"/>
+  <text class="node-label red" x="800" y="298">TSV 집중 전송</text>
+  <text class="sub-label" x="800" y="320">정각 트래픽 급증 · 경합</text>
+
+  <path class="edge-red" d="M625 253H693"/>
+  <path class="edge-red" d="M899 253H973"/>
+  <rect class="edge-label-bg" x="624" y="205" width="70" height="38"/>
+  <text class="edge-label red" x="659" y="221">1시간분</text>
+  <text class="edge-label red" x="659" y="238">TSV 전송</text>
+
+  <g>
+    <path class="storage" d="M982 173 C982 153 1118 153 1118 173 L1118 263 C1118 283 982 283 982 263 Z"/>
+    <ellipse class="storage" cx="1050" cy="173" rx="68" ry="18"/>
+    <text class="node-label red" x="1050" y="210">HDFS</text>
+    <text class="sub-label" x="1050" y="233">시간 단위 TSV</text>
+    <text class="sub-label" x="1050" y="253">원본 보관</text>
+  </g>
+
+  <rect class="batch" x="1151" y="188" width="122" height="130"/>
+  <text class="node-label amber" x="1212" y="226">Airflow</text>
+  <text class="sub-label" x="1212" y="250">스케줄 실행</text>
+  <text class="sub-label" x="1212" y="271">Impala ETL</text>
+  <text class="node-label amber" x="1212" y="298">BATCH 1h</text>
+
+  <g>
+    <path class="storage" d="M1312 173 C1312 153 1488 153 1488 173 L1488 263 C1488 283 1312 283 1312 263 Z"/>
+    <ellipse class="storage" cx="1400" cy="173" rx="88" ry="18"/>
+    <text class="node-label red" x="1400" y="209">HDFS / Impala</text>
+    <text class="sub-label" x="1400" y="233">Parquet 운영 테이블</text>
+    <text class="sub-label" x="1400" y="253">NN 3 · DN 37</text>
+  </g>
+
+  <path class="edge" d="M1118 218H1143"/>
+  <path class="edge" d="M1273 253H1304"/>
+  <rect class="edge-label-bg" x="1115" y="174" width="40" height="35"/>
+  <text class="edge-label" x="1135" y="196">감지</text>
+  <rect class="edge-label-bg" x="1270" y="205" width="44" height="35"/>
+  <text class="edge-label" x="1292" y="227">ETL</text>
+
+  <rect class="node" x="1574" y="216" width="176" height="74"/>
+  <text class="node-label" x="1662" y="247">BI / Analysts</text>
+  <text class="sub-label" x="1662" y="270">Superset · Metabase</text>
+  <path class="edge" d="M1488 218H1566"/>
+  <rect class="edge-label-bg" x="1481" y="166" width="91" height="44"/>
+  <text class="edge-label" x="1526" y="184">느린 SQL 조회</text>
+  <text class="edge-label" x="1526" y="201">수십 초 이상</text>
+
+  <path class="edge-dash" d="M503 355H625"/>
+  <path class="edge-dash" d="M982 355H1273"/>
+  <text class="edge-label amber" x="564" y="379">① 1시간 대기</text>
+  <text class="edge-label amber" x="1127" y="379">② 다음 1시간 배치 ETL</text>
+
+  <rect x="48" y="422" width="577" height="78" rx="8" fill="#fff8e1" stroke="#f9a825" stroke-width="2" stroke-dasharray="7 5"/>
+  <text class="node-label amber" x="336" y="449">실시간처럼 보이지만 실제 전달 단위는 1시간</text>
+  <text class="sub-label" x="336" y="476">Fluentd 실시간 Transform → TSV 1시간 누적 → 정각 Flush</text>
+
+  <rect x="702" y="422" width="786" height="78" rx="8" fill="#ffebee" stroke="#c62828" stroke-width="2" stroke-dasharray="7 5"/>
+  <text class="node-label red" x="1095" y="449">핵심 병목: 배치 경계마다 데이터와 네트워크 부하가 집중</text>
+  <text class="sub-label" x="1095" y="476">중간 TSV와 최종 Parquet를 모두 유지하여 전송량 · 저장량 · 운영 단계 증가</text>
+</svg>

@@ -1,0 +1,47 @@
+---
+title: ELT 파이프라인 설계 (PyAirbyte)
+description: PyAirbyte로 외부 데이터를 Apache Doris의 Bronze 레이어에 적재하고 dbt로 Silver·Gold 데이터 모델을 빌드해 분석 환경 표준화
+date: 2026-02-01
+tags:
+  - PyAirbyte
+  - Airflow
+  - Apache Doris
+  - dbt
+  - Python
+  - ELT
+featured: true
+draft: false
+---
+> **기간:** 2026.2 ~ 2026.3
+> **참여인원:** 
+> **역할:** Senior Data Engineer (아키텍처 설계 리딩)
+> **기술 스택:** PyAirbyte, Apache Airflow, Apache Doris, dbt, Python, SQL
+
+## 1. Background & Challenges
+
+기존의 Python API 연동 방식의 ETL은 Transform 코드가 파이썬 API 내부에 숨어있는 구조라 디버깅이 어렵고 유지보수 난이도가 높으며 다양한 데이터 분석 확장이 어려운 구조였습니다. Airbyte와 같이 이미 구현되어 있는 오픈소스를 활용하여 Raw 데이터를 추출하고 EL(Extraction & Load) 과정을 자동화하여, 데이터 엔지니어가 데이터 가공과 비즈니스 로직에 더 집중할 수 있는 환경이 필요했습니다.
+
+## 2. Architecture: As-Is vs To-Be
+
+기존의 "가공 후 적재(ETL)" 방식을 지양하고, "적재 후 가공(ELT)" 방식을 통해 데이터 유연성을 확보하는 아키텍처로 전환했습니다. 외부 데이터 소스의 Raw 데이터를 Apache Doris의 **Bronze 레이어**에 적재하고, **dbt로 Silver·Gold 레이어의 데이터 모델을 빌드**하여 분석 환경을 표준화했습니다.
+
+- **Bronze:** 외부 API·DB에서 수집한 Raw 데이터를 보관합니다.
+- **Silver:** dbt로 원본 데이터를 정제하고 공통 형식으로 표준화합니다.
+- **Gold:** dbt로 분석 목적에 맞는 데이터 모델과 집계 데이터를 구성해 BI에 제공합니다.
+
+## 3. Solution & Technical Insights
+
+![[pyairbyte.svg|697]]
+1. **PyAirbyte + Airflow 결합을 통한 Ingestion 자동화**
+- **[Issue]** API 연동 시마다 개별 커넥터를 작성하고 유지보수해야 하는 부담이 컸습니다.
+- **[Solution]** **PyAirbyte**를 Airflow 환경에 도입하여 수천 개의 오픈소스 커넥터를 즉시 활용할 수 있는 기반을 마련했습니다. 이로 인해 신규 데이터 소스 추가 시 코딩 리소스를 80% 이상 절감하고 수집 프로세스의 표준화를 달성했습니다.
+1. **아키텍처 설계 주도 및 팀 리딩 (Technical Mentoring)**
+- **Dynamic DAG 기반 커넥터 통합 관리:** 과거 40개 이상의 ETL을 단일 코드로 관리했던 메타데이터 기반 Dynamic DAG 노하우를 전수했습니다. 이를 통해 주니어 엔지니어들이 수십 개의 PyAirbyte 커넥터를 각각의 코드가 아닌, **단일 Dynamic DAG 코드**로 효율적으로 관리할 수 있도록 가이드했습니다.
+- **AI Agent Skills를 통한 커스텀 커넥터 개발 가속화:** 특정 API의 경우 직접 커스텀 커넥터를 작성해야 하는 리소스 부담을 인지하고, LLM 기반의 **Agent Skills**를 활용하여 누구나 쉽고 빠르게 커넥터 코드를 생성/패키징할 수 있는 환경을 구축하도록 피드백하고 리딩했습니다. 이를 통해 개발 진입 장벽을 낮추고 구현 속도를 혁신적으로 개선했습니다.
+## 4. Impact & Result
+
+- **유지보수 효율 극대화:** 신규 API 연동 리소스를 획기적으로 단축하여 데이터 엔지니어의 핵심 비즈니스 가공 집중도를 높였습니다.
+- **현대적 ELT 패러다임 정착:** 인프라 유연성과 확장성을 확보하여 향후 데이터 규모 성장에 대비한 견고한 토대를 마련했습니다.
+- **팀 기술 역량 상향 평준화:** 시니어의 설계 노하우와 AI 기술(Agent Skills)을 팀 워크플로우에 녹여내어, 주니어들이 복잡한 아키텍처를 안정적으로 운영하고 확장할 수 있는 기반을 마련했습니다.
+
+

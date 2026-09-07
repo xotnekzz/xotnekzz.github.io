@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="540" viewBox="0 0 1600 540" role="img" aria-labelledby="title desc">
+  <title id="title">Nginx 로그를 gzip으로 압축하고 DuckDB로 Parquet 변환 후 Doris에서 분석하는 데이터 파이프라인</title>
+  <desc id="desc">게임 유저, 로그 서버, Nginx 로그 회전 및 gzip 압축, SeaweedFS 원본 저장, Airflow Sensor, Docker 기반 DuckDB ETL, Parquet 저장, Apache Doris, BI 도구로 이어지는 시간 단위 배치 파이프라인</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#000" flood-opacity="0.06"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto">
+      <path d="M0 0L12 7L0 14Z" fill="#333"/>
+    </marker>
+    <style>
+      text { font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif; fill: #28253d; }
+      .layer { fill: #f9f9fb; stroke: #28253d; stroke-width: 2; rx: 10; filter: url(#shadow); }
+      .layer-title { font-size: 18px; font-weight: 650; text-anchor: middle; }
+      .node { fill: #fff; stroke: #28253d; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .process { fill: #e3f2fd; stroke: #1565c0; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .storage { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 2; filter: url(#shadow); }
+      .olap { fill: #fff3e0; stroke: #e65100; stroke-width: 2; filter: url(#shadow); }
+      .node-label { font-size: 17px; font-weight: 600; text-anchor: middle; }
+      .sub-label { font-size: 14px; font-weight: 450; text-anchor: middle; fill: #4b4b5e; }
+      .edge { fill: none; stroke: #333; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-label-bg { fill: #fff; opacity: .96; rx: 5; }
+      .edge-label { font-size: 14px; font-weight: 600; text-anchor: middle; }
+      .blue { fill: #1565c0; }
+      .green { fill: #2e7d32; }
+      .orange { fill: #e65100; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="540" fill="#fff"/>
+
+  <rect class="layer" x="24" y="42" width="500" height="450"/>
+  <text class="layer-title" x="274" y="76">[1] 수집 및 압축 전송 계층</text>
+
+  <rect class="layer" x="550" y="42" width="682" height="450"/>
+  <text class="layer-title" x="891" y="76">[2] 배치 ETL 및 데이터 플랫폼</text>
+
+  <rect class="layer" x="1258" y="42" width="318" height="450"/>
+  <text class="layer-title" x="1417" y="76">[3] 분석 및 활용 계층</text>
+
+  <rect class="node" x="55" y="205" width="110" height="62"/>
+  <text class="node-label" x="110" y="242">게임 유저</text>
+
+  <rect class="node" x="205" y="192" width="126" height="88"/>
+  <text class="node-label" x="268" y="229">로그 서버</text>
+  <text class="sub-label" x="268" y="253">Nginx access.log</text>
+
+  <rect class="process" x="371" y="180" width="122" height="112"/>
+  <text class="node-label blue" x="432" y="220">Logrotate</text>
+  <text class="sub-label" x="432" y="246">1시간 단위</text>
+  <text class="sub-label" x="432" y="269">rotate + gzip</text>
+
+  <path class="edge" d="M165 236H197"/>
+  <path class="edge" d="M331 236H363"/>
+
+  <path class="edge" d="M493 236H575"/>
+  <rect class="edge-label-bg" x="494" y="194" width="82" height="38"/>
+  <text class="edge-label" x="535" y="210">압축 전송</text>
+  <text class="edge-label" x="535" y="227">트래픽 절감</text>
+
+  <g>
+    <path class="storage" d="M580 132 C580 112 730 112 730 132 L730 215 C730 235 580 235 580 215 Z"/>
+    <ellipse class="storage" cx="655" cy="132" rx="75" ry="18"/>
+    <text class="node-label green" x="655" y="170">SeaweedFS</text>
+    <text class="sub-label" x="655" y="194">gzip 원본 로그</text>
+  </g>
+
+  <rect class="process" x="784" y="101" width="142" height="92"/>
+  <text class="node-label blue" x="855" y="139">Airflow</text>
+  <text class="sub-label" x="855" y="164">DAG Sensor</text>
+
+  <rect class="process" x="784" y="282" width="142" height="108"/>
+  <text class="node-label blue" x="855" y="319">DuckDB ETL</text>
+  <text class="sub-label" x="855" y="344">Docker</text>
+  <text class="sub-label" x="855" y="366">파싱 · 정제 · 변환</text>
+
+  <g>
+    <path class="storage" d="M998 292 C998 272 1198 272 1198 292 L1198 377 C1198 397 998 397 998 377 Z"/>
+    <ellipse class="storage" cx="1098" cy="292" rx="100" ry="18"/>
+    <text class="node-label green" x="1098" y="331">SeaweedFS</text>
+    <text class="sub-label" x="1098" y="355">Parquet 분석 데이터</text>
+  </g>
+
+  <path class="edge" d="M730 147H776"/>
+  <rect class="edge-label-bg" x="729" y="107" width="50" height="32"/>
+  <text class="edge-label" x="754" y="126">감지</text>
+
+  <path class="edge" d="M855 193V274"/>
+  <rect class="edge-label-bg" x="867" y="218" width="72" height="35"/>
+  <text class="edge-label" x="903" y="240">작업 실행</text>
+
+  <path class="edge" d="M730 206C758 206 748 336 776 336"/>
+  <rect class="edge-label-bg" x="714" y="257" width="70" height="35"/>
+  <text class="edge-label" x="749" y="279">gzip 읽기</text>
+
+  <path class="edge" d="M926 336H990"/>
+  <rect class="edge-label-bg" x="927" y="294" width="62" height="34"/>
+  <text class="edge-label" x="958" y="315">Parquet</text>
+
+  <g>
+    <path class="olap" d="M1290 131 C1290 108 1438 108 1438 131 L1438 222 C1438 245 1290 245 1290 222 Z"/>
+    <ellipse class="olap" cx="1364" cy="131" rx="74" ry="19"/>
+    <text class="node-label orange" x="1364" y="171">Apache Doris</text>
+    <text class="sub-label" x="1364" y="195">FE 3 · BE 28</text>
+  </g>
+
+  <rect class="node" x="1285" y="322" width="158" height="70"/>
+  <text class="node-label" x="1364" y="351">BI 도구</text>
+  <text class="sub-label" x="1364" y="375">Superset · Metabase</text>
+
+  <path class="edge" d="M1198 336C1240 336 1238 177 1282 177"/>
+  <rect class="edge-label-bg" x="1191" y="226" width="91" height="51"/>
+  <text class="edge-label" x="1236" y="245">Airflow</text>
+  <text class="edge-label" x="1236" y="263">배치 적재</text>
+
+  <path class="edge" d="M1364 245V314"/>
+  <rect class="edge-label-bg" x="1377" y="261" width="96" height="37"/>
+  <text class="edge-label" x="1425" y="284">빠른 SQL 조회</text>
+
+  <rect x="577" y="425" width="620" height="42" rx="8" fill="#eceff1" stroke="#455a64" stroke-width="2" stroke-dasharray="6 5"/>
+  <text class="sub-label" x="887" y="451">보관 구조 단순화: gzip 원본 + Parquet 분석 데이터</text>
+</svg>

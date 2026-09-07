@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="560" viewBox="0 0 1600 560" role="img" aria-labelledby="title desc">
+  <title id="title">Apache Doris Snapshot과 FE Metadata의 SeaweedFS S3 백업 구조</title>
+  <desc id="desc">Doris 파티션 Snapshot은 S3 Repository를 통해 SeaweedFS에 백업하고 FE Metadata는 매주 압축하여 별도 경로에 보관하며 복구 테스트로 검증하는 구조</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#000" flood-opacity=".06"/></filter>
+    <marker id="arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto"><path d="M0 0L12 7L0 14Z" fill="#333"/></marker>
+    <style>text{font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;fill:#28253d}.layer{fill:#f9f9fb;stroke:#28253d;stroke-width:2;rx:10;filter:url(#shadow)}.title{font-size:18px;font-weight:650;text-anchor:middle}.olap{fill:#fff3e0;stroke:#e65100;stroke-width:2;rx:8;filter:url(#shadow)}.process{fill:#e3f2fd;stroke:#1565c0;stroke-width:2;rx:8;filter:url(#shadow)}.storage{fill:#e8f5e9;stroke:#2e7d32;stroke-width:2;filter:url(#shadow)}.batch{fill:#fff8e1;stroke:#f9a825;stroke-width:2;rx:8;filter:url(#shadow)}.label{font-size:17px;font-weight:650;text-anchor:middle}.sub{font-size:14px;text-anchor:middle;fill:#4b4b5e}.edge{fill:none;stroke:#333;stroke-width:2.2;marker-end:url(#arrow)}.dash{fill:none;stroke:#1565c0;stroke-width:2.2;stroke-dasharray:7 5;marker-end:url(#arrow)}.blue{fill:#1565c0}.green{fill:#2e7d32}.orange{fill:#e65100}.amber{fill:#9a6700}</style>
+  </defs>
+  <rect width="1600" height="560" fill="#fff"/>
+  <rect class="layer" x="25" y="40" width="380" height="470"/><text class="title" x="215" y="75">[1] Apache Doris 운영 클러스터</text>
+  <rect class="layer" x="435" y="40" width="380" height="470"/><text class="title" x="625" y="75">[2] 백업 작업</text>
+  <rect class="layer" x="845" y="40" width="425" height="470"/><text class="title" x="1057" y="75">[3] 외부 백업 저장소</text>
+  <rect class="layer" x="1300" y="40" width="275" height="470"/><text class="title" x="1437" y="75">[4] 복구 검증</text>
+
+  <rect class="olap" x="80" y="120" width="270" height="115"/><text class="label orange" x="215" y="160">Doris 운영 데이터</text><text class="sub" x="215" y="188">BE Local Storage</text><text class="sub" x="215" y="211">Storage / Compute Coupled</text>
+  <rect class="olap" x="80" y="315" width="270" height="105"/><text class="label orange" x="215" y="355">Doris FE Metadata</text><text class="sub" x="215" y="383">FE HA · Cluster Metadata</text>
+
+  <rect class="process" x="490" y="120" width="270" height="115"/><text class="label blue" x="625" y="157">BACKUP SNAPSHOT</text><text class="sub" x="625" y="184">신규 파티션 선택</text><text class="sub" x="625" y="207">Repository → S3 API</text><text class="sub" x="625" y="226">실행 주기 추후 확정</text>
+  <rect class="batch" x="490" y="315" width="270" height="105"/><text class="label amber" x="625" y="352">FE Metadata 압축</text><text class="sub" x="625" y="380">매주 1회 저장</text><text class="sub" x="625" y="400">BATCH 1 week</text>
+  <path class="edge" d="M350 177H482"/><path class="edge" d="M350 367H482"/>
+
+  <g><path class="storage" d="M905 112C905 91 1210 91 1210 112V407C1210 428 905 428 905 407Z"/><ellipse class="storage" cx="1057.5" cy="112" rx="152.5" ry="21"/><text class="label green" x="1057" y="166">SeaweedFS S3</text><text class="sub" x="1057" y="191">S3 Gateway · Backup Bucket</text><text class="sub" x="1057" y="211">Doris S3 Repository</text><line x1="945" y1="237" x2="1170" y2="237" stroke="#a5d6a7"/><text class="label green" x="1057" y="278">파티션 Snapshot</text><text class="sub" x="1057" y="303">Full Backup / Selected Partitions</text><line x1="945" y1="327" x2="1170" y2="327" stroke="#a5d6a7"/><text class="label green" x="1057" y="371">FE Metadata 백업</text><text class="sub" x="1057" y="396">Weekly Compressed Archive</text></g>
+  <path class="dash" d="M760 177H897"/><path class="dash" d="M760 367H897"/>
+
+  <rect class="process" x="1335" y="124" width="205" height="115"/><text class="label blue" x="1437" y="163">데이터 복원</text><text class="sub" x="1437" y="190">운영 테이블 복구</text><text class="sub" x="1437" y="214">정합성 검증</text>
+  <rect class="process" x="1335" y="317" width="205" height="105"/><text class="label blue" x="1437" y="355">FE 복구</text><text class="sub" x="1437" y="382">Metadata 복원</text><text class="sub" x="1437" y="403">클러스터 재구성 검증</text>
+  <path class="edge" d="M1210 177H1327"/><path class="edge" d="M1210 369H1327"/>
+  <rect x="485" y="457" width="730" height="40" rx="8" fill="#eceff1" stroke="#455a64" stroke-width="2" stroke-dasharray="6 5"/><text class="sub" x="850" y="482">백업 성공 여부 · 복구 정합성 · 복구 소요 시간을 정기 테스트로 검증</text>
+</svg>

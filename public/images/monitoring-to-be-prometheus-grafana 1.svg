@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="540" viewBox="0 0 1600 540" role="img" aria-labelledby="title desc">
+  <title id="title">Prometheus와 Grafana 기반 통합 모니터링 구조</title>
+  <desc id="desc">서버의 node_exporter, 컨테이너의 cAdvisor, Doris와 SeaweedFS의 자체 메트릭을 중앙 Prometheus에서 수집하고 Grafana에서 대시보드와 장애 알림을 통합하는 구조</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#000" flood-opacity=".06"/></filter>
+    <marker id="arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto"><path d="M0 0L12 7L0 14Z" fill="#333"/></marker>
+    <style>
+      text{font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;fill:#28253d}.layer{fill:#f9f9fb;stroke:#28253d;stroke-width:2;rx:10;filter:url(#shadow)}.title{font-size:18px;font-weight:650;text-anchor:middle}.node{fill:#fff;stroke:#28253d;stroke-width:2;rx:8;filter:url(#shadow)}.process{fill:#e3f2fd;stroke:#1565c0;stroke-width:2;rx:8;filter:url(#shadow)}.storage{fill:#e8f5e9;stroke:#2e7d32;stroke-width:2;filter:url(#shadow)}.olap{fill:#fff3e0;stroke:#e65100;stroke-width:2;rx:8;filter:url(#shadow)}.label{font-size:17px;font-weight:650;text-anchor:middle}.sub{font-size:14px;text-anchor:middle;fill:#4b4b5e}.edge{fill:none;stroke:#333;stroke-width:2.2;marker-end:url(#arrow)}.dash{fill:none;stroke:#1565c0;stroke-width:2;stroke-dasharray:7 5;marker-end:url(#arrow)}.blue{fill:#1565c0}.green{fill:#2e7d32}.orange{fill:#e65100}
+    </style>
+  </defs>
+  <rect width="1600" height="540" fill="#fff"/>
+  <rect class="layer" x="25" y="40" width="570" height="455"/><text class="title" x="310" y="74">[1] 계층별 메트릭 노출</text>
+  <rect class="layer" x="625" y="40" width="425" height="455"/><text class="title" x="837" y="74">[2] 중앙 수집 및 저장</text>
+  <rect class="layer" x="1080" y="40" width="495" height="455"/><text class="title" x="1327" y="74">[3] 통합 조회 및 장애 알림</text>
+
+  <rect class="node" x="60" y="102" width="190" height="90"/><text class="label" x="155" y="137">모든 서버</text><text class="sub" x="155" y="162">CPU · Memory · Disk</text><text class="sub" x="155" y="181">Network</text>
+  <rect class="process" x="340" y="102" width="210" height="90"/><text class="label blue" x="445" y="139">node_exporter</text><text class="sub" x="445" y="165">서버 메트릭</text>
+  <path class="edge" d="M250 147H332"/>
+
+  <rect class="node" x="60" y="225" width="190" height="90"/><text class="label" x="155" y="261">모든 컨테이너</text><text class="sub" x="155" y="286">자원 사용량 · 실행 상태</text>
+  <rect class="process" x="340" y="225" width="210" height="90"/><text class="label blue" x="445" y="262">cAdvisor</text><text class="sub" x="445" y="288">컨테이너 메트릭</text>
+  <path class="edge" d="M250 270H332"/>
+
+  <rect class="node" x="60" y="348" width="190" height="90"/><text class="label" x="155" y="384">데이터 플랫폼</text><text class="sub" x="155" y="409">Apache Doris · SeaweedFS</text>
+  <rect class="process" x="340" y="348" width="210" height="90"/><text class="label blue" x="445" y="384">Native Metrics</text><text class="sub" x="445" y="410">Prometheus Endpoint</text>
+  <path class="edge" d="M250 393H332"/>
+
+  <g><path class="storage" d="M715 178C715 151 960 151 960 178V350C960 377 715 377 715 350Z"/><ellipse class="storage" cx="837.5" cy="178" rx="122.5" ry="23"/><text class="label green" x="837" y="240">Prometheus</text><text class="sub" x="837" y="267">단일 모니터링 서버</text><text class="sub" x="837" y="292">초 단위 Scrape</text><text class="sub" x="837" y="317">시계열 메트릭 저장</text></g>
+  <path class="dash" d="M550 147C635 147 620 220 707 220"/><path class="dash" d="M550 270H707"/><path class="dash" d="M550 393C635 393 620 320 707 320"/>
+
+  <rect class="olap" x="1160" y="123" width="335" height="135"/><text class="label orange" x="1327" y="163">Grafana Dashboards</text><text class="sub" x="1327" y="191">서버 · 컨테이너 · 애플리케이션</text><text class="sub" x="1327" y="215">메트릭 통합 조회</text><text class="sub" x="1327" y="239">상시 모니터링</text>
+  <rect class="olap" x="1160" y="315" width="335" height="120"/><text class="label orange" x="1327" y="356">Grafana Alerting</text><text class="sub" x="1327" y="384">장애 조건 · 알림 정책</text><text class="sub" x="1327" y="407">하나의 인터페이스로 운영</text>
+  <path class="edge" d="M960 233H1152"/><path class="edge" d="M960 310C1050 310 1060 375 1152 375"/>
+
+  <rect x="668" y="424" width="340" height="45" rx="8" fill="#eceff1" stroke="#455a64" stroke-width="2" stroke-dasharray="6 5"/><text class="sub" x="838" y="452">모든 계층의 메트릭을 한곳에서 수집</text>
+</svg>

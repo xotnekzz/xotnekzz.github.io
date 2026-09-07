@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">IDC 네트워크 최종 토폴로지</title>
+  <desc id="desc">FortiGate 100F, SX6632YF L3 Spine, 랙별 SG6654X L3 Leaf 5대로 구성한 Spine-Leaf 네트워크</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8fafc"/><stop offset="1" stop-color="#eef2ff"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0f172a" flood-opacity=".12"/></filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker>
+    <style>
+      text{font-family:Inter,"Noto Sans KR",Arial,sans-serif;fill:#0f172a}.title{font-size:34px;font-weight:800}.subtitle{font-size:17px;fill:#475569}.node-title{font-size:20px;font-weight:750}.node-sub{font-size:15px;fill:#475569}.link{stroke:#64748b;stroke-width:3;fill:none;marker-end:url(#arrow)}.link-label{font-size:14px;font-weight:650;fill:#475569}.rack{fill:#ecfdf5;stroke:#059669;stroke-width:2}.server{fill:#fff;stroke:#94a3b8;stroke-width:1.5}.tag{font-size:13px;font-weight:700}.note{font-size:15px;fill:#334155}.change{font-size:14px;font-weight:750;fill:#9f1239}
+    </style>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <text x="80" y="68" class="title">IDC 네트워크 최종 구성안</text>
+  <text x="80" y="100" class="subtitle">Spine–Leaf · FortiGate 100F · 모든 랙 Full L3 전환</text>
+
+  <rect x="655" y="130" width="290" height="86" rx="18" fill="#eff6ff" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="800" y="165" text-anchor="middle" class="node-title">Internet / IDC 회선</text>
+  <text x="800" y="192" text-anchor="middle" class="node-sub">Public · 전용회선 · Remote Access</text>
+
+  <path d="M800 216 V270" class="link"/><text x="820" y="252" class="link-label">WAN</text>
+  <rect x="620" y="270" width="360" height="110" rx="20" fill="#fff1f2" stroke="#e11d48" stroke-width="3" filter="url(#shadow)"/>
+  <text x="800" y="310" text-anchor="middle" class="node-title">FortiGate 100F</text>
+  <text x="800" y="338" text-anchor="middle" class="node-sub">Firewall · NAT · VPN · IPS · 정책 통제</text>
+  <rect x="752" y="352" width="96" height="20" rx="10" fill="#ffe4e6"/><text x="800" y="367" text-anchor="middle" class="change">100E → 100F</text>
+
+  <path d="M800 380 V440" class="link"/><text x="820" y="417" class="link-label">10G+ L3 Transit</text>
+  <rect x="580" y="440" width="440" height="118" rx="20" fill="#f5f3ff" stroke="#7c3aed" stroke-width="3" filter="url(#shadow)"/>
+  <text x="800" y="480" text-anchor="middle" class="node-title">L3 Spine / Core · SX6632YF</text>
+  <text x="800" y="509" text-anchor="middle" class="node-sub">26×10G SFP+ · 6×25G SFP28</text>
+  <text x="800" y="535" text-anchor="middle" class="node-sub">Static / OSPF · VRRP · ECMP 확장 가능</text>
+
+  <path d="M800 558 V610 H180 V657" class="link"/><path d="M800 558 V610 H490 V657" class="link"/><path d="M800 558 V657" class="link"/><path d="M800 558 V610 H1110 V657" class="link"/><path d="M800 558 V610 H1420 V657" class="link"/>
+  <text x="805" y="600" class="link-label">랙별 10G SFP+ Routed Uplink</text>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="657" width="240" height="218" rx="18" class="rack"/><rect x="80" y="754" width="200" height="91" rx="12" class="server"/>
+    <rect x="370" y="657" width="240" height="218" rx="18" class="rack"/><rect x="390" y="754" width="200" height="91" rx="12" class="server"/>
+    <rect x="680" y="657" width="240" height="218" rx="18" class="rack"/><rect x="700" y="754" width="200" height="91" rx="12" class="server"/>
+    <rect x="990" y="657" width="240" height="218" rx="18" class="rack"/><rect x="1010" y="754" width="200" height="91" rx="12" class="server"/>
+    <rect x="1300" y="657" width="240" height="218" rx="18" class="rack"/><rect x="1320" y="754" width="200" height="91" rx="12" class="server"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="180" y="692" class="node-title">RACK 1</text><text x="180" y="720" class="node-sub">L3 Leaf · SG6654X</text><text x="180" y="740" class="tag" fill="#047857">48×1G · 6×10G</text><text x="180" y="790" class="node-title">Web / DB</text><text x="180" y="817" class="node-sub">Game Service</text>
+    <text x="490" y="692" class="node-title">RACK 2</text><text x="490" y="720" class="node-sub">L3 Leaf · SG6654X</text><text x="490" y="740" class="tag" fill="#047857">48×1G · 6×10G</text><text x="490" y="790" class="node-title">Hadoop</text><text x="490" y="817" class="node-sub">Data Cluster</text>
+    <text x="800" y="692" class="node-title">RACK 3</text><text x="800" y="720" class="node-sub">L3 Leaf · SG6654X</text><text x="800" y="740" class="tag" fill="#047857">48×1G · 6×10G</text><text x="800" y="790" class="node-title">Application</text><text x="800" y="817" class="node-sub">Compute Cluster</text>
+    <text x="1110" y="692" class="node-title">RACK 4</text><text x="1110" y="720" class="node-sub">L3 Leaf · SG6654X</text><text x="1110" y="740" class="tag" fill="#047857">48×1G · 6×10G</text><text x="1110" y="790" class="node-title">Proxy · Kong · Log</text><text x="1110" y="817" class="node-sub">DMZ / 58 VLAN 분리</text>
+    <text x="1420" y="692" class="node-title">RACK 5</text><text x="1420" y="720" class="node-sub">L3 Leaf · SG6654X</text><text x="1420" y="740" class="tag" fill="#047857">48×1G · 6×10G</text><text x="1420" y="790" class="node-title">기타 서버</text><text x="1420" y="817" class="node-sub">향후 증설 영역</text>
+  </g>
+
+  <rect x="80" y="914" width="640" height="55" rx="14" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+  <text x="105" y="948" class="note"><tspan font-weight="750">운영 예비:</tspan> SG6654X Leaf 1대 별도 보관 (구축 5대 + 예비 1대)</text>
+  <rect x="765" y="914" width="755" height="55" rx="14" fill="#f8fafc" stroke="#94a3b8"/>
+  <text x="790" y="948" class="note"><tspan font-weight="750">설계 원칙:</tspan> VLAN 간 라우팅은 L3 Leaf/Core, 보안 경계와 외부 통신은 FortiGate 100F</text>
+</svg>

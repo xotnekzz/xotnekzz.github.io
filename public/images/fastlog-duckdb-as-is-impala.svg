@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="530" viewBox="0 0 1320 530" role="img" aria-labelledby="title desc"><title id="title">AS-IS · 공유망 경합과 TSV / Parquet 이중 저장</title><desc id="desc">AS-IS · 공유망 경합과 TSV / Parquet 이중 저장. TSV를 HDFS에 저장한 Impala ETL 테이블에서 Airflow ETL을 거쳐 운영 Impala 테이블용 Parquet로 HDFS에 다시 저장합니다.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#28253d"/></marker><style>text{font-family:Pretendard,'Apple SD Gothic Neo','Noto Sans KR',Arial,sans-serif;fill:#28253d}.title{font-size:27px;font-weight:700}.label{font-size:20px;font-weight:600;text-anchor:middle}.sub{font-size:17px;text-anchor:middle}</style></defs><rect width="1320" height="530" fill="#fff"/>
+<text x="30" y="45" class="title">AS-IS · 공유망 경합과 TSV / Parquet 이중 저장</text>
+<rect x="30" y="82" width="285" height="320" rx="12" fill="#f9f9fb" stroke="#28253d"/><text x="172.5" y="117" class="label">[1] 로그 수집 · 배치 경계</text>
+<rect x="42" y="153" width="261" height="140" rx="10" fill="#e3f2fd" stroke="#1565c0"/><text x="172.5" y="191" class="label">Nginx → Fluentd</text><text x="172.5" y="231" class="sub">실시간 파싱 · TSV 변환</text><text x="172.5" y="263" class="sub">TSV는 1시간 단위 누적</text>
+<path d="M316 223H353" fill="none" stroke="#1565c0" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="355" y="82" width="285" height="320" rx="12" fill="#f9f9fb" stroke="#28253d"/><text x="497.5" y="117" class="label">[2] 공유 네트워크</text>
+<rect x="367" y="153" width="261" height="140" rx="10" fill="#ffebee" stroke="#c62828"/><text x="497.5" y="191" class="label">공유 1 Gbps 경로</text><text x="497.5" y="231" class="sub">비압축 TSV 집중 전송</text><text x="497.5" y="263" class="sub">게임 서비스 트래픽과 경합</text>
+<path d="M641 223H678" fill="none" stroke="#c62828" stroke-width="4" marker-end="url(#arrow)"/>
+<rect x="680" y="82" width="285" height="320" rx="12" fill="#f9f9fb" stroke="#28253d"/><text x="822.5" y="117" class="label">[3] 중간 TSV 저장</text>
+<path d="M692 166 A130.5 13 0 0 1 953 166 V280 A130.5 13 0 0 1 692 280 Z" fill="#e8f5e9" stroke="#2e7d32"/><ellipse cx="822.5" cy="166" rx="130.5" ry="13" fill="#e8f5e9" stroke="#2e7d32"/><text x="822.5" y="204" class="label">Impala ETL 테이블</text><text x="822.5" y="231" class="sub">HDFS · 비압축 TSV</text><text x="822.5" y="263" class="sub">첫 번째 저장 · ETL 입력</text>
+<path d="M966 223H986V184H1003" fill="none" stroke="#2e7d32" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="1005" y="82" width="285" height="320" rx="12" fill="#f9f9fb" stroke="#28253d"/><text x="1147.5" y="117" class="label">[4] ETL · 운영 데이터</text>
+<rect x="1017" y="155" width="261" height="58" rx="10" fill="#e3f2fd" stroke="#1565c0"/><text x="1147.5" y="190" class="label">Airflow · Impala ETL</text>
+<path d="M1147.5 214V242" fill="none" stroke="#28253d" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M1017 256 A130.5 13 0 0 1 1278 256 V374 A130.5 13 0 0 1 1017 374 Z" fill="#e8f5e9" stroke="#2e7d32"/><ellipse cx="1147.5" cy="256" rx="130.5" ry="13" fill="#e8f5e9" stroke="#2e7d32"/>
+<text x="1147.5" y="300" class="label">운영 Impala 테이블</text><text x="1147.5" y="332" class="sub">HDFS · Parquet 재저장</text><text x="1147.5" y="362" class="sub">두 번째 저장 · 운영 조회</text>
+<rect x="30" y="430" width="1260" height="78" rx="10" fill="#ffebee"/><text x="660" y="460" class="label">1시간분 TSV 집중 전송 + 중간 TSV와 운영 Parquet 이중 보관</text><text x="660" y="491" class="sub">공유망 경합에 더해 저장 공간 · TSV 읽기와 Parquet 쓰기 I/O · 두 테이블 관리 비용 발생</text></svg>
