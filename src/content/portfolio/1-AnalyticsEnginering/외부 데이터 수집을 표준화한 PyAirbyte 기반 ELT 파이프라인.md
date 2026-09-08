@@ -30,8 +30,8 @@ draft: false
 - **Gold:** dbt로 분석 목적에 맞는 데이터 모델과 집계 데이터를 구성해 BI에 제공합니다.
 
 ## 3. Solution & Technical Insights
+![[pyairbyte.svg|437]]
 
-![[pyairbyte.svg|697]]
 1. **PyAirbyte + Airflow 결합을 통한 Ingestion 자동화**
 - **[Issue]** API 연동 시마다 개별 커넥터를 작성하고 유지보수해야 하는 부담이 컸습니다.
 - **[Solution]** **PyAirbyte**를 Airflow 환경에 도입하여 수천 개의 오픈소스 커넥터를 즉시 활용할 수 있는 기반을 마련했습니다. 이로 인해 신규 데이터 소스 추가 시 코딩 리소스를 80% 이상 절감하고 수집 프로세스의 표준화를 달성했습니다.
