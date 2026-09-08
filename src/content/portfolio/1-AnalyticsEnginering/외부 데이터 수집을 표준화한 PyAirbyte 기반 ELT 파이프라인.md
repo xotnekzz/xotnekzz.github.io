@@ -30,7 +30,7 @@ draft: false
 - **Gold:** dbt로 분석 목적에 맞는 데이터 모델과 집계 데이터를 구성해 BI에 제공합니다.
 
 ## 3. Solution & Technical Insights
-![[pyairbyte.svg|437]]
+![PyAirbyte 기반 ELT 파이프라인|437](/images/pyairbyte.svg)
 
 1. **PyAirbyte + Airflow 결합을 통한 Ingestion 자동화**
 - **[Issue]** API 연동 시마다 개별 커넥터를 작성하고 유지보수해야 하는 부담이 컸습니다.
