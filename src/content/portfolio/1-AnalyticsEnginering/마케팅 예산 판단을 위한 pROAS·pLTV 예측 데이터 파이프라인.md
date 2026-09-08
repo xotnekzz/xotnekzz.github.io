@@ -24,7 +24,7 @@ draft: false
 
 Ad-Network의 캠페인 퍼포먼스(Spend, Install, Impression, Click)와 MMP(Appsflyer)의 유저 행동 데이터(ROAS, Retention, Session 등)를 통합하여 마케팅 데이터 마트를 구축하고, 이를 기반으로 딥러닝 모델이 미래 매출을 예측하여 실무에 환류되는 구조를 설계했습니다.
 
-![[ua_proas.svg|437]]
+![[images/ua_proas.svg|437]]
 ## 3. Solution & Technical Insights
 
 1. **딥러닝 학습 최적화를 위한 데이터 피딩(Feeding) 파이프라인**
