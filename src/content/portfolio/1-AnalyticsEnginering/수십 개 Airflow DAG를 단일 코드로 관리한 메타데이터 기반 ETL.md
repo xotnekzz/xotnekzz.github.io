@@ -1,5 +1,5 @@
 ---
-title: Metadata Driven ETL Workflow
+title: 수십 개 Airflow DAG를 단일 코드로 관리한 메타데이터 기반 ETL
 description: 파이프라인 설정을 메타데이터화하여 단일 코드베이스로 수십 개의 Airflow DAG를 동적 생성·관리하는 아키텍처
 date: 2023-01-01
 tags:

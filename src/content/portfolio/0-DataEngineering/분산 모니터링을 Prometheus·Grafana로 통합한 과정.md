@@ -1,7 +1,7 @@
 ---
-title: Grafana × Prometheus 기반 모니터링 시스템 구축
+title: 분산 모니터링을 Prometheus·Grafana로 통합한 과정
 description: 분산되어 있던 서버·컨테이너·애플리케이션 메트릭과 장애 알림을 Prometheus와 Grafana로 통합
-date: 2026-09-05
+date: 2026-02-02
 tags:
   - Prometheus
   - Grafana

@@ -1,5 +1,5 @@
 ---
-title: Doris 전환
+title: 40대 레거시 클러스터로 구축한 Doris 기반 데이터 플랫폼
 description: HDFS/Impala 게임로그 데이터 저장소를 Apache Doris로 전환
 date: 2026-02-01
 tags:

@@ -1,7 +1,7 @@
 ---
-title: 메달리온 아키텍처 도입 with dbt × Airflow
+title: 파편화된 ETL을 메달리온 아키텍처로 표준화한 과정
 description: 파편화된 ETL과 중복 데이터를 Bronze·Silver·Gold 계층 및 dbt SQL 모델링으로 표준화
-date: 2026-09-05
+date: 2026-04-05
 tags:
   - Medallion Architecture
   - dbt

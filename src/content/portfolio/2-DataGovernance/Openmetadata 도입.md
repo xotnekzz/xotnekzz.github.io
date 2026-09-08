@@ -1,5 +1,5 @@
 ---
-title: OpenMetadata 기반 데이터 디스커버리·거버넌스 체계 구축
+title: 데이터 탐색과 계보를 연결한 OpenMetadata 거버넌스 플랫폼
 description: OpenMetadata 인프라와 OpenLineage 계보를 구축하고, OpenSearch 임베딩 기반 Semantic Search로 데이터 자산 탐색을 확장
 date: 2026-02-01
 tags:

@@ -1,5 +1,5 @@
 ---
-title: 인프라 장애 처방전 에이전트
+title: CMDB와 관측 데이터를 기반으로 장애를 분석하는 AI 에이전트
 description: OpenMetadata CMDB 온톨로지와 관측 Skill·MCP를 결합해 장애 영향 범위와 원인을 자율 분석하는 에이전트
 date: 2026-09-08
 tags:
@@ -33,7 +33,7 @@ draft: false
 
 ### TO-BE: CMDB 온톨로지를 탐색하는 장애 분석 에이전트
 
-![하드웨어·네트워크·서비스 흐름을 YAML Ontology as Code로 모델링해 OpenMetadata CMDB를 갱신하고, 장애 발생 시 Hermes Agent가 CMDB 관계와 관측 Skill·MCP를 반복 탐색하여 영향 범위와 원인을 분석하는 흐름](images/incident-agent-ontology-sequence.svg)
+![하드웨어·네트워크·서비스 흐름을 YAML Ontology as Code로 모델링해 OpenMetadata CMDB를 갱신하고, 장애 발생 시 Hermes Agent가 CMDB 관계와 관측 Skill·MCP를 반복 탐색하여 영향 범위와 원인을 분석하는 흐름](incident-agent-ontology-sequence.svg)
 
 CMDB 갱신 흐름과 장애 분석 흐름을 분리했습니다. 하드웨어 서버 장비, 네트워크 구성, 서비스 흐름 데이터를 YAML 온톨로지로 모델링해 OpenMetadata 용어집에 지속 반영합니다. 장애가 발생하면 에이전트가 이 관계도를 따라 영향 범위와 조사 대상을 정한 뒤, 대상별 관측 도구를 호출해 원인을 좁힙니다.
 

@@ -1,5 +1,5 @@
 ---
-title: OpenMetadata 기반 자연어 데이터 분석 에이전트 개발
+title: 신뢰할 데이터 자산을 찾아 분석까지 수행하는 AI 에이전트
 description: 데이터 자산 탐색부터 SQL 실행, Metabase 차트와 분석 보고까지 연결한 자연어 기반 데이터 분석 에이전트
 date: 2026-09-08
 tags:
@@ -35,7 +35,7 @@ OpenMetadata 도입과 메달리온 아키텍처 전환으로 기반을 마련�
 
 ### TO-BE: 메타데이터 맥락을 사용하는 분석 에이전트
 
-![Mattermost의 자연어 요청을 Hermes Gateway와 Hermes Agent가 받아 OpenMetadata에서 신뢰할 데이터 자산을 찾고, SQL 실행 후 Metabase 차트와 분석 보고서를 반환하는 구조](images/openmetadata-data-analysis-agent.svg)
+![Mattermost의 자연어 요청을 Hermes Gateway와 Hermes Agent가 받아 OpenMetadata에서 신뢰할 데이터 자산을 찾고, SQL 실행 후 Metabase 차트와 분석 보고서를 반환하는 구조](openmetadata-data-analysis-agent.svg)
 
 Mattermost의 자연어 요청을 Hermes Gateway·Agent가 받아, OpenMetadata Skill로 자산 맥락을 검색합니다. 분석 목적에 맞는 Silver·Gold 자산을 고른 뒤 SQL 실행, Metabase 차트와 해석을 같은 채널로 반환합니다.
 

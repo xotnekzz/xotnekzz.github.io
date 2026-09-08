@@ -1,5 +1,5 @@
 ---
-title: PROAS Prediction Data Pipeline
+title: 마케팅 예산 판단을 위한 pROAS·pLTV 예측 데이터 파이프라인
 description: 딥러닝 기반 pROAS/pLTV 예측 모델을 위한 피처 데이터 공급 및 실시간 서빙 파이프라인 구축
 date: 2022-01-01
 tags:

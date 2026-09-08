@@ -1,5 +1,5 @@
 ---
-title: Asset Driven Data Pipeline 도입기 with Airflow3
+title: Cron 기반 배치를 Asset 기반 파이프라인으로 전환한 과정
 description: Cron 기반 DAG의 수동 복구를 Asset 기반 연쇄 실행으로 전환하고, Partition Key로 백필의 처리 단위를 명확히 한 과정
 date: 2026-09-07
 tags:

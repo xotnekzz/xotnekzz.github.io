@@ -1,5 +1,5 @@
 ---
-title: DuckDB x Airflow 조합으로 로그 ETL 구조 변경하기
+title: 공유 네트워크 병목을 줄인 DuckDB 로그 ETL 전환
 description: 비압축 TSV 전송과 Impala ETL·운영 테이블의 이중 저장 구조를 gzip 원본·DuckDB Parquet 배치 ETL로 전환
 date: 2026-09-07
 tags:
