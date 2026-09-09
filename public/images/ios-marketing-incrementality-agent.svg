@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="600" viewBox="0 0 1600 600" role="img" aria-labelledby="title desc">
+  <title id="title">iOS 마케팅 증분 분석 에이전트 아키텍처</title>
+  <desc id="desc">마케터의 요청을 Gemini Agent가 받아 MCP 서버를 호출하고 Marketing Database의 Spend와 Organic 시계열 데이터를 LinearSVR와 RANSAC으로 분석해 차트와 자연어 인사이트를 제공하는 흐름</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#000" flood-opacity="0.06"/></filter>
+    <marker id="arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto"><path d="M0 0L12 7L0 14Z" fill="#333"/></marker>
+    <style>
+      text { font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif; fill: #28253d; }
+      .layer { fill: #f9f9fb; stroke: #28253d; stroke-width: 2; rx: 10; filter: url(#shadow); }
+      .layer-title { font-size: 18px; font-weight: 650; text-anchor: middle; }
+      .node { fill: #fff; stroke: #28253d; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .process { fill: #e3f2fd; stroke: #1565c0; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .storage { fill: #e8f5e9; stroke: #2e7d32; stroke-width: 2; filter: url(#shadow); }
+      .result { fill: #fff3e0; stroke: #e65100; stroke-width: 2; rx: 8; filter: url(#shadow); }
+      .label { font-size: 17px; font-weight: 650; text-anchor: middle; }
+      .sub { font-size: 14px; text-anchor: middle; fill: #4b4b5e; }
+      .edge { fill: none; stroke: #333; stroke-width: 2.2; marker-end: url(#arrow); }
+      .edge-text { font-size: 13px; font-weight: 600; text-anchor: middle; }
+      .blue { fill: #1565c0; } .green { fill: #2e7d32; } .orange { fill: #e65100; }
+    </style>
+  </defs>
+  <rect width="1600" height="600" fill="#fff"/>
+  <rect class="layer" x="24" y="42" width="210" height="470"/><text class="layer-title" x="129" y="78">[1] 분석 요청</text>
+  <rect class="layer" x="260" y="42" width="270" height="470"/><text class="layer-title" x="395" y="78">[2] 에이전트 계층</text>
+  <rect class="layer" x="556" y="42" width="700" height="470"/><text class="layer-title" x="906" y="78">[3] 데이터 조회 및 증분 분석</text>
+  <rect class="layer" x="1282" y="42" width="294" height="470"/><text class="layer-title" x="1429" y="78">[4] 의사결정 지원</text>
+
+  <rect class="node" x="50" y="205" width="158" height="104"/>
+  <text class="label" x="129" y="245">Marketer</text><text class="label" x="129" y="269">/ Management</text><text class="sub" x="129" y="293">증분 효과 질의</text>
+  <rect class="process" x="292" y="192" width="206" height="130"/>
+  <text class="label blue" x="395" y="232">Gemini Agent</text><text class="sub" x="395" y="260">분석 도구 선택</text><text class="sub" x="395" y="283">결과·차트 해석</text><text class="sub" x="395" y="306">멀티모달 분석</text>
+  <rect class="process" x="582" y="192" width="176" height="130"/>
+  <text class="label blue" x="670" y="232">MCP Server</text><text class="sub" x="670" y="260">분석 도구 호출</text><text class="sub" x="670" y="283">JSON · 차트 반환</text>
+  <g><path class="storage" d="M806 207C806 185 986 185 986 207V304C986 326 806 326 806 304Z"/><ellipse class="storage" cx="896" cy="207" rx="90" ry="19"/>
+  <text class="label green" x="896" y="249">Marketing DB</text><text class="sub" x="896" y="276">Spend · Organic 설치</text><text class="sub" x="896" y="299">Organic 매출 시계열</text></g>
+  <rect class="process" x="1030" y="192" width="196" height="130"/>
+  <text class="label blue" x="1128" y="231">LinearSVR</text><text class="label blue" x="1128" y="255">+ RANSAC</text><text class="sub" x="1128" y="284">이상치 영향 완화</text><text class="sub" x="1128" y="306">계수 · 영향도 산출</text>
+  <rect class="result" x="1312" y="182" width="234" height="150"/>
+  <text class="label orange" x="1429" y="224">분석 결과</text><text class="sub" x="1429" y="253">자연어 인사이트</text><text class="sub" x="1429" y="277">시각화 차트</text><text class="sub" x="1429" y="301">예산 최적화 전략</text>
+
+  <path class="edge" d="M208 257H284"/><text class="edge-text" x="246" y="238">자연어 질의</text>
+  <path class="edge" d="M498 257H574"/><text class="edge-text" x="536" y="238">MCP 호출</text>
+  <path class="edge" d="M758 257H798"/><text class="edge-text" x="778" y="238">조회</text>
+  <path class="edge" d="M986 257H1022"/><text class="edge-text" x="1004" y="238">시계열</text>
+  <path class="edge" d="M1226 257H1304"/><text class="edge-text" x="1265" y="224">JSON · 차트</text>
+
+  <rect x="584" y="399" width="640" height="62" rx="8" fill="#fff8e1" stroke="#9a6700" stroke-width="2"/>
+  <text class="label" x="904" y="424" fill="#9a6700">Privacy-Safe Measurement</text>
+  <text class="sub" x="904" y="448">개인 식별 정보 없이 집계 데이터의 상관관계로 증분 효과를 간접 추정</text>
+</svg>
