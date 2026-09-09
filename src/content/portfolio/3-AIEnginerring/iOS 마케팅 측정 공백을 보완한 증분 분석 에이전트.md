@@ -10,8 +10,8 @@ tags:
   - RANSAC
   - MCP
   - Gemini
-featured: false
-draft: true
+featured: true
+draft: false
 ---
 > **기간:** 2025.09 ~ 2025.09
 > **참여인원:**
