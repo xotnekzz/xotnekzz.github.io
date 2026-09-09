@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1000" role="img" aria-labelledby="title desc">
+  <title id="title">SeaweedFS3 HDD 장애의 조사와 복제 복구 시퀀스</title>
+  <desc id="desc">운영자가 장애 Volume Server, Master, FilerDB, 생존 Volume Server와 상호작용하며 stale 위치를 해제하고 부족 복제본을 채운 다음 초과 복제본을 정리하는 순서.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#1565c0"/></marker>
+    <marker id="return-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2e7d32"/></marker>
+    <style>
+      .text { fill:#28253d; font-family:Pretendard,'Apple SD Gothic Neo','Noto Sans KR',Arial,sans-serif; }
+      .title { font-size:27px; font-weight:700; } .subtitle { font-size:15px; } .head { font-size:17px; font-weight:700; }
+      .label { font-size:15px; font-weight:600; } .small { font-size:13px; }
+      .life { stroke:#b8c4d5; stroke-width:1.5; stroke-dasharray:7 7; }
+      .request { stroke:#1565c0; stroke-width:2.3; fill:none; marker-end:url(#arrow); }
+      .response { stroke:#2e7d32; stroke-width:2.1; stroke-dasharray:7 6; fill:none; marker-end:url(#return-arrow); }
+      .phase { fill:#f8fbff; stroke:#bbdefb; stroke-width:1.5; } .safe { fill:#f7fcf7; stroke:#a5d6a7; stroke-width:1.5; }
+    </style>
+  </defs>
+  <rect width="1240" height="1000" rx="18" fill="#fff"/>
+  <text x="60" y="52" class="text title">HDD 이탈 이후, SeaweedFS 복제본을 다시 3본으로 맞추는 흐름</text>
+  <text x="60" y="80" class="text subtitle">실선은 변경·요청, 점선은 확인 결과다. 시간은 위에서 아래로 흐른다.</text>
+
+  <g class="text">
+    <rect x="42" y="110" width="155" height="56" rx="12" fill="#eef5ff" stroke="#1565c0" stroke-width="2"/><text x="120" y="144" text-anchor="middle" class="head">운영자</text>
+    <rect x="270" y="110" width="175" height="56" rx="12" fill="#fff3e0" stroke="#e65100" stroke-width="2"/><text x="358" y="144" text-anchor="middle" class="head">장애 Volume Server</text>
+    <rect x="518" y="110" width="155" height="56" rx="12" fill="#eef5ff" stroke="#1565c0" stroke-width="2"/><text x="596" y="144" text-anchor="middle" class="head">Master</text>
+    <rect x="746" y="110" width="155" height="56" rx="12" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/><text x="824" y="144" text-anchor="middle" class="head">FilerDB</text>
+    <rect x="974" y="110" width="210" height="56" rx="12" fill="#eef8f0" stroke="#2e7d32" stroke-width="2"/><text x="1079" y="144" text-anchor="middle" class="head">생존 Volume Server</text>
+  </g>
+  <g class="life"><line x1="120" y1="166" x2="120" y2="944"/><line x1="358" y1="166" x2="358" y2="944"/><line x1="596" y1="166" x2="596" y2="944"/><line x1="824" y1="166" x2="824" y2="944"/><line x1="1079" y1="166" x2="1079" y2="944"/></g>
+
+  <rect x="24" y="190" width="1192" height="128" rx="14" class="phase"/>
+  <text x="46" y="218" class="text head" fill="#1565c0">1. 장애와 영향 범위 확인</text>
+  <path d="M358 244 H120" class="response"/><text x="239" y="236" text-anchor="middle" class="text label">/storage1 이탈, drive1 사용 불가</text>
+  <path d="M120 276 H596" class="request"/><text x="358" y="267" text-anchor="middle" class="text label">volume.list로 장애 디스크 볼륨 역조회</text>
+  <path d="M596 304 H1079" class="request"/><text x="838" y="295" text-anchor="middle" class="text label">대상별 생존 복제본 위치 확인</text>
+
+  <rect x="24" y="342" width="1192" height="150" rx="14" class="phase"/>
+  <text x="46" y="370" class="text head" fill="#1565c0">2. orphan 분기와 stale 등록 해제</text>
+  <path d="M120 400 H824" class="request"/><text x="472" y="391" text-anchor="middle" class="text label">Volume 188 Filer 참조 조회 (1분 제한)</text>
+  <path d="M824 428 H120" class="response"/><text x="472" y="420" text-anchor="middle" class="text small">참조 0건 → orphan, 복구·재등록 제외</text>
+  <path d="M120 460 H596" class="request"/><text x="358" y="451" text-anchor="middle" class="text label">생존본이 검증된 stale 위치만 해제</text>
+  <text x="596" y="479" text-anchor="middle" class="text small">Master가 실제 부족 복제본 상태를 인식</text>
+
+  <rect x="24" y="516" width="1192" height="196" rx="14" class="safe"/>
+  <text x="46" y="544" class="text head" fill="#2e7d32">3. 가용성을 먼저 회복</text>
+  <path d="M120 574 H358" class="request"/><text x="239" y="565" text-anchor="middle" class="text label">drive1 제거 후 Volume 재기동</text>
+  <path d="M358 602 H120" class="response"/><text x="239" y="594" text-anchor="middle" class="text small">남은 두 디렉터리 정상 노출</text>
+  <path d="M120 636 H596" class="request"/><text x="358" y="627" text-anchor="middle" class="text label">단일 병렬 부족본 복구 (doDelete=false)</text>
+  <path d="M596 664 H1079" class="request"/><text x="838" y="655" text-anchor="middle" class="text label">부족 복제본 생성</text>
+  <path d="M1079 694 H596" class="response"/><text x="838" y="686" text-anchor="middle" class="text small">154개 대상 모두 3본 이상 도달</text>
+
+  <rect x="24" y="736" width="1192" height="190" rx="14" class="safe"/>
+  <text x="46" y="764" class="text head" fill="#2e7d32">4. 초과본 정리와 최종 검증</text>
+  <path d="M120 794 H596" class="request"/><text x="358" y="785" text-anchor="middle" class="text label">무변경 검증: 45개 볼륨이 4본 이상</text>
+  <path d="M120 826 H596" class="request"/><text x="358" y="817" text-anchor="middle" class="text label">승인 후 단일 병렬 정리 (doDelete=true)</text>
+  <path d="M596 852 H1079" class="request"/><text x="838" y="843" text-anchor="middle" class="text label">동기화 확인 후 초과 복제본 삭제</text>
+  <path d="M1079 880 H120" class="response"/><text x="600" y="872" text-anchor="middle" class="text label">under / missing / over / misplaced = 0</text>
+  <text x="620" y="968" text-anchor="middle" class="text small">완료 판정과 진행률은 Master가 보고한 실제 볼륨 위치 수를 기준으로 계산했다.</text>
+</svg>

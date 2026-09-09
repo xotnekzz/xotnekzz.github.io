@@ -56,6 +56,10 @@ Agent(
 - 포트폴리오: `src/content/portfolio/{Category}/{title}.md`
 - 이력서: `src/data/resume.md` (기존 파일 수정)
 
+### 시각화 판단
+
+블로그 또는 포트폴리오에서 프로토콜, 데이터 파이프라인, 요청·응답, 이벤트 전달, 분기, 재시도, 백필처럼 시간 순서가 핵심이면 `~/.skills-manager/skills/technical-content-sequence-diagram/SKILL.md`를 적용한다. 새 스킬의 기준에 따라 다이어그램이 실제로 이해를 높이는지 먼저 판단하고, 필요한 경우 SVG 또는 Mermaid를 생성해 문서에 연결한다.
+
 ---
 
 ## Phase 2: 결과 보고
