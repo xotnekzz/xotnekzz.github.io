@@ -15,7 +15,7 @@ draft: false
 
 dbt Core 핵심 철학은 "데이터 변환에도 소프트 엔지니어링의 모범 사례를 적용하자"는 것 입니다. 즉 모든 변환 로직은 Git으로 버전 관리 되는 SQL 파일이 되고, 모듈화-재사용-테스트-문서화-CI/CD가 자연스럽게 간으해 집니다.
 
-동작 방식은 간단합니다. 사용자가 `SELECT`문으로 모델을 작성하면, dbt Core가 이를 `CREATE TABLE AS` 또는 `CREATE VIE AS`문으로 컴파일해 데이터 웨어하우스에 직접 전송하고 실행시킵니다. dbt Core자체는 데이터를  저장하지도, 직접 처리하지도 않습니다. 실제 연산은 Snowflake, BigQuery, Redshift, Postgres, Databricks 같은 웨어하우스에서 일어납니다.
+동작 방식은 간단합니다. 사용자가 `SELECT`문으로 모델을 작성하면, dbt Core가 이를 `CREATE TABLE AS` 또는 `CREATE VIEW AS`문으로 컴파일해 데이터 웨어하우스에 직접 전송하고 실행시킵니다. dbt Core자체는 데이터를  저장하지도, 직접 처리하지도 않습니다. 실제 연산은 Snowflake, BigQuery, Redshift, Postgres, Databricks 같은 웨어하우스에서 일어납니다.
 
 웨어하우스와 통신할 때는 어댑터(adapter)라는 플러그인 구조를 사용합니다. 예를 들어 Postgres는 `dbt-postgres`, Snowflake는 `dbt-snowflake` 어댑터를 설치하면 됩니다. 어댑터를 설치하면 의존성으로 `dbt-core` 가 함께 설치됩니다.
 

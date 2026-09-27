@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="650" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc" font-family="Arial, Apple SD Gothic Neo, Noto Sans CJK KR, sans-serif">
+<title id="title">Airflow에서 OpenMetadata로 계보 보내기</title>
+<desc id="desc">Airflow Task의 입력과 출력 정보를 OpenLineage 이벤트로 보내고, 성공 완료 시 현재 DAG가 만든 이전 연결만 정리한 뒤 최신 연결을 OpenMetadata에 기록합니다.</desc>
+<defs><marker id="olGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#278568"/></marker><marker id="olBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#5271b8"/></marker></defs>
+<rect width="1400" height="650" rx="24" fill="#f8fafc"/>
+<text x="48" y="58" font-size="31" fill="#13243a" font-weight="700">Airflow → OpenLineage → OpenMetadata</text>
+<text x="49" y="91" font-size="18" fill="#52647a" font-weight="400">OpenLineage는 테이블 데이터 대신 ‘무엇을 읽고 무엇을 만들었는지’를 전달합니다.</text>
+<rect x="38" y="120" width="1324" height="170" rx="20" fill="#f1f5fc" stroke="#cbd7ec" stroke-width="2"/>
+<text x="57" y="151" font-size="18" fill="#5271b8" font-weight="700">Task가 성공적으로 끝나면 다음 순서로 계보를 갱신합니다</text>
+<rect x="65" y="178" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="82" y="212" font-size="21" fill="#13243a" font-weight="700">1. 입력·출력 확인</text><text x="82" y="244" font-size="16" fill="#45566c" font-weight="400">orders_raw → orders_daily</text>
+<rect x="385" y="178" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="402" y="212" font-size="21" fill="#13243a" font-weight="700">2. 실행 기록 만들기</text><text x="402" y="244" font-size="16" fill="#45566c" font-weight="400">DAG·Task·테이블·성공 여부</text>
+<rect x="705" y="178" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="722" y="212" font-size="21" fill="#13243a" font-weight="700">3. 옛 연결 정리</text><text x="722" y="244" font-size="16" fill="#45566c" font-weight="400">현재 DAG가 만든 연결만</text>
+<rect x="1025" y="178" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="1042" y="212" font-size="21" fill="#13243a" font-weight="700">4. 새 연결 저장</text><text x="1042" y="244" font-size="16" fill="#45566c" font-weight="400">OpenMetadata에 최신 상태 반영</text>
+<line x1="333" y1="223" x2="371" y2="223" stroke="#278568" stroke-width="3" marker-end="url(#olGreen)"/>
+<line x1="653" y1="223" x2="691" y2="223" stroke="#278568" stroke-width="3" marker-end="url(#olGreen)"/>
+<line x1="973" y1="223" x2="1011" y2="223" stroke="#278568" stroke-width="3" marker-end="url(#olGreen)"/>
+<rect x="38" y="322" width="1324" height="245" rx="20" fill="#eef8f4" stroke="#c7e6d9" stroke-width="2"/>
+<text x="57" y="355" font-size="18" fill="#258264" font-weight="700">입력 테이블이 바뀌었을 때</text>
+<rect x="65" y="386" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="82" y="420" font-size="21" fill="#13243a" font-weight="700">이전 실행</text><text x="82" y="452" font-size="16" fill="#45566c" font-weight="400">orders_old → orders_daily</text>
+<rect x="385" y="386" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="402" y="420" font-size="21" fill="#13243a" font-weight="700">이번 실행</text><text x="402" y="452" font-size="16" fill="#45566c" font-weight="400">orders_new → orders_daily</text>
+<rect x="705" y="386" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="722" y="420" font-size="21" fill="#13243a" font-weight="700">정리 범위</text><text x="722" y="452" font-size="16" fill="#45566c" font-weight="400">이 DAG의 옛 연결만 삭제</text>
+<rect x="1025" y="386" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="1042" y="420" font-size="21" fill="#13243a" font-weight="700">화면에 표시</text><text x="1042" y="452" font-size="16" fill="#45566c" font-weight="400">orders_new → orders_daily</text>
+<line x1="333" y1="431" x2="371" y2="431" stroke="#278568" stroke-width="3" marker-end="url(#olGreen)"/>
+<line x1="653" y1="431" x2="691" y2="431" stroke="#278568" stroke-width="3" marker-end="url(#olGreen)"/>
+<line x1="973" y1="431" x2="1011" y2="431" stroke="#278568" stroke-width="3" marker-end="url(#olGreen)"/>
+<text x="57" y="510" font-size="16" fill="#45566c" font-weight="400">같은 테이블을 쓰는 다른 DAG의 연결은 그대로 둡니다.</text>
+<text x="48" y="612" font-size="16" fill="#26384b" font-weight="700">실패·입력 누락·OpenMetadata 오류가 있으면 옛 연결을 지우지 않아 계보가 통째로 사라지는 일을 막습니다.</text>
+</svg>

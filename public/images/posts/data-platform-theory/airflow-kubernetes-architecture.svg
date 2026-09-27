@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc" font-family="Arial, Apple SD Gothic Neo, Noto Sans CJK KR, sans-serif">
+<title id="title">Airflow on Kubernetes · KubernetesExecutor</title>
+<desc id="desc">Airflow Scheduler가 KubernetesExecutor를 통해 Kubernetes API에 Task Pod 생성을 요청합니다. Kubernetes Scheduler가 노드를 선택하고 Pod는 DAG를 실행해 업무 시스템에 접근한 뒤 상태를 보고하고 종료합니다.</desc>
+<defs><marker id="blueArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#5271b8"/></marker><marker id="greenArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#278568"/></marker></defs>
+<rect width="1400" height="760" rx="24" fill="#f8fafc"/>
+<text x="48" y="58" font-size="31" fill="#13243a" font-weight="700">Airflow on Kubernetes · KubernetesExecutor</text>
+<text x="49" y="91" font-size="17" fill="#52647a" font-weight="400">Airflow Scheduler는 작업을 선택하고, Kubernetes Scheduler는 Pod를 실행할 노드를 선택합니다.</text>
+<rect x="38" y="120" width="1324" height="210" rx="20" fill="#f1f5fc" stroke="#cbd7ec" stroke-width="2"/>
+<text x="57" y="151" font-size="17" fill="#5271b8" font-weight="700">제어 경로 · Airflow Scheduler와 Kubernetes API의 상호작용</text>
+<rect x="38" y="358" width="1324" height="190" rx="20" fill="#eef8f4" stroke="#c7e6d9" stroke-width="2"/>
+<text x="57" y="389" font-size="17" fill="#258264" font-weight="700">실행 경로 · Task Pod가 DAG 코드를 실행하고 실제 업무 데이터에 접근</text>
+<rect x="65" y="174" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="82" y="208" font-size="21" fill="#13243a" font-weight="700">Airflow Scheduler</text><text x="82" y="240" font-size="16" fill="#45566c" font-weight="400">DAG·의존성 평가</text>
+<rect x="385" y="174" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="402" y="208" font-size="21" fill="#13243a" font-weight="700">KubernetesExecutor</text><text x="402" y="240" font-size="16" fill="#45566c" font-weight="400">Task Pod 생성 요청</text>
+<rect x="705" y="174" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="722" y="208" font-size="21" fill="#13243a" font-weight="700">Kubernetes API</text><text x="722" y="240" font-size="16" fill="#45566c" font-weight="400">Pod 객체·상태</text>
+<rect x="1025" y="174" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="1042" y="208" font-size="21" fill="#13243a" font-weight="700">Kubernetes Scheduler</text><text x="1042" y="240" font-size="16" fill="#45566c" font-weight="400">노드 배치</text>
+<rect x="65" y="412" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="82" y="446" font-size="21" fill="#13243a" font-weight="700">DAG Bundle / Image</text><text x="82" y="478" font-size="16" fill="#45566c" font-weight="400">Task 코드·런타임 제공</text>
+<rect x="385" y="412" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="402" y="446" font-size="21" fill="#13243a" font-weight="700">임시 Worker Pod</text><text x="402" y="478" font-size="16" fill="#45566c" font-weight="400">Task 한 건 실행</text>
+<rect x="705" y="412" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="722" y="446" font-size="21" fill="#13243a" font-weight="700">외부 시스템</text><text x="722" y="478" font-size="16" fill="#45566c" font-weight="400">DB·API·파일 저장소</text>
+<rect x="1025" y="412" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="1042" y="446" font-size="21" fill="#13243a" font-weight="700">Airflow 상태·로그</text><text x="1042" y="478" font-size="16" fill="#45566c" font-weight="400">성공·실패·로그 기록</text>
+<line x1="333" y1="219" x2="371" y2="219" stroke="#5271b8" stroke-width="3" marker-end="url(#blueArrow)"/>
+<line x1="653" y1="219" x2="691" y2="219" stroke="#5271b8" stroke-width="3" marker-end="url(#blueArrow)"/>
+<line x1="973" y1="219" x2="1011" y2="219" stroke="#5271b8" stroke-width="3" marker-end="url(#blueArrow)"/>
+<line x1="333" y1="457" x2="371" y2="457" stroke="#278568" stroke-width="3" marker-end="url(#greenArrow)"/>
+<line x1="653" y1="457" x2="691" y2="457" stroke="#278568" stroke-width="3" marker-end="url(#greenArrow)"/>
+<line x1="973" y1="457" x2="1011" y2="457" stroke="#278568" stroke-width="3" marker-end="url(#greenArrow)"/>
+<line x1="1158" y1="270" x2="535" y2="405" stroke="#5271b8" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#blueArrow)"/>
+<text x="776" y="320" font-size="15" fill="#5271b8" font-weight="700">Pod 생성·배치</text>
+<path d="M520 505 C520 590 1158 590 1158 505" fill="none" stroke="#278568" stroke-width="2.5" stroke-dasharray="7 6" marker-end="url(#greenArrow)"/>
+<text x="655" y="581" font-size="16" fill="#258264" font-weight="700">Task 실행 결과와 로그가 Airflow에 반영된 뒤 Pod 종료</text>
+<text x="48" y="640" font-size="18" fill="#26384b" font-weight="700">Kubernetes에 Airflow 구성요소를 배포하는 것과 KubernetesExecutor를 선택하는 것은 별도 결정입니다.</text>
+<text x="48" y="674" font-size="16" fill="#52647a" font-weight="400">Helm Chart는 API Server·Scheduler·DAG Processor 등 상시 구성요소의 배포를 돕고, Executor 설정이 Task의 실행 형태를 결정합니다.</text>
+</svg>

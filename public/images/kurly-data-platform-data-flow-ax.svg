@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+<title id="title">Kurly Data Platform: Data Flow &amp; AX Direction</title>
+<desc id="desc">Six left-to-right swimlanes show AWS data sources, CDC ingestion, Kafka streaming, GCP BigQuery warehouse, consumers, and a dashed future AX platform. Solid paths are supported by Kurly technology blog posts; dashed paths are proposed or inferred.</desc>
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#607085"/></marker></defs>
+<rect width="1920" height="1080" fill="#FFFFFF"/>
+<text x="52" y="65" fill="#17243A" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="700" text-anchor="start"><tspan x="52" dy="0">Kurly Data Platform: Data Flow &amp; AX Direction</tspan></text>
+<text x="52" y="95" fill="#64748B" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="450" text-anchor="start"><tspan x="52" dy="0">Publicly documented data flow and a clearly marked AX target state</tspan></text>
+<rect x="52" y="122" width="1816" height="53" rx="14" fill="#FAF8FF" stroke="#A88BD5" stroke-width="1.8" stroke-dasharray="8 6"/>
+<text x="960" y="156" fill="#6E4D9B" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="650" text-anchor="middle"><tspan x="960" dy="0">Unified governance layer (target state)</tspan></text>
+<rect x="52" y="205" width="270" height="675" rx="18" fill="#FFF7F0" stroke="#E8B889" stroke-width="1.5"/>
+<text x="70" y="241" fill="#334155" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="start"><tspan x="70" dy="0">SOURCES</tspan></text>
+<text x="304" y="241" fill="#64748B" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="650" text-anchor="end"><tspan x="304" dy="0">AWS</tspan></text>
+<line x1="70" y1="258" x2="304" y2="258" stroke="#E8B889"/>
+<rect x="335" y="205" width="270" height="675" rx="18" fill="#FFF7F0" stroke="#E8B889" stroke-width="1.5"/>
+<text x="353" y="241" fill="#334155" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="start"><tspan x="353" dy="0">INGESTION / CDC</tspan></text>
+<text x="587" y="241" fill="#64748B" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="650" text-anchor="end"><tspan x="587" dy="0">AWS</tspan></text>
+<line x1="353" y1="258" x2="587" y2="258" stroke="#E8B889"/>
+<rect x="618" y="205" width="270" height="675" rx="18" fill="#FFF7F0" stroke="#E8B889" stroke-width="1.5"/>
+<text x="636" y="241" fill="#334155" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="start"><tspan x="636" dy="0">STREAMING BACKBONE</tspan></text>
+<line x1="636" y1="258" x2="870" y2="258" stroke="#E8B889"/>
+<rect x="901" y="205" width="326" height="675" rx="18" fill="#F2F8FF" stroke="#9AC4E9" stroke-width="1.5"/>
+<text x="919" y="241" fill="#334155" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="start"><tspan x="919" dy="0">WAREHOUSE</tspan></text>
+<text x="1209" y="241" fill="#64748B" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="650" text-anchor="end"><tspan x="1209" dy="0">GCP</tspan></text>
+<line x1="919" y1="258" x2="1209" y2="258" stroke="#9AC4E9"/>
+<rect x="1240" y="205" width="270" height="675" rx="18" fill="#F3FAF4" stroke="#AAD7B0" stroke-width="1.5"/>
+<text x="1258" y="241" fill="#334155" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="start"><tspan x="1258" dy="0">CONSUMERS</tspan></text>
+<text x="1492" y="241" fill="#64748B" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="650" text-anchor="end"><tspan x="1492" dy="0">USE</tspan></text>
+<line x1="1258" y1="258" x2="1492" y2="258" stroke="#AAD7B0"/>
+<rect x="1523" y="205" width="345" height="675" rx="18" fill="#F8F5FC" stroke="#BCA8DC" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="1541" y="241" fill="#334155" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="700" text-anchor="start"><tspan x="1541" dy="0">FUTURE: AX DATA PLATFORM</tspan></text>
+<line x1="1541" y1="258" x2="1850" y2="258" stroke="#BCA8DC"/>
+<line x1="894" y1="190" x2="894" y2="885" stroke="#769DC7" stroke-width="2" stroke-dasharray="5 7"/>
+<rect x="784" y="183" width="220" height="26" rx="7" fill="#FFFFFF" stroke="#B8CBE0" stroke-width="1.5"/>
+<text x="894" y="201" fill="#476E98" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="650" text-anchor="middle"><tspan x="894" dy="0">Multi-cloud boundary · AWS → GCP</tspan></text>
+<rect x="70" y="285" width="232" height="72" rx="12" fill="#FFFFFF" stroke="#E5C39F" stroke-width="1.5"/>
+<text x="186.0" y="316.58" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="550" text-anchor="middle"><tspan x="186.0" dy="0">Oracle</tspan><tspan x="186.0" dy="20.4">Aurora (MySQL/PostgreSQL)</tspan></text>
+<rect x="74" y="362" width="58.5" height="25" rx="7" fill="#FFF1E2" stroke="none" stroke-width="0"/>
+<text x="84" y="379" fill="#9B5E1E" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="600" text-anchor="start"><tspan x="84" dy="0">RDBMS</tspan></text>
+<rect x="70" y="438" width="232" height="68" rx="12" fill="#FFFFFF" stroke="#E5C39F" stroke-width="1.5"/>
+<text x="186.0" y="478.46" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="550" text-anchor="middle"><tspan x="186.0" dy="0">DocumentDB</tspan></text>
+<rect x="74" y="511" width="58.5" height="25" rx="7" fill="#FFF1E2" stroke="none" stroke-width="0"/>
+<text x="84" y="528" fill="#9B5E1E" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="600" text-anchor="start"><tspan x="84" dy="0">NoSQL</tspan></text>
+<rect x="70" y="609" width="232" height="72" rx="12" fill="#FFFFFF" stroke="#E5C39F" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="186.0" y="640.32" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="550" text-anchor="middle"><tspan x="186.0" dy="0">Legacy DBs</tspan><tspan x="186.0" dy="21.599999999999998">(no binlog access)</tspan></text>
+<rect x="353" y="285" width="234" height="72" rx="12" fill="#FFFFFF" stroke="#E5C39F" stroke-width="1.5"/>
+<text x="470.0" y="316.32" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="550" text-anchor="middle"><tspan x="470.0" dy="0">AWS DMS</tspan><tspan x="470.0" dy="21.599999999999998">log-based CDC</tspan></text>
+<rect x="353" y="438" width="234" height="68" rx="12" fill="#FFFFFF" stroke="#E5C39F" stroke-width="1.5"/>
+<text x="470.0" y="467.58" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="550" text-anchor="middle"><tspan x="470.0" dy="0">DMS Change Stream</tspan><tspan x="470.0" dy="20.4">from DocumentDB</tspan></text>
+<rect x="353" y="609" width="234" height="72" rx="12" fill="#FFFFFF" stroke="#E5C39F" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="470.0" y="640.5799999999999" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="550" text-anchor="middle"><tspan x="470.0" dy="0">Kafka Connect JDBC</tspan><tspan x="470.0" dy="20.4">query-based CDC</tspan></text>
+<rect x="353" y="697" width="234" height="39" rx="12" fill="#FFF0ED" stroke="#EF9F97" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="470.0" y="721.6" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="600" text-anchor="middle"><tspan x="470.0" dy="0">cannot detect deletes</tspan></text>
+<rect x="637" y="386" width="232" height="115" rx="12" fill="#FFFFFF" stroke="#E5C39F" stroke-width="1.5"/>
+<text x="753.0" y="437.0" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700" text-anchor="middle"><tspan x="753.0" dy="0">AWS MSK</tspan><tspan x="753.0" dy="30.0">(Kafka)</tspan></text>
+<rect x="637" y="573" width="232" height="83" rx="12" fill="#FFFDFB" stroke="#DBB37F" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="753.0" y="609.82" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="550" text-anchor="middle"><tspan x="753.0" dy="0">NiFi / Flink</tspan><tspan x="753.0" dy="21.599999999999998">real-time processing</tspan></text>
+<rect x="644" y="663" width="218.00000000000003" height="25" rx="7" fill="#FFF1E2" stroke="none" stroke-width="0"/>
+<text x="654" y="680" fill="#9B5E1E" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="600" text-anchor="start"><tspan x="654" dy="0">NiFi observed · Flink proposed</tspan></text>
+<rect x="920" y="378" width="288" height="67" rx="12" fill="#FFFFFF" stroke="#ABCBE7" stroke-width="1.5"/>
+<text x="1064.0" y="417.96" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="550" text-anchor="middle"><tspan x="1064.0" dy="0">BigQuery Streaming API</tspan></text>
+<rect x="920" y="485" width="288" height="89" rx="12" fill="#FFFFFF" stroke="#ABCBE7" stroke-width="1.5"/>
+<text x="1064.0" y="514.88" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="550" text-anchor="middle"><tspan x="1064.0" dy="0">CDC Log Tables</tspan><tspan x="1064.0" dy="20.4">append-only · date-partitioned</tspan><tspan x="1064.0" dy="20.4">I / U / D + timestamp</tspan></text>
+<rect x="920" y="620" width="288" height="74" rx="12" fill="#FFFFFF" stroke="#ABCBE7" stroke-width="1.5"/>
+<text x="1064.0" y="652.32" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="550" text-anchor="middle"><tspan x="1064.0" dy="0">Final Tables</tspan><tspan x="1064.0" dy="21.599999999999998">mirror of source DB</tspan></text>
+<rect x="920" y="738" width="288" height="57" rx="12" fill="#FFFFFF" stroke="#ABCBE7" stroke-width="1.5"/>
+<text x="1064.0" y="773.3" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="550" text-anchor="middle"><tspan x="1064.0" dy="0">Data Marts</tspan></text>
+<rect x="920" y="813" width="288" height="46" rx="9" fill="#E8F3FF" stroke="#BFD9F0" stroke-width="1.5"/>
+<text x="1064" y="832" fill="#456C91" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="500" text-anchor="middle"><tspan x="1064" dy="0">Pipeline / query projects separated</tspan><tspan x="1064" dy="16">slots + daily scan limits</tspan></text>
+<rect x="1258" y="296" width="234" height="76" rx="12" fill="#FFFFFF" stroke="#AED5B5" stroke-width="1.5"/>
+<text x="1375.0" y="339.78" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="550" text-anchor="middle"><tspan x="1375.0" dy="0">BI &amp; Dashboards</tspan></text>
+<rect x="1258" y="388" width="234" height="76" rx="12" fill="#FFFFFF" stroke="#AED5B5" stroke-width="1.5"/>
+<text x="1375.0" y="421.58" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="550" text-anchor="middle"><tspan x="1375.0" dy="0">ML: demand forecast</tspan><tspan x="1375.0" dy="20.4">(Dataflow), recommendation</tspan></text>
+<rect x="1258" y="496" width="234" height="76" rx="12" fill="#FFFFFF" stroke="#AED5B5" stroke-width="1.5"/>
+<text x="1375.0" y="529.5799999999999" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="550" text-anchor="middle"><tspan x="1375.0" dy="0">GenAI: Gemini</tspan><tspan x="1375.0" dy="20.4">review analysis</tspan></text>
+<rect x="1258" y="604" width="234" height="76" rx="12" fill="#FFFFFF" stroke="#AED5B5" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="1375.0" y="637.5799999999999" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="550" text-anchor="middle"><tspan x="1375.0" dy="0">AI Customer Service</tspan><tspan x="1375.0" dy="20.4">(AICS)</tspan></text>
+<rect x="1258" y="712" width="234" height="76" rx="12" fill="#FFFFFF" stroke="#AED5B5" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="1375.0" y="755.78" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="550" text-anchor="middle"><tspan x="1375.0" dy="0">Ad Platform (DSP)</tspan></text>
+<rect x="1541" y="287" width="309" height="138" rx="12" fill="#FFFFFF" stroke="#BCA8DC" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="1695.5" y="339.65999999999997" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="550" text-anchor="middle"><tspan x="1695.5" dy="0">ClickHouse</tspan><tspan x="1695.5" dy="22.8">sub-second serving</tspan><tspan x="1695.5" dy="22.8">ad reports · observability store</tspan></text>
+<rect x="1541" y="479" width="309" height="79" rx="12" fill="#FFFFFF" stroke="#BCA8DC" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="1695.5" y="513.8199999999999" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="550" text-anchor="middle"><tspan x="1695.5" dy="0">Data Observability</tspan><tspan x="1695.5" dy="21.599999999999998">missing / duplicate / latency</tspan></text>
+<rect x="1541" y="601" width="309" height="72" rx="12" fill="#FFFFFF" stroke="#BCA8DC" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="1695.5" y="632.32" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="550" text-anchor="middle"><tspan x="1695.5" dy="0">Data FinOps</tspan><tspan x="1695.5" dy="21.599999999999998">cost per domain</tspan></text>
+<rect x="1541" y="716" width="309" height="85" rx="12" fill="#FFFFFF" stroke="#BCA8DC" stroke-width="1.5" stroke-dasharray="8 6"/>
+<text x="1695.5" y="753.82" fill="#263449" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="550" text-anchor="middle"><tspan x="1695.5" dy="0">Data Mesh Governance</tspan><tspan x="1695.5" dy="21.599999999999998">catalog · permissions · lineage</tspan></text>
+<polyline points="302,321 353,321" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<polyline points="302,472 353,472" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<polyline points="302,645 353,645" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#arr)"/>
+<polyline points="587,321 610,321 610,410 637,410" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<polyline points="587,472 637,472" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<polyline points="587,645 610,645 610,484 637,484" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#arr)"/>
+<polyline points="869,425 920,425" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<rect x="877" y="394" width="59.6" height="25" rx="7" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="887" y="411" fill="#64748B" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="600" text-anchor="start"><tspan x="887" dy="0">stream</tspan></text>
+<polyline points="1064,445 1064,485" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<polyline points="1064,574 1064,620" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<rect x="929" y="586" width="244.4" height="25" rx="7" fill="#F2F8FF" stroke="none" stroke-width="0"/>
+<text x="939" y="603" fill="#456C91" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="600" text-anchor="start"><tspan x="939" dy="0">MERGE · PK, created_at, op, cdc_ts</tspan></text>
+<polyline points="1064,694 1064,738" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<polyline points="1208,766 1224,766 1224,334 1258,334" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<polyline points="1224,426 1258,426" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<polyline points="1224,534 1258,534" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<polyline points="1224,642 1258,642" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#arr)"/>
+<polyline points="1224,750 1258,750" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#arr)"/>
+<polyline points="869,398 886,398 886,275 1518,275 1518,356 1541,356" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#arr)"/>
+<rect x="1368" y="260" width="198.20000000000002" height="25" rx="7" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="1378" y="277" fill="#7B629F" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="600" text-anchor="start"><tspan x="1378" dy="0">proposed Kafka / Flink feed</tspan></text>
+<polyline points="1541,405 1517,405 1517,642 1492,642" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#arr)"/>
+<polyline points="1517,750 1492,750" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#arr)"/>
+<rect x="1525" y="430" width="66.2" height="25" rx="7" fill="#FFFFFF" stroke="none" stroke-width="0"/>
+<text x="1535" y="447" fill="#7B629F" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="600" text-anchor="start"><tspan x="1535" dy="0">serving</tspan></text>
+<rect x="335" y="904" width="1175" height="67" rx="13" fill="#EEF6FD" stroke="#9DC5E5" stroke-width="1.5"/>
+<text x="922" y="934" fill="#315F88" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="650" text-anchor="middle"><tspan x="922" dy="0">Orchestration: Airflow on Kubernetes (EKS, Helm, CeleryExecutor)</tspan></text>
+<text x="922" y="957" fill="#5E7B99" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="450" text-anchor="middle"><tspan x="922" dy="0">Cross-cutting capability; 2023 BigQuery MERGE was orchestrated by GCP Cloud Composer</tspan></text>
+<rect x="1523" y="904" width="345" height="104" rx="12" fill="#FFFFFF" stroke="#D7DCE5" stroke-width="1.5"/>
+<text x="1541" y="928" fill="#344256" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" text-anchor="start"><tspan x="1541" dy="0">Legend</tspan></text>
+<polyline points="1542,948 1590,948" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1601" y="953" fill="#526276" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="500" text-anchor="start"><tspan x="1601" dy="0">Confirmed in Kurly tech blog</tspan></text>
+<polyline points="1542,980 1590,980" fill="none" stroke="#607085" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="7 6"/>
+<text x="1601" y="985" fill="#526276" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="500" text-anchor="start"><tspan x="1601" dy="0">Proposed / inferred direction</tspan></text>
+<text x="52" y="1025" fill="#718096" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="450" text-anchor="start"><tspan x="52" dy="0">Source basis: Kurly tech blog (2023–2024) · dashed paths are not a claim of current deployment</tspan></text>
+</svg>

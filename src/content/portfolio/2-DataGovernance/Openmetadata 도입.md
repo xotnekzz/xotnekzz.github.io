@@ -29,7 +29,7 @@ draft: false
 
 ![OpenMetadata 서버, 전용 Ingestion Airflow, MariaDB, OpenSearch와 데이터 자산 활용 계층으로 구성한 인프라 구조](../../images/openmetadata-infra.svg)
 
-### AS-IS: 분산된 자산과 단절된 계보
+### AS-IS: 분산된 자산과 단절된 계보≠
 
 데이터베이스·Airflow 정보와 설명·소유권이 흩어져 탐색 경로가 표준화되지 않았고, 단절된 계보는 정합성 문제의 수동 역추적을 만들었습니다. Elasticsearch의 BM25 검색도 정확한 용어나 자산명을 알아야 했습니다.
 

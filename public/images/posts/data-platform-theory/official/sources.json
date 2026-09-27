@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "airflow",
+    "file": "airflow-official.png",
+    "source_page": "https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/overview.html",
+    "image_url": "https://airflow.apache.org/docs/apache-airflow/stable/_images/diagram_distributed_airflow_architecture.png",
+    "mime": "image/png"
+  },
+  {
+    "slug": "doris",
+    "file": "doris-official.jpg",
+    "source_page": "https://doris.apache.org/docs/4.x/features-architecture/system-architecture/",
+    "image_url": "https://cdnd.selectdb.com/assets/images/compute-storage-coupled-c168e29d3299982489174992208ad3af.jpg",
+    "mime": "image/jpeg"
+  },
+  {
+    "slug": "seaweedfs",
+    "file": "seaweedfs-official.png",
+    "source_page": "https://github.com/seaweedfs/seaweedfs/blob/master/README.md",
+    "image_url": "https://raw.githubusercontent.com/seaweedfs/seaweedfs/master/note/SeaweedFS_Architecture.png",
+    "mime": "image/png"
+  },
+  {
+    "slug": "spark",
+    "file": "spark-official.png",
+    "source_page": "https://spark.apache.org/docs/latest/cluster-overview.html",
+    "image_url": "https://spark.apache.org/docs/latest/img/cluster-overview.png",
+    "mime": "image/png"
+  },
+  {
+    "slug": "flink",
+    "file": "flink-official.svg",
+    "source_page": "https://nightlies.apache.org/flink/flink-docs-stable/docs/concepts/flink-architecture/",
+    "image_url": "https://nightlies.apache.org/flink/flink-docs-release-2.3//fig/processes.svg",
+    "mime": "image/svg+xml"
+  },
+  {
+    "slug": "nifi",
+    "file": "nifi-official.png",
+    "source_page": "https://nifi.apache.org/docs/nifi-docs/html/overview",
+    "image_url": "https://nifi.apache.org/docs/nifi-docs/html/images/zero-leader-node.png",
+    "mime": "image/png"
+  }
+]

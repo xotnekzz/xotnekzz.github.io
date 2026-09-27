@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="690" viewBox="0 0 1280 690" role="img" aria-labelledby="title desc" font-family="Arial, Apple SD Gothic Neo, Noto Sans CJK KR, sans-serif">
+<title id="title">Apache Airflow 3 아키텍처</title>
+<desc id="desc">제어·메타데이터 계층과 데이터 처리 계층을 구분합니다. 처리 순서: DAG 코드를 파싱해 DB에 저장; Scheduler가 DagRun과 Task를 선정; Executor가 Worker에 작업 전달; Worker가 외부 시스템을 호출</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#278568"/></marker><marker id="ctrl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#5271b8"/></marker></defs>
+<rect width="1280" height="690" rx="24" fill="#f8fafc"/>
+<text x="46" y="57" font-size="32" fill="#13243a" font-weight="700">Apache Airflow 3</text>
+<text x="47" y="89" font-size="17" fill="#52647a" font-weight="400">파란색: 제어·메타데이터    초록색: 실제 데이터 경로</text>
+<rect x="40" y="120" width="1200" height="150" rx="18" fill="#f1f5fc"/>
+<rect x="40" y="300" width="1200" height="150" rx="18" fill="#eef8f4"/>
+<text x="57" y="149" font-size="17" fill="#5271b8" font-weight="700">제어 · 메타데이터</text>
+<text x="57" y="329" font-size="17" fill="#258264" font-weight="700">실제 데이터 경로</text>
+<rect x="65" y="166" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="82" y="200" font-size="21" fill="#13243a" font-weight="700">DAG Bundle</text><text x="82" y="232" font-size="16" fill="#45566c" font-weight="400">버전별 DAG 코드</text>
+<rect x="370" y="166" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="387" y="200" font-size="21" fill="#13243a" font-weight="700">DAG Processor</text><text x="387" y="232" font-size="16" fill="#45566c" font-weight="400">파싱·직렬화</text>
+<rect x="675" y="166" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="692" y="200" font-size="21" fill="#13243a" font-weight="700">Metadata DB</text><text x="692" y="232" font-size="16" fill="#45566c" font-weight="400">실행 상태·일정</text>
+<rect x="980" y="166" width="265" height="91" rx="15" fill="#e8efff" stroke="#5271b8" stroke-width="2"/><text x="997" y="200" font-size="21" fill="#13243a" font-weight="700">Scheduler</text><text x="997" y="232" font-size="16" fill="#45566c" font-weight="400">실행 가능 작업 선택</text>
+<rect x="65" y="346" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="82" y="380" font-size="21" fill="#13243a" font-weight="700">원천 시스템</text><text x="82" y="412" font-size="16" fill="#45566c" font-weight="400">DB·API·파일</text>
+<rect x="370" y="346" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="387" y="380" font-size="21" fill="#13243a" font-weight="700">Worker Task</text><text x="387" y="412" font-size="16" fill="#45566c" font-weight="400">데이터 읽기·명령 실행</text>
+<rect x="675" y="346" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="692" y="380" font-size="21" fill="#13243a" font-weight="700">외부 처리</text><text x="692" y="412" font-size="16" fill="#45566c" font-weight="400">변환·계산 작업</text>
+<rect x="980" y="346" width="265" height="91" rx="15" fill="#e1f6ee" stroke="#258264" stroke-width="2"/><text x="997" y="380" font-size="21" fill="#13243a" font-weight="700">목적지</text><text x="997" y="412" font-size="16" fill="#45566c" font-weight="400">DB·객체 저장소</text>
+<line x1="333" y1="391" x2="358" y2="391" stroke="#278568" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="638" y1="391" x2="663" y2="391" stroke="#278568" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="943" y1="391" x2="968" y2="391" stroke="#278568" stroke-width="3" marker-end="url(#arrow)"/>
+<line x1="650" y1="273" x2="650" y2="333" stroke="#5271b8" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#ctrl)"/>
+<text x="48" y="496" font-size="22" fill="#13243a" font-weight="700">한눈에 보는 실행 순서</text>
+<circle cx="64" cy="529" r="13" fill="#278568"/>
+<text x="59" y="535" font-size="15" fill="#ffffff" font-weight="700">1</text>
+<text x="91" y="535" font-size="18" fill="#26384b" font-weight="400">DAG 코드를 파싱해 DB에 저장</text>
+<circle cx="64" cy="565" r="13" fill="#278568"/>
+<text x="59" y="571" font-size="15" fill="#ffffff" font-weight="700">2</text>
+<text x="91" y="571" font-size="18" fill="#26384b" font-weight="400">Scheduler가 DagRun과 Task를 선정</text>
+<circle cx="64" cy="601" r="13" fill="#278568"/>
+<text x="59" y="607" font-size="15" fill="#ffffff" font-weight="700">3</text>
+<text x="91" y="607" font-size="18" fill="#26384b" font-weight="400">Executor가 Worker에 작업 전달</text>
+<circle cx="64" cy="637" r="13" fill="#278568"/>
+<text x="59" y="643" font-size="15" fill="#ffffff" font-weight="700">4</text>
+<text x="91" y="643" font-size="18" fill="#26384b" font-weight="400">Worker가 외부 시스템을 호출</text>
+</svg>

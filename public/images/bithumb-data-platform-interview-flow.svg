@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="660" viewBox="0 0 1600 660" role="img" aria-labelledby="title desc">
+  <title id="title">Bithumb Data Engineer interview: proposed data flow</title>
+  <desc id="desc">A proposed five-stage flow from trading and customer data sources through ingestion, raw landing, processing and warehouse to consumption. Quality monitoring and replay apply across all stages. All components and links are interview hypotheses, not a confirmed internal architecture.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#607085"/></marker>
+    <style>
+      text{font-family:Pretendard,'Apple SD Gothic Neo','Noto Sans KR',Arial,sans-serif;fill:#28253d}
+      .head{font-size:30px;font-weight:700;fill:#17243a}.sub{font-size:16px;fill:#64748b}
+      .stage{font-size:19px;font-weight:700}.body{font-size:17px;font-weight:600}.note{font-size:14px;fill:#64748b}
+      .panel{fill:#f9f9fb;stroke:#cbd5e1;stroke-width:1.5}.node{fill:#fff;stroke:#cbd5e1;stroke-width:1.5}
+      .arrow{fill:none;stroke:#607085;stroke-width:2.5;stroke-dasharray:7 6;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="660" fill="#fff"/>
+  <text x="48" y="58" class="head">빗썸 Data Engineer: 데이터 흐름 가설</text>
+  <text x="48" y="88" class="sub">채용 공고의 책임 범위를 재구성한 면접용 그림 · 내부 시스템/제품 배치 확인 필요</text>
+
+  <rect x="48" y="126" width="274" height="375" rx="18" class="panel"/>
+  <rect x="353" y="126" width="274" height="375" rx="18" fill="#e3f2fd" stroke="#9ac4e9" stroke-width="1.5"/>
+  <rect x="658" y="126" width="274" height="375" rx="18" fill="#e8f5e9" stroke="#a8d5ae" stroke-width="1.5"/>
+  <rect x="963" y="126" width="274" height="375" rx="18" fill="#fff3e0" stroke="#e8ba80" stroke-width="1.5"/>
+  <rect x="1268" y="126" width="284" height="375" rx="18" class="panel"/>
+
+  <text x="68" y="163" class="stage">[1] 원천 데이터</text>
+  <text x="373" y="163" class="stage">[2] 수집·전달</text>
+  <text x="678" y="163" class="stage">[3] 원본 착지</text>
+  <text x="983" y="163" class="stage">[4] 정제·DW</text>
+  <text x="1288" y="163" class="stage">[5] 활용</text>
+
+  <rect x="68" y="197" width="234" height="70" rx="11" class="node"/>
+  <text x="185" y="226" class="body" text-anchor="middle">주문·체결·정산</text>
+  <text x="185" y="250" class="note" text-anchor="middle">도메인 원천 예시</text>
+  <rect x="68" y="283" width="234" height="70" rx="11" class="node"/>
+  <text x="185" y="312" class="body" text-anchor="middle">입출금·고객 행동</text>
+  <text x="185" y="336" class="note" text-anchor="middle">수집 범위 미확인</text>
+
+  <rect x="373" y="197" width="234" height="70" rx="11" class="node"/>
+  <text x="490" y="226" class="body" text-anchor="middle">CDC / 이벤트 / 배치</text>
+  <text x="490" y="250" class="note" text-anchor="middle">Python·Airflow 배치 추정</text>
+  <rect x="373" y="283" width="234" height="70" rx="11" class="node"/>
+  <text x="490" y="312" class="body" text-anchor="middle">버퍼·체크포인트</text>
+  <text x="490" y="336" class="note" text-anchor="middle">Kafka/MSK·Kinesis 후보</text>
+
+  <rect x="678" y="197" width="234" height="70" rx="11" class="node"/>
+  <text x="795" y="226" class="body" text-anchor="middle">변경 전 의미 보존</text>
+  <text x="795" y="250" class="note" text-anchor="middle">S3 원본 영역 추정</text>
+  <rect x="678" y="283" width="234" height="70" rx="11" class="node"/>
+  <text x="795" y="312" class="body" text-anchor="middle">ID · 시각 · 스키마 버전</text>
+  <text x="795" y="336" class="note" text-anchor="middle">중복·지연 추적 키</text>
+
+  <rect x="983" y="197" width="234" height="70" rx="11" class="node"/>
+  <text x="1100" y="226" class="body" text-anchor="middle">검증·중복 제거·대사</text>
+  <text x="1100" y="250" class="note" text-anchor="middle">Spark·Flink 등은 후보</text>
+  <rect x="983" y="283" width="234" height="70" rx="11" class="node"/>
+  <text x="1100" y="312" class="body" text-anchor="middle">DW → 데이터 마트</text>
+  <text x="1100" y="336" class="note" text-anchor="middle">Redshift 우선 추정</text>
+
+  <rect x="1288" y="197" width="244" height="70" rx="11" class="node"/>
+  <text x="1410" y="226" class="body" text-anchor="middle">BI · 운영 분석</text>
+  <text x="1410" y="250" class="note" text-anchor="middle">소비 목적 예시</text>
+  <rect x="1288" y="283" width="244" height="70" rx="11" class="node"/>
+  <text x="1410" y="312" class="body" text-anchor="middle">위험 탐지 · 지표 제공</text>
+  <text x="1410" y="336" class="note" text-anchor="middle">실제 연결 미확인</text>
+
+  <path d="M302 391 H347" class="arrow"/>
+  <path d="M607 391 H652" class="arrow"/>
+  <path d="M912 391 H957" class="arrow"/>
+  <path d="M1217 391 H1262" class="arrow"/>
+  <text x="800" y="441" text-anchor="middle" class="note">점선: 공고에서 직접 확인되지 않은 구성·연결</text>
+
+  <rect x="48" y="528" width="1504" height="91" rx="16" fill="#f2f8ff" stroke="#9ac4e9" stroke-width="1.5"/>
+  <text x="800" y="563" text-anchor="middle" class="stage" fill="#1565c0">전 구간 운영: 신선도 · 누락 · 중복 · 원천 대사 · 알림 · 장애 대응 · 재처리</text>
+  <text x="800" y="593" text-anchor="middle" class="note">품질·운영 책임은 공고에 명시 · 각 단계의 구현 방식과 SLO는 면접에서 확인</text>
+</svg>

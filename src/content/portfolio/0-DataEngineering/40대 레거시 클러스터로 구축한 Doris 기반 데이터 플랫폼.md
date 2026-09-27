@@ -64,3 +64,21 @@ draft: false
 - 💰 **서버 가용성 및 효율성 극대화:** 신규 서버 도입 없이 기존 40대 장비의 역할을 재정의(SeaweedFS 9, FE 3, BE 28)하는 것만으로 폭발적인 성능 향상을 달성하여 추가 인프라 구축 비용을 100% 절감했습니다.
 - 🦾 **ETL 효율화 및 지표 자동화:** Impala의 MV 부재로 인한 복잡한 Airflow DAG(2차 가공) 구조를 Doris MV 기반의 **SQL 레벨 사전 집계**로 전환하여, 파이프라인 운영 리소스를 최소화하고 데이터 정합성을 강화했습니다.
 - 📦 **수집 파이프라인 경량화:** Fluentd와 중간 TSV를 제거하고 압축 원본과 Parquet만 유지하여 네트워크 부하와 저장 중복을 줄였습니다. DuckDB ETL을 Docker로 격리해 실행 환경의 재현성과 배치 운영 안정성도 높였습니다.
+
+## 5. Next Step
+
+현재는 기존 HDFS/Impala 서버 40대를 **SeaweedFS 9대와 Doris 31대(FE 3대, BE 28대)**로 재배치해 운영합니다. Doris의 로컬 스토리지를 활용해 쿼리 성능을 확보했지만, SeaweedFS의 Parquet 분석 데이터와 Doris 운영 테이블을 함께 유지하므로 저장 중복과 재적재 시 정합성 관리 부담이 남아 있습니다.
+
+다음 단계에서는 **기존 서버 40대를 전부 SeaweedFS Data Lake 클러스터로 전환**하고, **별도로 할당받을 OLAP 서버 약 10대에 Doris를 구성**할 계획입니다. 저장과 연산을 물리적으로 분리하되, IDC 네트워크에서 성능과 운영 비용의 균형을 찾기 위해 다음 두 가지 저장·서빙 경계를 비교합니다.
+
+1. **Iceberg External Catalog 기반 직접 조회**
+    - Raw/Bronze부터 분석용 Silver/Gold까지 Iceberg 테이블로 SeaweedFS에 저장
+    - Doris는 External Catalog를 통해 Iceberg 데이터를 직접 조회하고, 동일한 분석 데이터를 Doris 내부 테이블에 복제하지 않음
+    - 저장 중복 제거 효과와 원격 스캔에 따른 네트워크 I/O, 쿼리 지연, 로컬 캐시 워밍 비용을 검증
+
+2. **Silver·Gold 데이터의 Doris 서빙 구조**
+    - SeaweedFS에는 gzip 원본과 Raw/Bronze 데이터를 장기 보관
+    - 자주 조회하는 Silver/Gold 데이터와 Materialized View 집계 결과는 Doris 내부 테이블에 저장
+    - Doris를 원본에서 다시 생성할 수 있는 고성능 OLAP 서빙 계층으로 정의하고, 쿼리 성능 대비 저장·재적재 비용을 검증
+
+두 안은 동일한 데이터셋·SQL·동시 사용자 조건에서 비교합니다. Cold/Warm Cache별 p50·p95 쿼리 응답 시간, 동시 쿼리 처리량, 네트워크 I/O, 실제 저장 용량, 원본 생성부터 BI 반영까지의 신선도, 장애 복구 및 전체 재적재 시간을 측정해 IDC 환경에 적합한 데이터 저장·처리 경계를 결정합니다.
