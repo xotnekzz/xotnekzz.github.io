@@ -43,7 +43,7 @@ draft: true
 
 ### To-Be Architecture
 
-![원천 데이터와 Doris 파티션 Snapshot, FE Metadata를 외부 S3 또는 GCS에 분리 보관하고 격리 환경에서 복구를 검증하는 구조](/images/doris-backup-to-be.svg)
+![원천 데이터와 Doris 파티션 Snapshot, FE Metadata를 외부 S3 또는 GCS에 분리 보관하고 격리 환경에서 복구를 검증하는 구조](assets/doris-backup-dr-strategy.svg)
 
 1. **원천 데이터 보관:** gzip 웹 로그와 Parquet 분석 데이터를 불변 경로로 저장해 전체 재처리 경로를 유지합니다.
 2. **클러스터 내부 HA:** FE는 3 Follower 구성을 기본으로 하고, 주요 테이블은 3 Replica와 장애 도메인 배치 정책으로 단일 노드·디스크 장애를 흡수합니다.

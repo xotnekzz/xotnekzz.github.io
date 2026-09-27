@@ -67,6 +67,8 @@ draft: false
 
 ## 5. Next Step
 
+> 관련 운영 설계: [[draft/Apache Doris 백업 전략|Apache Doris 데이터 백업·복구 및 FE·BE 장애 대응 전략]]
+
 현재는 기존 HDFS/Impala 서버 40대를 **SeaweedFS 9대와 Doris 31대(FE 3대, BE 28대)**로 재배치해 운영합니다. Doris의 로컬 스토리지를 활용해 쿼리 성능을 확보했지만, SeaweedFS의 Parquet 분석 데이터와 Doris 운영 테이블을 함께 유지하므로 저장 중복과 재적재 시 정합성 관리 부담이 남아 있습니다.
 
 다음 단계에서는 **기존 서버 40대를 전부 SeaweedFS Data Lake 클러스터로 전환**하고, **별도로 할당받을 OLAP 서버 약 10대에 Doris를 구성**할 계획입니다. 저장과 연산을 물리적으로 분리하되, IDC 네트워크에서 성능과 운영 비용의 균형을 찾기 위해 다음 두 가지 저장·서빙 경계를 비교합니다.

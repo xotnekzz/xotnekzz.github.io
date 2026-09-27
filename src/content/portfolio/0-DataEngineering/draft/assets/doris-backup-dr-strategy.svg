@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="620" viewBox="0 0 1600 620" role="img" aria-labelledby="title desc">
+  <title id="title">Apache Doris 다계층 백업 및 장애 복구 구조</title>
+  <desc id="desc">gzip 웹 로그와 Parquet 원천 데이터, FE 3 Follower와 BE 3 Replica, 파티션 Snapshot과 FE Metadata 백업, 별도 계정과 리전의 S3 또는 GCS, 격리 복구 훈련으로 이어지는 구조</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="140%"><feDropShadow dx="4" dy="4" stdDeviation="0" flood-color="#000" flood-opacity=".06"/></filter>
+    <marker id="arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto"><path d="M0 0L12 7L0 14Z" fill="#333"/></marker>
+    <marker id="green-arrow" viewBox="0 0 12 14" refX="10" refY="7" markerWidth="11" markerHeight="13" orient="auto"><path d="M0 0L12 7L0 14Z" fill="#2e7d32"/></marker>
+    <style>
+      text{font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;fill:#28253d}
+      .layer{fill:#f9f9fb;stroke:#28253d;stroke-width:2;rx:10;filter:url(#shadow)}
+      .title{font-size:18px;font-weight:650;text-anchor:middle}
+      .process{fill:#e3f2fd;stroke:#1565c0;stroke-width:2;rx:8;filter:url(#shadow)}
+      .storage{fill:#e8f5e9;stroke:#2e7d32;stroke-width:2;filter:url(#shadow)}
+      .olap{fill:#fff3e0;stroke:#e65100;stroke-width:2;rx:8;filter:url(#shadow)}
+      .batch{fill:#fff8e1;stroke:#f9a825;stroke-width:2;rx:8;filter:url(#shadow)}
+      .label{font-size:17px;font-weight:650;text-anchor:middle}
+      .sub{font-size:14px;text-anchor:middle;fill:#4b4b5e}
+      .small{font-size:13px;text-anchor:middle;fill:#4b4b5e}
+      .edge{fill:none;stroke:#333;stroke-width:2.2;marker-end:url(#arrow)}
+      .copy{fill:none;stroke:#2e7d32;stroke-width:2.3;stroke-dasharray:7 5;marker-end:url(#green-arrow)}
+      .blue{fill:#1565c0}.green{fill:#2e7d32}.orange{fill:#e65100}.amber{fill:#9a6700}
+    </style>
+  </defs>
+  <rect width="1600" height="620" fill="#fff"/>
+
+  <rect class="layer" x="24" y="40" width="330" height="520"/><text class="title" x="189" y="74">[1] 원천 · 재처리 계층</text>
+  <rect class="layer" x="382" y="40" width="360" height="520"/><text class="title" x="562" y="74">[2] Apache Doris 운영 클러스터</text>
+  <rect class="layer" x="770" y="40" width="360" height="520"/><text class="title" x="950" y="74">[3] 백업 · 검증 작업</text>
+  <rect class="layer" x="1158" y="40" width="418" height="520"/><text class="title" x="1367" y="74">[4] 외부 장애 도메인</text>
+
+  <g><path class="storage" d="M73 132C73 110 305 110 305 132V250C305 272 73 272 73 250Z"/><ellipse class="storage" cx="189" cy="132" rx="116" ry="20"/><text class="label green" x="189" y="174">gzip 웹 로그</text><text class="sub" x="189" y="201">Immutable Raw</text><text class="sub" x="189" y="226">전체 재처리 원본</text></g>
+  <g><path class="storage" d="M73 342C73 320 305 320 305 342V460C305 482 73 482 73 460Z"/><ellipse class="storage" cx="189" cy="342" rx="116" ry="20"/><text class="label green" x="189" y="384">Parquet</text><text class="sub" x="189" y="411">분석 · 재적재 데이터</text><text class="sub" x="189" y="436">Schema Version 관리</text></g>
+
+  <rect class="olap" x="432" y="116" width="260" height="136"/><text class="label orange" x="562" y="157">Doris FE</text><text class="sub" x="562" y="185">3 Follower · 자동 선출</text><text class="sub" x="562" y="210">Metadata HA</text><text class="small" x="562" y="232">서로 다른 서버 · 전원 도메인</text>
+  <rect class="olap" x="432" y="329" width="260" height="144"/><text class="label orange" x="562" y="370">Doris BE</text><text class="sub" x="562" y="398">Replica 3 · 자동 Repair</text><text class="sub" x="562" y="423">Local Storage</text><text class="small" x="562" y="447">28 BE · Tablet Health 감시</text>
+
+  <rect class="process" x="820" y="105" width="260" height="130"/><text class="label blue" x="950" y="146">FE Metadata 백업</text><text class="sub" x="950" y="174">meta_dir · FE 버전 · 설정</text><text class="sub" x="950" y="198">정기 + 변경 전후</text><text class="small" x="950" y="219">Checkpoint 최신성 검증</text>
+  <rect class="process" x="820" y="276" width="260" height="130"/><text class="label blue" x="950" y="317">Doris Snapshot</text><text class="sub" x="950" y="345">전체 기준점 + 파티션 선택</text><text class="sub" x="950" y="369">최근 N일 Rolling Lookback</text><text class="small" x="950" y="390">BACKUP · SHOW SNAPSHOT</text>
+  <rect class="batch" x="820" y="447" width="260" height="82"/><text class="label amber" x="950" y="480">정기 DR Drill</text><text class="sub" x="950" y="506">Restore · 정합성 · RTO 측정</text>
+
+  <g><path class="storage" d="M1208 118C1208 95 1526 95 1526 118V405C1526 428 1208 428 1208 405Z"/><ellipse class="storage" cx="1367" cy="118" rx="159" ry="21"/><text class="label green" x="1367" y="157">S3 / GCS Object Storage</text><text class="sub" x="1367" y="182">별도 계정 · 리전 · IAM</text><line x1="1250" y1="208" x2="1484" y2="208" stroke="#a5d6a7"/><text class="label green" x="1367" y="246">Raw · Parquet</text><text class="sub" x="1367" y="270">Versioning · Lifecycle</text><line x1="1250" y1="295" x2="1484" y2="295" stroke="#a5d6a7"/><text class="label green" x="1367" y="333">Snapshot · FE Metadata</text><text class="sub" x="1367" y="357">Object Lock · 암호화</text><text class="sub" x="1367" y="382">최근 Warm · 장기 Archive</text></g>
+  <rect class="process" x="1234" y="458" width="266" height="74"/><text class="label blue" x="1367" y="488">격리 복구 클러스터</text><text class="sub" x="1367" y="513">운영 반영 전 Restore 검증</text>
+
+  <path class="edge" d="M305 401H424"/><text class="small" x="365" y="387">배치 적재</text>
+  <path class="edge" d="M692 184H812"/><text class="small" x="752" y="170">Metadata</text>
+  <path class="edge" d="M692 401H812"/><text class="small" x="752" y="387">Partition</text>
+  <path class="copy" d="M1080 170H1200"/><path class="copy" d="M1080 341H1200"/>
+  <path class="copy" d="M305 184C320 110 345 92 382 92H1136C1165 92 1182 108 1200 132"/>
+  <path class="copy" d="M305 438C628 534 883 551 1200 370"/>
+  <path class="edge" d="M1367 428V450"/>
+  <path class="edge" d="M1208 496H1088"/><text class="small" x="1148" y="482">검증 결과</text>
+
+  <rect x="410" y="572" width="780" height="34" rx="8" fill="#eceff1" stroke="#455a64" stroke-width="2" stroke-dasharray="6 5"/><text class="sub" x="800" y="594">FE HA → BE Replica → 외부 Snapshot → 원천 재처리의 네 단계로 장애 범위를 분리</text>
+</svg>
