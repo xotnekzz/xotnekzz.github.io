@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1760 1030" role="img" aria-labelledby="title desc">
+  <title id="title">망고게이트 개인 DB 계정 신청과 Role 적용 시퀀스</title>
+  <desc id="desc">직원이 권한 프로필을 신청하면 관리자가 승인한다. API는 PostgreSQL에 승인 원장을 남기고 비밀번호를 OpenBao에 저장한다. Worker가 작업을 가져와 대상 DB에 개인 계정과 Role을 적용하고 검증한 뒤 결과를 원장에 반영한다.</desc>
+  <defs>
+    <marker id="request-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#1565c0"/></marker>
+    <marker id="result-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#2e7d32"/></marker>
+    <marker id="async-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#e65100"/></marker>
+    <style>
+      text{font-family:Pretendard,"Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;fill:#28253d}
+      .heading{font-size:30px;font-weight:700}.sub{font-size:16px;fill:#596478}
+      .actor{fill:#f2f7ff;stroke:#9bb9df;stroke-width:1.5;rx:12}.actor-label{font-size:17px;font-weight:700;text-anchor:middle}
+      .life{stroke:#bbc6d4;stroke-width:1.5;stroke-dasharray:7 7}
+      .request{stroke:#1565c0;stroke-width:2.2;fill:none;marker-end:url(#request-arrow)}
+      .result{stroke:#2e7d32;stroke-width:2.2;stroke-dasharray:7 5;fill:none;marker-end:url(#result-arrow)}
+      .asynchronous{stroke:#e65100;stroke-width:2.2;stroke-dasharray:7 5;fill:none;marker-end:url(#async-arrow)}
+      .label{font-size:14px;text-anchor:middle}.stage{font-size:15px;font-weight:700;fill:#1565c0}
+      .stage-box{fill:#f8fbff;fill-opacity:.74;stroke:#d9e4f1;stroke-width:1.2;rx:12}
+      .note{font-size:14px;fill:#596478}.emphasis{font-weight:700;fill:#e65100}
+    </style>
+  </defs>
+  <rect width="1760" height="1030" fill="#fff"/>
+  <text x="54" y="54" class="heading">개인 계정과 Role이 실제 DB에 적용되기까지</text>
+  <text x="54" y="84" class="sub">승인 원장의 desired state와 대상 DB의 실제 상태를 분리해 추적한다</text>
+
+  <rect x="38" y="112" width="170" height="56" class="actor"/><text x="123" y="146" class="actor-label">직원</text>
+  <rect x="289" y="112" width="170" height="56" class="actor"/><text x="374" y="146" class="actor-label">관리자</text>
+  <rect x="540" y="112" width="170" height="56" class="actor"/><text x="625" y="146" class="actor-label">MangoGate API</text>
+  <rect x="791" y="112" width="170" height="56" class="actor"/><text x="876" y="146" class="actor-label">승인 원장</text>
+  <rect x="1042" y="112" width="170" height="56" class="actor"/><text x="1127" y="146" class="actor-label">OpenBao</text>
+  <rect x="1293" y="112" width="170" height="56" class="actor"/><text x="1378" y="146" class="actor-label">Worker·Adapter</text>
+  <rect x="1544" y="112" width="170" height="56" class="actor"/><text x="1629" y="146" class="actor-label">대상 DB</text>
+  <path d="M123 168V900 M374 168V900 M625 168V900 M876 168V900 M1127 168V900 M1378 168V900 M1629 168V900" class="life"/>
+
+  <rect x="25" y="191" width="1710" height="213" class="stage-box"/>
+  <text x="46" y="218" class="stage">1 · 신청과 승인</text>
+  <path d="M123 263H615" class="request"/><text x="369" y="250" class="label">데이터소스 · 프로필 · 사유 · 만료일 신청</text>
+  <path d="M625 325H866" class="request"/><text x="750" y="312" class="label">신청과 감사 이력 기록</text>
+  <path d="M374 384H615" class="request"/><text x="497" y="371" class="label">범위 확인 후 승인</text>
+
+  <rect x="25" y="422" width="1710" height="223" class="stage-box"/>
+  <text x="46" y="449" class="stage">2 · 승인 원장과 자격증명 준비</text>
+  <path d="M625 496H866" class="request"/><text x="750" y="483" class="label">Grant · 승인 이력 기록</text>
+  <path d="M625 557H1117" class="request"/><text x="876" y="544" class="label">초기 비밀번호를 비밀 저장소에 보관</text>
+  <path d="M625 618H866" class="request"/><text x="750" y="605" class="label">참조 버전 · Job 기록</text>
+
+  <rect x="25" y="663" width="1710" height="300" class="stage-box"/>
+  <text x="46" y="690" class="stage">3 · 비동기 집행과 검증</text>
+  <path d="M876 729H1368" class="asynchronous"/><text x="1127" y="716" class="label">대기 작업 수령 · revision 확인</text>
+  <path d="M1378 781H1137" class="request"/><text x="1253" y="768" class="label">고정 버전 조회</text>
+  <path d="M1378 833H1619" class="request"/><text x="1503" y="820" class="label">개인 계정 · Role 적용</text>
+  <path d="M1629 886H1388" class="result"/><text x="1503" y="873" class="label">인증 · 권한 확인</text>
+
+  <path d="M1378 944H886" class="result"/><text x="1127" y="931" class="label">성공 시 사용 가능 상태 기록</text>
+  <text x="54" y="991" class="note">실패하거나 실제 결과가 불명확하면 재시도·검토 상태로 남긴다. <tspan class="emphasis">관리자 승인만으로 발급 완료로 표시하지 않는다.</tspan></text>
+</svg>

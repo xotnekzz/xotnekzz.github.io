@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 1030" role="img" aria-labelledby="title desc">
+  <title id="title">온톨로지 기반 KPI 대시보드 생성 순서</title>
+  <desc id="desc">경영진 요청을 정규화하고 OpenMetadata와 운영 데이터에서 근거를 수집한 다음 정책 검증과 결정론적 렌더링을 거쳐 로컬 HTML 산출물로 저장하는 순서를 보여준다.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#1565c0"/></marker>
+    <style>.bg{fill:#fff}.head{fill:#eef5fc;stroke:#1565c0;stroke-width:2}.life{stroke:#9ba7b4;stroke-width:1.5;stroke-dasharray:6 6}.msg{stroke:#1565c0;stroke-width:2;marker-end:url(#arrow)}.ret{stroke:#2e7d32;stroke-width:2;stroke-dasharray:7 5;marker-end:url(#arrow)}.note{fill:#f7f8fa;stroke:#aeb7c1;stroke-width:1.5}.gate{fill:#fff8f2;stroke:#e65100;stroke-width:2}.txt{font-family:Pretendard,'Apple SD Gothic Neo','Noto Sans KR',Arial,sans-serif;fill:#28253d;font-size:15px}.small{font-size:13px}.label{font-weight:700;font-size:16px}</style>
+  </defs>
+  <rect class="bg" width="1280" height="1030"/>
+  <text class="txt label" x="34" y="37">Ontology-backed KPI dashboard — evidence-to-artifact runtime</text>
+  <g>
+    <rect class="head" x="25" y="60" width="145" height="54" rx="12"/><text class="txt label" text-anchor="middle" x="97" y="92">경영진</text>
+    <rect class="head" x="215" y="60" width="170" height="54" rx="12"/><text class="txt label" text-anchor="middle" x="300" y="92">오케스트레이터</text>
+    <rect class="head" x="430" y="60" width="170" height="54" rx="12"/><text class="txt label" text-anchor="middle" x="515" y="82">Ontology</text><text class="txt small" text-anchor="middle" x="515" y="101">OpenMetadata</text>
+    <rect class="head" x="645" y="60" width="185" height="54" rx="12"/><text class="txt label" text-anchor="middle" x="737" y="82">Evidence</text><text class="txt small" text-anchor="middle" x="737" y="101">Doris / Airflow / BI</text>
+    <rect class="head" x="875" y="60" width="180" height="54" rx="12"/><text class="txt label" text-anchor="middle" x="965" y="82">Policy + Renderer</text><text class="txt small" text-anchor="middle" x="965" y="101">schema / HTML / QA</text>
+    <rect class="head" x="1100" y="60" width="155" height="54" rx="12"/><text class="txt label" text-anchor="middle" x="1177" y="82">Local Artifact</text><text class="txt small" text-anchor="middle" x="1177" y="101">versioned HTML</text>
+  </g>
+  <g><line class="life" x1="97" y1="114" x2="97" y2="980"/><line class="life" x1="300" y1="114" x2="300" y2="980"/><line class="life" x1="515" y1="114" x2="515" y2="980"/><line class="life" x1="737" y1="114" x2="737" y2="980"/><line class="life" x1="965" y1="114" x2="965" y2="980"/><line class="life" x1="1177" y1="114" x2="1177" y2="980"/></g>
+  <line class="msg" x1="97" y1="160" x2="292" y2="160"/><text class="txt" x="122" y="151">범위·기간·KPI 요청</text>
+  <rect class="note" x="220" y="181" width="160" height="55" rx="8"/><text class="txt small" x="236" y="204">DashboardRequest</text><text class="txt small" x="236" y="223">정규화·스키마 검사</text>
+  <line class="msg" x1="300" y1="275" x2="507" y2="275"/><text class="txt" x="335" y="265">KPI 검색·관계 경로 확인</text>
+  <line class="ret" x1="515" y1="335" x2="308" y2="335"/><text class="txt" x="335" y="325">FQN·연결 자산 반환</text>
+  <line class="msg" x1="300" y1="400" x2="729" y2="400"/><text class="txt" x="425" y="390">검증된 자산으로 read-only 근거 수집</text>
+  <rect class="note" x="650" y="426" width="175" height="72" rx="8"/><text class="txt small" x="666" y="449">parallel collection</text><text class="txt small" x="666" y="469">metric / freshness</text><text class="txt small" x="666" y="488">quality / BI / case</text>
+  <line class="ret" x1="737" y1="540" x2="308" y2="540"/><text class="txt" x="410" y="530">값·시계열·품질·운영 근거</text>
+  <rect class="note" x="220" y="566" width="160" height="73" rx="8"/><text class="txt small" x="236" y="589">EvidenceBundle</text><text class="txt small" x="236" y="608">정규화 + 추론</text><text class="txt small" x="236" y="627">사실·가설 분리</text>
+  <line class="msg" x1="300" y1="685" x2="957" y2="685"/><text class="txt" x="520" y="675">DashboardBundle schema + quality / causal gate</text>
+  <rect class="gate" x="882" y="710" width="166" height="82" rx="10"/><text class="txt small" x="897" y="735">검증 실패 시</text><text class="txt small" x="897" y="755">KPI 격리 또는</text><text class="txt small" x="897" y="775">경고 표시</text>
+  <line class="msg" x1="300" y1="845" x2="957" y2="845"/><text class="txt" x="520" y="835">고정된 골든 레퍼런스로 단일 HTML 렌더</text>
+  <line class="msg" x1="965" y1="905" x2="1169" y2="905"/><text class="txt" x="987" y="895">run별 로컬 저장</text>
+  <line class="ret" x1="1177" y1="955" x2="105" y2="955"/><text class="txt" x="482" y="945">산출물 경로·asOf·데이터 상태·경고 반환</text>
+  <rect class="gate" x="210" y="980" width="1045" height="33" rx="8"/><text class="txt small" x="225" y="1002">외부 게시·알림·OpenMetadata 변경은 기본 흐름에서 제외하며, 각각 사용자 요청과 별도 승인을 거친다.</text>
+</svg>
